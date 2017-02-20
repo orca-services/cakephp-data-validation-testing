@@ -360,7 +360,7 @@ class TestDataValidation {
 			'abc123', // Alphanumeric
 			0, // Zero
 			(-1), // Negative input
-			9999999, // non-existent key
+			999999, // non-existent key
 		);
 
 		$db = ConnectionManager::getDataSource('test');

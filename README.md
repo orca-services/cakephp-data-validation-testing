@@ -15,10 +15,22 @@ A CakePHP 2.x plugin to help testing data validation.
 - PHP >= 5.3
 - CakePHP 2.x
 
+### CakePHP Version Support
+
+This plugin supports CakePHP 2.x only.
+
 ### Installation via composer
+
+First, require the package through Composer:
 
 ````
 composer require orca-services/cakephp-data-validation-testing
+````
+
+Then load plugin in bootstrap.php:
+
+````
+CakePlugin::load('DataValidationTesting');
 ````
 
 ### Installation alternatives
@@ -26,17 +38,13 @@ composer require orca-services/cakephp-data-validation-testing
 Refer to the CakePHP CookBook section
 [How To Install Plugins](http://book.cakephp.org/2.0/en/plugins/how-to-install-plugins.html).
 
-## CakePHP Version Support
+## How to use
 
-This plugin only supports CakePHP 2.x.
+You can use the plugin as shown in [BlogPostTest example](examples/BlogPostTest.php) .
 
 ## Versioning
 
 The releases of this plugin are versioned using [SemVer](http://semver.org/).
-
-## How to use
-
-TODO
 
 ## Contributing
 
@@ -52,6 +60,7 @@ See [CHANGELOG.md](CHANGELOG.md)
 - Integrate with Travis CI
 - Integrate with Scrutinizer CI
 - Integrate with AppVeyor
+- Extend examples
 
 ## License
 
