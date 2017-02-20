@@ -24,7 +24,7 @@ This plugin supports CakePHP 2.x only.
 First, require the package through Composer:
 
 ````
-composer require orca-services/cakephp-data-validation-testing
+composer require --dev orca-services/cakephp-data-validation-testing
 ````
 
 Then load plugin in bootstrap.php:
