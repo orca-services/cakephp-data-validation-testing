@@ -475,7 +475,7 @@ class TestDataValidation {
 	 * @param int $length The length of the string.
 	 * @return string A $length long string filled up with the supplied characters from $characterList.
 	 */
-	protected static function textFillUp($length) {
+	protected static function _textFillUp($length) {
 		$filled = '';
 		$characterList = '012345679';
 		$charListLength = strlen($characterList);
