@@ -12,7 +12,7 @@ A CakePHP 2.x plugin to help testing data validation.
 
 ### Requirements
 
-- PHP >= 5.3
+- PHP >= 5.4.0
 - CakePHP 2.x
 
 ### CakePHP Version Support
