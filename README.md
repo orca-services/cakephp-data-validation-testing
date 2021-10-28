@@ -8,6 +8,11 @@
 
 A CakePHP 2.x plugin to help testing data validation.
 
+## Security
+
+If you've found a security vulnerability, please follow the procedure
+described in [SECURITY.md](.github/SECURITY.md).
+
 ## Installation
 
 ### Requirements
