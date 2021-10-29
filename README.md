@@ -8,11 +8,6 @@
 
 A CakePHP 2.x plugin to help testing data validation.
 
-## Security
-
-If you've found a security vulnerability, please follow the procedure
-described in [SECURITY.md](.github/SECURITY.md).
-
 ## Installation
 
 ### Requirements
@@ -66,6 +61,11 @@ See [CHANGELOG.md](CHANGELOG.md)
 - Integrate with Scrutinizer CI
 - Integrate with AppVeyor
 - Extend examples
+
+## Security
+
+If you've found a security vulnerability, please follow the procedure
+described in [SECURITY.md](.github/SECURITY.md).
 
 ## License
 
