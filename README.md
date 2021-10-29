@@ -62,6 +62,11 @@ See [CHANGELOG.md](CHANGELOG.md)
 - Integrate with AppVeyor
 - Extend examples
 
+## Security
+
+If you've found a security vulnerability, please follow the procedure
+described in [SECURITY.md](.github/SECURITY.md).
+
 ## License
 
 This plugin is licensed under the [MIT License](LICENSE).
