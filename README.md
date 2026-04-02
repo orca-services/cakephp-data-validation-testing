@@ -6,9 +6,9 @@ A CakePHP 4.x plugin to help testing data validation.
 
 See the [installation documentation](docs/Installation.md).
 
-## How to use
+[//]: # (## How to use)
 
-You can use the plugin as shown in [BlogPostTest example](examples/BlogPostTest.php).
+[//]: # (TODO: Add Usage section.)
 
 ## Versioning
 
