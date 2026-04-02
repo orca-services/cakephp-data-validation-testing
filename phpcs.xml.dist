@@ -12,6 +12,9 @@
     <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml">
         <!-- Exclude unwanted sniffs -->
         <exclude name="Generic.Commenting.Todo"/>
+
+        <!-- Suppress: FQCNs in PHPDoc should use short names via use statements -->
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
     </rule>
 
 </ruleset>
