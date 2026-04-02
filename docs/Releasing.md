@@ -14,4 +14,5 @@
 - Update the [change log](../CHANGELOG.md) for the release
 - Push the changes to the GitLab repo
 - [Tag](https://github.com/orca-services/cakephp-data-validation-testing/tags) the revision
-- Copy the [change log](../CHANGELOG.md) entries of the released version in raw as [release notes for the new tag](https://github.com/orca-services/cakephp-data-validation-testing/releases/new)
+- Copy the [change log](../CHANGELOG.md) entries of the released version in raw
+  as [release notes for the new tag](https://github.com/orca-services/cakephp-data-validation-testing/releases/new)

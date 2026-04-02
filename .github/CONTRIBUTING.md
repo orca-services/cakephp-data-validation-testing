@@ -8,15 +8,16 @@ We welcome your contribution. There are several ways to help out:
 
 There are a few guidelines that we need contributors to follow so that we have a chance of keeping on top of things.
 
-* The code must follow the [CakePHP coding standard](https://book.cakephp.org/4.x/contributing/cakephp-coding-conventions.html).
+* The code must follow
+  the [CakePHP coding standard](https://book.cakephp.org/4.x/contributing/cakephp-coding-conventions.html).
 * All code changes should be covered by unit tests
 
 ## Issues
 
 * Submit an issue, but:
-  * Make sure it does not already exist.
-  * Clearly describe the issue including steps to reproduce, if it is a bug.
-  * Make sure you mention the version and configuration of all software that could be relevant.
+    * Make sure it does not already exist.
+    * Clearly describe the issue including steps to reproduce, if it is a bug.
+    * Make sure you mention the version and configuration of all software that could be relevant.
 
 ## Coding Standard
 
