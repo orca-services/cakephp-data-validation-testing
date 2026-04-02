@@ -18,6 +18,7 @@
 phpcs.xml
 pdepend.xml
 phpunit.xml
+.phpunit.result.cache
 
 # OS generated files #
 ######################
