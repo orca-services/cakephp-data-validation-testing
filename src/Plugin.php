@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace DataValidation;
 
@@ -10,4 +11,3 @@ use Cake\Core\BasePlugin;
 class Plugin extends BasePlugin
 {
 }
-
