@@ -16,7 +16,7 @@
 
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
-        <testsuite name="Data Validation">
+        <testsuite name="DataValidationTesting">
             <directory>./tests/TestCase</directory>
         </testsuite>
     </testsuites>
