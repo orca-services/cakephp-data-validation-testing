@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - Assert a field enforces a minimum and maximum length range
 
 ### Changed
-- Drop support for CakePHP 2.x
+- Drop support for CakePHP 2.x & skip support for CakePHP 3.x
 - Update the minimum required PHP Version to PHP 7.4
 
 ### Fixed
