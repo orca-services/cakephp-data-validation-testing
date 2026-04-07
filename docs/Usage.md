@@ -34,13 +34,17 @@ All helper methods are `protected` and callable from within your test class.
 ```php
 public function testValidationTitle(): void
 {
+    // Assert that the "title" field's presence is required
     $this->_testDataValidationRequired($this->Articles, 'title');
+    // Assert that the field "title" cannot be empty
     $this->_testDataValidationNotEmpty($this->Articles, 'title');
+    // Assert that the "title" field's maximum length is 255 characters
     $this->_testDataValidationMaxLength($this->Articles, 'title', 255);
 }
 
 public function testValidationIsPublished(): void
 {
+    // Assert that the field "is_published" must have a boolean value
     $this->_testDataValidationBoolean($this->Articles, 'is_published');
 }
 ```
