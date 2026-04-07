@@ -22,14 +22,6 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md)
 
 See [CHANGELOG.md](CHANGELOG.md)
 
-## TODOs
-
-- Add Unit Tests
-- Integrate with Travis CI
-- Integrate with Scrutinizer CI
-- Integrate with AppVeyor
-- Extend examples
-
 ## Security
 
 If you've found a security vulnerability, please follow the procedure
