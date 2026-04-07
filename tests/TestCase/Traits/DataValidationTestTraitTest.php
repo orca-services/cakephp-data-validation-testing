@@ -34,10 +34,10 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test the _testDataValidation base method
+     * Test the testDataValidation base method
      *
      * @return void
-     * @covers ::_testDataValidation
+     * @covers ::testDataValidation
      */
     public function testTestDataValidation(): void
     {
@@ -49,14 +49,14 @@ class DataValidationTestTraitTest extends TestCase
         $errors = $entity->getError($fieldName);
         $this->assertSame($expectedErrors, $errors);
 
-        $this->_testDataValidation($this->table, $fieldName, $dataSet, $expectedErrors);
+        $this->testDataValidation($this->table, $fieldName, $dataSet, $expectedErrors);
     }
 
     /**
-     * Test the _testDataValidationNoErrors base method
+     * Test the testDataValidationNoErrors base method
      *
      * @return void
-     * @covers ::_testDataValidationNoErrors
+     * @covers ::testDataValidationNoErrors
      */
     public function testTestDataValidationNoErrors(): void
     {
@@ -68,14 +68,14 @@ class DataValidationTestTraitTest extends TestCase
         $errors = $entity->getError($fieldName);
         $this->assertSame($expectedErrors, $errors);
 
-        $this->_testDataValidationNoErrors($this->table, $fieldName, $dataSet);
+        $this->testDataValidationNoErrors($this->table, $fieldName, $dataSet);
     }
 
     /**
-     * Test that _testDataValidationNotEmpty passes when the field is not empty.
+     * Test that testDataValidationNotEmpty passes when the field is not empty.
      *
      * @return void
-     * @covers ::_testDataValidationNotEmpty
+     * @covers ::testDataValidationNotEmpty
      */
     public function testTestDataValidationNotEmpty(): void
     {
@@ -83,254 +83,254 @@ class DataValidationTestTraitTest extends TestCase
         $field = 'not_empty_field';
         $expectedErrors = ['_empty' => 'This field cannot be left empty'];
         $dataSet = [$field => ''];
-        $this->_testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->_testDataValidationNotEmpty($this->table, $field);
+        $this->testDataValidationNotEmpty($this->table, $field);
     }
 
     /**
-     * Test that _testDataValidationEmpty passes when the field is empty.
+     * Test that testDataValidationEmpty passes when the field is empty.
      *
      * @return void
-     * @covers ::_testDataValidationEmpty
+     * @covers ::testDataValidationEmpty
      */
     public function testTestDataValidationEmpty(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'empty_field';
         $dataSet = [$field => ''];
-        $this->_testDataValidationNoErrors($this->table, $field, $dataSet);
+        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
 
-        $this->_testDataValidationEmpty($this->table, $field);
+        $this->testDataValidationEmpty($this->table, $field);
     }
 
     /**
      * Test that Required passes when the field is required.
      *
      * @return void
-     * @covers ::_testDataValidationRequired
+     * @covers ::testDataValidationRequired
      */
     public function testRequiredPasses(): void
     {
-        $this->_testDataValidationRequired($this->table, 'required_field');
+        $this->testDataValidationRequired($this->table, 'required_field');
     }
 
     /**
      * Test that Required fails when the field is empty.
      *
      * @return void
-     * @covers ::_testDataValidationRequired
+     * @covers ::testDataValidationRequired
      */
     public function testRequiredFailsWhenFieldNotRequired(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationRequired($this->table, 'empty_field');
+        $this->testDataValidationRequired($this->table, 'empty_field');
     }
 
     /**
      * Test that NotRequired passes when the field is empty.
      *
      * @return void
-     * @covers ::_testDataValidationNotRequired
+     * @covers ::testDataValidationNotRequired
      */
     public function testNotRequiredPasses(): void
     {
-        $this->_testDataValidationNotRequired($this->table, 'empty_field');
+        $this->testDataValidationNotRequired($this->table, 'empty_field');
     }
 
     /**
      * Test that NotRequired fails when the field is required.
      *
      * @return void
-     * @covers ::_testDataValidationNotRequired
+     * @covers ::testDataValidationNotRequired
      */
     public function testNotRequiredFailsWhenFieldRequired(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationNotRequired($this->table, 'required_field');
+        $this->testDataValidationNotRequired($this->table, 'required_field');
     }
 
     /**
      * Test that Boolean passes when the field is boolean.
      *
      * @return void
-     * @covers ::_testDataValidationBoolean
+     * @covers ::testDataValidationBoolean
      */
     public function testBooleanPasses(): void
     {
-        $this->_testDataValidationBoolean($this->table, 'boolean_field');
+        $this->testDataValidationBoolean($this->table, 'boolean_field');
     }
 
     /**
      * Test that Boolean fails when the field is not boolean.
      *
      * @return void
-     * @covers ::_testDataValidationBoolean
+     * @covers ::testDataValidationBoolean
      */
     public function testBooleanFailsOnNonBooleanField(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationBoolean($this->table, 'max_length_field');
+        $this->testDataValidationBoolean($this->table, 'max_length_field');
     }
 
     /**
      * Test that URLWithProtocol passes when the field is url.
      *
      * @return void
-     * @covers ::_testDataValidationURLWithProtocol
+     * @covers ::testDataValidationURLWithProtocol
      */
     public function testUrlWithProtocolPasses(): void
     {
-        $this->_testDataValidationURLWithProtocol($this->table, 'url_field');
+        $this->testDataValidationURLWithProtocol($this->table, 'url_field');
     }
 
     /**
      * Test that URLWithProtocol fails when the field is not a url.
      *
      * @return void
-     * @covers ::_testDataValidationURLWithProtocol
+     * @covers ::testDataValidationURLWithProtocol
      */
     public function testUrlWithProtocolFailsOnNonUrlField(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationURLWithProtocol($this->table, 'max_length_field');
+        $this->testDataValidationURLWithProtocol($this->table, 'max_length_field');
     }
 
     /**
      * Test that DateTime passes when the field is datetime.
      *
      * @return void
-     * @covers ::_testDataValidationDateTime
+     * @covers ::testDataValidationDateTime
      */
     public function testDateTimePasses(): void
     {
-        $this->_testDataValidationDateTime($this->table, 'datetime_field');
+        $this->testDataValidationDateTime($this->table, 'datetime_field');
     }
 
     /**
      * Test that DateTime fails when the field is not a datetime.
      *
      * @return void
-     * @covers ::_testDataValidationDateTime
+     * @covers ::testDataValidationDateTime
      */
     public function testDateTimeFailsOnNonDateTimeField(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationDateTime($this->table, 'max_length_field');
+        $this->testDataValidationDateTime($this->table, 'max_length_field');
     }
 
     /**
      * Test that MaxLength passes when the value is less than the max length.
      *
      * @return void
-     * @covers ::_testDataValidationMaxLength
+     * @covers ::testDataValidationMaxLength
      */
     public function testMaxLengthPasses(): void
     {
-        $this->_testDataValidationMaxLength($this->table, 'max_length_field', 10);
+        $this->testDataValidationMaxLength($this->table, 'max_length_field', 10);
     }
 
     /**
      * Test that MaxLength fails when the field has no max length rule.
      *
      * @return void
-     * @covers ::_testDataValidationMaxLength
+     * @covers ::testDataValidationMaxLength
      */
     public function testMaxLengthFailsWhenFieldIsNoMaxLength(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationMaxLength($this->table, 'empty_field', 10);
+        $this->testDataValidationMaxLength($this->table, 'empty_field', 10);
     }
 
     /**
      * Test that MinLength passes when the value is greater than the min length.
      *
      * @return void
-     * @covers ::_testDataValidationMinLength
+     * @covers ::testDataValidationMinLength
      */
     public function testMinLengthPasses(): void
     {
-        $this->_testDataValidationMinLength($this->table, 'min_length_field', 5);
+        $this->testDataValidationMinLength($this->table, 'min_length_field', 5);
     }
 
     /**
      * Test that MinLength fails when the field has no min length rule.
      *
      * @return void
-     * @covers ::_testDataValidationMinLength
+     * @covers ::testDataValidationMinLength
      */
     public function testMinLengthFailsWhenFieldIsNoMinLength(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationMinLength($this->table, 'empty_field', 5);
+        $this->testDataValidationMinLength($this->table, 'empty_field', 5);
     }
 
     /**
      * Test that Scalar passes when the field is scalar.
      *
      * @return void
-     * @covers ::_testDataValidationScalar
+     * @covers ::testDataValidationScalar
      */
     public function testScalarPasses(): void
     {
-        $this->_testDataValidationScalar($this->table, 'scalar_field');
+        $this->testDataValidationScalar($this->table, 'scalar_field');
     }
 
     /**
      * Test that Scalar fails when the field is no scalar.
      *
      * @return void
-     * @covers ::_testDataValidationScalar
+     * @covers ::testDataValidationScalar
      */
     public function testScalarFailsWhenFieldIsNoScalar(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationScalar($this->table, 'empty_field');
+        $this->testDataValidationScalar($this->table, 'empty_field');
     }
 
     /**
      * Test that LengthBetween passes when the field is between the min and max length.
      *
      * @return void
-     * @covers ::_testDataValidationLengthBetween
+     * @covers ::testDataValidationLengthBetween
      */
     public function testLengthBetweenPasses(): void
     {
-        $this->_testDataValidationLengthBetween($this->table, 'length_between_field', 5, 10);
+        $this->testDataValidationLengthBetween($this->table, 'length_between_field', 5, 10);
     }
 
     /**
      * Test that LengthBetween fails when the field has no length between rule.
      *
      * @return void
-     * @covers ::_testDataValidationLengthBetween
+     * @covers ::testDataValidationLengthBetween
      */
     public function testLengthBetweenFails(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationLengthBetween($this->table, 'empty_field', 5, 10);
+        $this->testDataValidationLengthBetween($this->table, 'empty_field', 5, 10);
     }
 
     /**
      * Test that NaturalNumber passes when the field is a natural number.
      *
      * @return void
-     * @covers ::_testDataValidationNaturalNumber
+     * @covers ::testDataValidationNaturalNumber
      */
     public function testNaturalNumberPasses(): void
     {
-        $this->_testDataValidationNaturalNumber($this->table, 'natural_number_field');
+        $this->testDataValidationNaturalNumber($this->table, 'natural_number_field');
     }
 
     /**
      * Test that NoErrors passes when the data set has no errors.
      *
      * @return void
-     * @covers ::_testDataValidationNoErrors
+     * @covers ::testDataValidationNoErrors
      */
     public function testNoErrorsPasses(): void
     {
-        $this->_testDataValidationNoErrors(
+        $this->testDataValidationNoErrors(
             $this->table,
             'not_empty_field',
             ['not_empty_field' => 'hello', 'required_field' => 'x']
@@ -341,12 +341,12 @@ class DataValidationTestTraitTest extends TestCase
      * Test that NoErrors fails when the data set has errors.
      *
      * @return void
-     * @covers ::_testDataValidationNoErrors
+     * @covers ::testDataValidationNoErrors
      */
     public function testNoErrorsFailsWhenDataSetHasErrors(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationNoErrors(
+        $this->testDataValidationNoErrors(
             $this->table,
             'not_empty_field',
             ['not_empty_field' => '']
@@ -357,11 +357,11 @@ class DataValidationTestTraitTest extends TestCase
      * Test that FullDataValidationNoErrors passes when the full data set has no errors.
      *
      * @return void
-     * @covers ::_testFullDataValidationNoErrors
+     * @covers ::testFullDataValidationNoErrors
      */
     public function testFullDataValidationNoErrorsPasses(): void
     {
-        $this->_testFullDataValidationNoErrors(
+        $this->testFullDataValidationNoErrors(
             $this->table,
             ['required_field' => 'x']
         );
@@ -371,12 +371,12 @@ class DataValidationTestTraitTest extends TestCase
      * Test that FullDataValidationNoErrors fails when the full data set has errors.
      *
      * @return void
-     * @covers ::_testFullDataValidationNoErrors
+     * @covers ::testFullDataValidationNoErrors
      */
     public function testFullDataValidationNoErrorsFails(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testFullDataValidationNoErrors(
+        $this->testFullDataValidationNoErrors(
             $this->table,
             ['not_empty_field' => '']
         );
@@ -386,11 +386,11 @@ class DataValidationTestTraitTest extends TestCase
      * Test that FullDataValidation reports all errors.
      *
      * @return void
-     * @covers ::_testFullDataValidation
+     * @covers ::testFullDataValidation
      */
     public function testFullDataValidationReportsAllErrors(): void
     {
-        $this->_testFullDataValidation(
+        $this->testFullDataValidation(
             $this->table,
             ['not_empty_field' => ''],
             [
@@ -404,12 +404,12 @@ class DataValidationTestTraitTest extends TestCase
      * Test that FullDataValidation fails when the errors do not match.
      *
      * @return void
-     * @covers ::_testFullDataValidation
+     * @covers ::testFullDataValidation
      */
     public function testFullDataValidationFails(): void
     {
         $this->expectException(AssertionFailedError::class);
-        $this->_testFullDataValidation(
+        $this->testFullDataValidation(
             $this->table,
             ['required_field' => 'x'],
             [

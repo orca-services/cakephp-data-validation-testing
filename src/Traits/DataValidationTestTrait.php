@@ -25,7 +25,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationNotEmpty(
+    protected function testDataValidationNotEmpty(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -34,7 +34,7 @@ trait DataValidationTestTrait
         $list = [null, ''];
 
         $expected = ['_empty' => 'This field cannot be left empty'];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -46,7 +46,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationEmpty(
+    protected function testDataValidationEmpty(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -55,7 +55,7 @@ trait DataValidationTestTrait
         $list = [null, ''];
 
         $expected = [];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -67,14 +67,14 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationRequired(
+    protected function testDataValidationRequired(
         Table $table,
         string $fieldName,
         array $dataSet = [],
         array $options = []
     ): void {
         $expected = ['_required' => 'This field is required'];
-        $this->_testDataValidation($table, $fieldName, $dataSet, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -86,13 +86,13 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationNotRequired(
+    protected function testDataValidationNotRequired(
         Table $table,
         string $fieldName,
         array $dataSet = [],
         array $options = []
     ): void {
-        $this->_testDataValidationNoErrors($table, $fieldName, $dataSet, $options);
+        $this->testDataValidationNoErrors($table, $fieldName, $dataSet, $options);
     }
 
     /**
@@ -104,7 +104,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationBoolean(
+    protected function testDataValidationBoolean(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -113,12 +113,12 @@ trait DataValidationTestTrait
         // Valid values
         $list = [true, false, 1, 0];
         $expected = [];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = ['Not a boolean', 123, []];
         $expected = ['boolean' => 'The provided value is invalid'];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -130,7 +130,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationURLWithProtocol(
+    protected function testDataValidationURLWithProtocol(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -139,12 +139,12 @@ trait DataValidationTestTrait
         // Valid values
         $list = ['https://valid.com', 'http://valid.com'];
         $expected = [];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = ['no-protocol.com', 'htp://foo.com'];
         $expected = ['urlWithProtocol' => 'The provided value is invalid'];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -156,7 +156,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationDateTime(
+    protected function testDataValidationDateTime(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -173,12 +173,12 @@ trait DataValidationTestTrait
             new FrozenTime(),
         ];
         $expected = [];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = ['Not a date/time', '123'];
         $expected = ['dateTime' => 'The provided value is invalid'];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -192,7 +192,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationInList(
+    protected function testDataValidationInList(
         Table $table,
         array $list,
         string $fieldName,
@@ -202,7 +202,7 @@ trait DataValidationTestTrait
     ) {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
-            $this->_testDataValidation($table, $fieldName, $dataSet, $expected, $options);
+            $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
         }
     }
 
@@ -215,10 +215,10 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
+    protected function testDataValidationNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
     {
         $expected = [];
-        $this->_testDataValidation($table, $fieldName, $dataSet, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -229,10 +229,10 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testFullDataValidationNoErrors(Table $table, array $dataSet, array $options = [])
+    protected function testFullDataValidationNoErrors(Table $table, array $dataSet, array $options = [])
     {
         $expected = [];
-        $this->_testFullDataValidation($table, $dataSet, $expected, $options);
+        $this->testFullDataValidation($table, $dataSet, $expected, $options);
     }
 
     /**
@@ -245,7 +245,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidation(
+    protected function testDataValidation(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -268,7 +268,7 @@ trait DataValidationTestTrait
      * @return void
      * @todo Move to a rules dedicated helper class.
      */
-    protected function _testDataRules(
+    protected function testDataRules(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -296,7 +296,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testRules(Table $table, string $fieldName, array $dataSet, array $expected, array $options = [])
+    protected function testRules(Table $table, string $fieldName, array $dataSet, array $expected, array $options = [])
     {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
@@ -317,7 +317,7 @@ trait DataValidationTestTrait
      * @return void
      * @todo Move to a rules dedicated helper class.
      */
-    protected function _testDataRulesNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
+    protected function testDataRulesNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
     {
         $defaultOptions = ['validate' => false];
         $options = $defaultOptions + $options;
@@ -340,7 +340,7 @@ trait DataValidationTestTrait
      * @param ?array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationMaxLength(
+    protected function testDataValidationMaxLength(
         Table $table,
         string $fieldName,
         int $maxLength,
@@ -351,7 +351,7 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => $tooLongFieldContent];
 
         $expected = $expected ?? ['maxLength' => 'The provided value is invalid'];
-        $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -364,7 +364,7 @@ trait DataValidationTestTrait
      * @param ?array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationMinLength(
+    protected function testDataValidationMinLength(
         Table $table,
         string $fieldName,
         int $minLength,
@@ -375,7 +375,7 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => $tooShortFieldContent];
 
         $expected ??= ['minLength' => 'The provided value is invalid'];
-        $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -387,7 +387,7 @@ trait DataValidationTestTrait
      * @param ?array $options Additional options for newEntity (optional).
      * @return void
      */
-    protected function _testDataValidationScalar(
+    protected function testDataValidationScalar(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -400,7 +400,7 @@ trait DataValidationTestTrait
             // TODO maxLength will only be triggered when this rule is set on this field.
             'maxLength' => 'The provided value is invalid',
         ];
-        $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -414,7 +414,7 @@ trait DataValidationTestTrait
      * @param ?array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationLengthBetween(
+    protected function testDataValidationLengthBetween(
         Table $table,
         string $fieldName,
         int $minLength,
@@ -428,7 +428,7 @@ trait DataValidationTestTrait
             $dataset = [$fieldName => $tooShortFieldContent];
 
             $expected ??= ['lengthBetween' => 'The provided value is invalid'];
-            $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
+            $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
         }
 
         // Too long
@@ -436,7 +436,7 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => $tooLongFieldContent];
 
         $expected ??= ['lengthBetween' => 'The provided value is invalid'];
-        $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -448,7 +448,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testDataValidationNaturalNumber(
+    protected function testDataValidationNaturalNumber(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -457,12 +457,12 @@ trait DataValidationTestTrait
         // Valid value
         $list = [1];
         $expected = [];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = [0, -1];
         $expected = ['naturalNumber' => 'The provided value is invalid'];
-        $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -474,7 +474,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function _testFullDataValidation(Table $table, array $dataSet, array $expected, array $options = [])
+    protected function testFullDataValidation(Table $table, array $dataSet, array $expected, array $options = [])
     {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getErrors();
