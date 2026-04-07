@@ -109,7 +109,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $additionalDataSet = [],
         array $options = []
-    ) {
+    ): void {
         // Valid values
         $list = [true, false, 1, 0];
         $expected = [];
@@ -161,7 +161,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $additionalDataSet = [],
         array $options = []
-    ) {
+    ): void {
         // Valid values
         $list = [
             '1900-01-01 00:00:00', // Far in the past
@@ -199,7 +199,7 @@ trait DataValidationTestTrait
         array $expected = [],
         array $additionalDataSet = [],
         array $options = []
-    ) {
+    ): void {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
             $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
@@ -215,8 +215,12 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function testDataValidationNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
-    {
+    protected function testDataValidationNoErrors(
+        Table $table,
+        string $fieldName,
+        array $dataSet,
+        array $options = []
+    ): void {
         $expected = [];
         $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
     }
@@ -229,7 +233,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function testFullDataValidationNoErrors(Table $table, array $dataSet, array $options = [])
+    protected function testFullDataValidationNoErrors(Table $table, array $dataSet, array $options = []): void
     {
         $expected = [];
         $this->testFullDataValidation($table, $dataSet, $expected, $options);
@@ -251,7 +255,7 @@ trait DataValidationTestTrait
         array $dataSet,
         array $expected,
         array $options = []
-    ) {
+    ): void {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
         static::assertEquals($expected, $errors);
@@ -274,7 +278,7 @@ trait DataValidationTestTrait
         array $dataSet,
         array $expected,
         array $options = []
-    ) {
+    ): void {
         $defaultOptions = ['validate' => false];
         $options = $defaultOptions + $options;
         $entity = $table->newEntity($dataSet, $options);
@@ -297,8 +301,13 @@ trait DataValidationTestTrait
      * @return void
      * @todo Add test for this method
      */
-    protected function testRules(Table $table, string $fieldName, array $dataSet, array $expected, array $options = [])
-    {
+    protected function testRules(
+        Table $table,
+        string $fieldName,
+        array $dataSet,
+        array $expected,
+        array $options = []
+    ): void {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
         static::assertEmpty($errors);
@@ -318,7 +327,7 @@ trait DataValidationTestTrait
      * @return void
      * @todo Move to a rules dedicated helper class.
      */
-    protected function testDataRulesNoErrors(Table $table, string $fieldName, array $dataSet, array $options = [])
+    protected function testDataRulesNoErrors(Table $table, string $fieldName, array $dataSet, array $options = []): void
     {
         $defaultOptions = ['validate' => false];
         $options = $defaultOptions + $options;
@@ -475,7 +484,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function testFullDataValidation(Table $table, array $dataSet, array $expected, array $options = [])
+    protected function testFullDataValidation(Table $table, array $dataSet, array $expected, array $options = []): void
     {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getErrors();
