@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace DataValidationTesting\Test\TestApp\Model\Table;
 
-use Cake\Database\Schema\TableSchema;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * The Validation Test Table
+ * A test table used to exercise the DataValidationTestTrait methods.
  */
 class ValidationTestTable extends Table
 {
@@ -19,33 +19,6 @@ class ValidationTestTable extends Table
     {
         parent::initialize($config);
         $this->setTable('validation_test');
-        $this->setSchema($this->buildSchema());
-    }
-
-    /**
-     * Build the table schema.
-     *
-     * @return TableSchema
-     */
-    private function buildSchema(): TableSchema
-    {
-        $schema = new TableSchema('validation_test');
-        $schema
-            ->addColumn('id', ['type' => 'integer'])
-            ->addColumn('required_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('not_empty_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('empty_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('boolean_field', ['type' => 'boolean'])
-            ->addColumn('url_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('datetime_field', ['type' => 'datetime'])
-            ->addColumn('max_length_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('min_length_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('scalar_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('length_between_field', ['type' => 'string', 'length' => 255])
-            ->addColumn('natural_number_field', ['type' => 'integer'])
-            ->addConstraint('primary', ['type' => 'primary', 'columns' => ['id']]);
-
-        return $schema;
     }
 
     /**
@@ -73,8 +46,19 @@ class ValidationTestTable extends Table
             ->lengthBetween('length_between_field', [5, 10])
             ->allowEmptyString('length_between_field')
             ->naturalNumber('natural_number_field')
-            ->allowEmptyString('natural_number_field');
+            ->allowEmptyString('natural_number_field')
+            ->allowEmptyString('unique_field');
 
         return $validator;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['unique_field']));
+
+        return $rules;
     }
 }

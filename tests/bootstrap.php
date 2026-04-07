@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Datasource\ConnectionManager;
+
 /**
  * Test suite bootstrap for cakephp-data-validation-testing.
  *
@@ -35,12 +37,8 @@ require_once $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
 /**
  * Configure an in-memory SQLite connection so that Table instances
- * used in our tests have a default connection available. The tests
- * do not actually read/write data — tables override their schema
- * in-memory to avoid describing from the database.
+ * used in our tests have a default connection available.
  */
-use Cake\Datasource\ConnectionManager;
-
 if (!in_array('test', ConnectionManager::configured(), true)) {
     ConnectionManager::setConfig('test', [
         'className' => 'Cake\Database\Connection',
@@ -54,6 +52,31 @@ if (!in_array('test', ConnectionManager::configured(), true)) {
 if (!in_array('default', ConnectionManager::configured(), true)) {
     ConnectionManager::alias('test', 'default');
 }
+
+/**
+ * Create the schema for the validation_test table used by the
+ * ValidationTestTable fixture so that save() operations work during
+ * tests that exercise application rules.
+ */
+$connection = ConnectionManager::get('test');
+$connection->execute('DROP TABLE IF EXISTS validation_test');
+$connection->execute('
+    CREATE TABLE validation_test (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        required_field VARCHAR(255),
+        not_empty_field VARCHAR(255),
+        empty_field VARCHAR(255),
+        boolean_field TINYINT(1),
+        url_field VARCHAR(255),
+        datetime_field DATETIME,
+        max_length_field VARCHAR(255),
+        min_length_field VARCHAR(255),
+        scalar_field VARCHAR(255),
+        length_between_field VARCHAR(255),
+        natural_number_field INTEGER,
+        unique_field VARCHAR(255) UNIQUE
+    )
+');
 
 if (file_exists($root . '/config/bootstrap.php')) {
     require $root . '/config/bootstrap.php';

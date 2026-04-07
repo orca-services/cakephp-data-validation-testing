@@ -36,6 +36,15 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * @inheritDoc
+     */
+    protected function tearDown(): void
+    {
+        $this->table->deleteAll([]);
+        parent::tearDown();
+    }
+
+    /**
      * Test the testDataValidation base method
      *
      * @return void
@@ -328,5 +337,47 @@ class DataValidationTestTraitTest extends TestCase
             'required_field' => ['_required' => 'This field is required'],
         ];
         $this->testFullDataValidation($this->table, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test that testDataRules passes when saving leads to the expected rule errors.
+     *
+     * @return void
+     * @covers ::testDataRules
+     */
+    public function testTestDataRules(): void
+    {
+        $field = 'unique_field';
+        $dataSet = [$field => 'duplicate'];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        // Ensure a first record exists so the unique rule will fail on the second
+        $existing = $this->table->newEntity($dataSet, ['validate' => false]);
+        static::assertNotFalse($this->table->save($existing));
+
+        $duplicate = $this->table->newEntity($dataSet, ['validate' => false]);
+        static::assertFalse($this->table->save($duplicate));
+        static::assertSame($expectedErrors, $duplicate->getError($field));
+
+        $this->testDataRules($this->table, $field, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test that testDataRulesNoErrors passes when saving leads to no rule errors.
+     *
+     * @return void
+     * @covers ::testDataRulesNoErrors
+     */
+    public function testTestDataRulesNoErrors(): void
+    {
+        // Ensure the rule works as expected first
+        $field = 'unique_field';
+        $dataSet = [$field => 'unique-value-' . uniqid()];
+
+        $entity = $this->table->newEntity($dataSet, ['validate' => false]);
+        static::assertNotFalse($this->table->save($entity));
+        static::assertEmpty($entity->getError($field));
+
+        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid()]);
     }
 }
