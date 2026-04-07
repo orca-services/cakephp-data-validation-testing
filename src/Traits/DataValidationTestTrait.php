@@ -460,7 +460,7 @@ trait DataValidationTestTrait
         $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
-        $list = [null, -1];
+        $list = [0, -1];
         $expected = ['naturalNumber' => 'The provided value is invalid'];
         $this->_testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
