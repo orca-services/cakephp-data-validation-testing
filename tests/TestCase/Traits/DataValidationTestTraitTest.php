@@ -19,6 +19,7 @@ class DataValidationTestTraitTest extends TestCase
 {
     use DataValidationTestTrait;
 
+    /** @var Table A CakePHP table to test the DataValidationTestTrait methods on */
     private Table $table;
 
     /**
