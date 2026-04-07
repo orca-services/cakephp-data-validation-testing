@@ -335,7 +335,7 @@ trait DataValidationTestTrait
      *
      * @param Table $table The table to test
      * @param string $fieldName The field to check the maximum length for.
-     * @param int $maxlength The maximum length of the field
+     * @param int $maxLength The maximum length of the field
      * @param array|null $expected The expected data validation errors.
      * @param ?array $options Additional options for newEntity.
      * @return void
@@ -343,11 +343,11 @@ trait DataValidationTestTrait
     protected function _testDataValidationMaxLength(
         Table $table,
         string $fieldName,
-        int $maxlength,
+        int $maxLength,
         ?array $expected = null,
         ?array $options = []
     ): void {
-        $tooLongFieldContent = str_repeat('A', $maxlength + 1);
+        $tooLongFieldContent = str_repeat('A', $maxLength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
         $expected = $expected ?? ['maxLength' => 'The provided value is invalid'];
@@ -359,7 +359,7 @@ trait DataValidationTestTrait
      *
      * @param Table $table The table to test
      * @param string $fieldName The field to check the minimum length for.
-     * @param int $minlength The minimum length of the field
+     * @param int $minLength The minimum length of the field
      * @param array|null $expected The expected data validation errors.
      * @param ?array $options Additional options for newEntity.
      * @return void
@@ -367,14 +367,14 @@ trait DataValidationTestTrait
     protected function _testDataValidationMinLength(
         Table $table,
         string $fieldName,
-        int $minlength,
+        int $minLength,
         ?array $expected = null,
         ?array $options = []
     ): void {
-        $tooShortFieldContent = str_repeat('A', $minlength - 1);
+        $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
 
-        $expected ??= ['minlength' => 'The provided value is invalid'];
+        $expected ??= ['minLength' => 'The provided value is invalid'];
         $this->_testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
