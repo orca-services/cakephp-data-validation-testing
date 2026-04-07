@@ -1,6 +1,6 @@
 {
     "name": "orca-services/cakephp-data-validation-testing",
-    "description": "A plugin to simplify CakePHP data validation testing",
+    "description": "A plugin to simplify testing of data validation configuration of tables in CakePHP applications",
     "type": "cakephp-plugin",
     "keywords": [
         "cakephp",
@@ -10,7 +10,10 @@
         "testing",
         "valid",
         "model",
+        "table",
+        "entity",
         "unit",
+        "integration",
         "test"
     ],
     "homepage": "https://github.com/orca-services/cakephp-data-validation-testing",
