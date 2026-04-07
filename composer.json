@@ -56,12 +56,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DataValidation\\": "src/"
+            "DataValidationTesting\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DataValidation\\Test\\": "tests/",
+            "DataValidationTesting\\Test\\": "tests/",
             "Cake\\Test\\": "vendor/cakephp/cakephp/tests/"
         }
     },

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DataValidation\Traits;
+namespace DataValidationTesting\Traits;
 
 use Cake\Chronos\Chronos;
 use Cake\Chronos\Date;
