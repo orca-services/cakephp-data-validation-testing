@@ -34,49 +34,74 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that notEmpty passes when the field is not empty.
+     * Test the _testDataValidation base method
+     *
+     * @return void
+     * @covers ::_testDataValidation
+     */
+    public function testTestDataValidation(): void
+    {
+        // Ensure data validation of some field works as expected first
+        $fieldName = 'not_empty_field';
+        $dataSet = [$fieldName => ''];
+        $entity = $this->table->newEntity($dataSet);
+        $expectedErrors = ['_empty' => 'This field cannot be left empty'];
+        $errors = $entity->getError($fieldName);
+        $this->assertSame($expectedErrors, $errors);
+
+        $this->_testDataValidation($this->table, $fieldName, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test the _testDataValidationNoErrors base method
+     *
+     * @return void
+     * @covers ::_testDataValidationNoErrors
+     */
+    public function testTestDataValidationNoErrors(): void
+    {
+        // Ensure data validation of some field works as expected first
+        $fieldName = 'empty_field';
+        $dataSet = [$fieldName => ''];
+        $entity = $this->table->newEntity($dataSet);
+        $expectedErrors = [];
+        $errors = $entity->getError($fieldName);
+        $this->assertSame($expectedErrors, $errors);
+
+        $this->_testDataValidationNoErrors($this->table, $fieldName, $dataSet);
+    }
+
+    /**
+     * Test that _testDataValidationNotEmpty passes when the field is not empty.
      *
      * @return void
      * @covers ::_testDataValidationNotEmpty
      */
-    public function testNotEmptyPasses(): void
+    public function testTestDataValidationNotEmpty(): void
     {
-        $this->_testDataValidationNotEmpty($this->table, 'not_empty_field');
+        // Ensure data validation of the field works as expected first
+        $field = 'not_empty_field';
+        $expectedErrors = ['_empty' => 'This field cannot be left empty'];
+        $dataSet = [$field => ''];
+        $this->_testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->_testDataValidationNotEmpty($this->table, $field);
     }
 
     /**
-     * Test that notEmpty fails when the field is empty.
-     *
-     * @return void
-     * @covers ::_testDataValidationNotEmpty
-     */
-    public function testNotEmptyFailsWhenFieldAllowsEmpty(): void
-    {
-        $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationNotEmpty($this->table, 'empty_field');
-    }
-
-    /**
-     * Test that Empty passes when the field is empty.
+     * Test that _testDataValidationEmpty passes when the field is empty.
      *
      * @return void
      * @covers ::_testDataValidationEmpty
      */
-    public function testEmptyPasses(): void
+    public function testTestDataValidationEmpty(): void
     {
-        $this->_testDataValidationEmpty($this->table, 'empty_field');
-    }
+        // Ensure data validation of the field works as expected first
+        $field = 'empty_field';
+        $dataSet = [$field => ''];
+        $this->_testDataValidationNoErrors($this->table, $field, $dataSet);
 
-    /**
-     * Test that Empty fails when the field is not empty.
-     *
-     * @return void
-     * @covers ::_testDataValidationEmpty
-     */
-    public function testEmptyFailsWhenFieldIsNotEmpty(): void
-    {
-        $this->expectException(AssertionFailedError::class);
-        $this->_testDataValidationEmpty($this->table, 'not_empty_field');
+        $this->_testDataValidationEmpty($this->table, $field);
     }
 
     /**
