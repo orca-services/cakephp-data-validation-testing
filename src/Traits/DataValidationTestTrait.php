@@ -207,7 +207,7 @@ trait DataValidationTestTrait
     }
 
     /**
-     * Validate that a given data set for a given table does not lead to data validation errors
+     * Validate that a given data set for a given table does not lead to data validation errors for a given field
      *
      * @param Table $table The table to test
      * @param string $fieldName The field to check for data validation errors.
@@ -222,7 +222,7 @@ trait DataValidationTestTrait
     }
 
     /**
-     * Validate that a given data set for a given table does not lead to data validation errors
+     * Validate that a given data set for a given table does not lead to data validation errors on any field
      *
      * @param Table $table The table to test
      * @param array $dataSet The data set to test.
