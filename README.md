@@ -2,6 +2,17 @@
 
 A CakePHP 4.x plugin to help testing data validation.
 
+## Compatibility
+
+| Plugin Version | CakePHP Compatibility | Branch      | Status    |
+|----------------|-----------------------|-------------| --------- |
+| 1.x            | 4.x                   | master      | Supported |
+| 0.x            | 2.x                   | cakephp-2.x | EOL       |
+
+Note:
+- There is no plugin version for CakePHP 3.x.
+- Previous versions of the plugin that supported previous versions of CakePHP are not supported anymore.
+
 ## Installation
 
 See the [installation documentation](docs/Installation.md).
