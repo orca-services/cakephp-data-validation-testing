@@ -3,7 +3,17 @@
 All notable changes to this project are documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing/compare/0.1.1...master)
+## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Dependencies
+
+## [1.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/1.0.0) - 2026-04-08
 
 ### Added
 - Add support for CakePHP 4.x
@@ -23,18 +33,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Drop support for CakePHP 2.x & skip support for CakePHP 3.x
 - Update the minimum required PHP Version to PHP 7.4
 
-### Fixed
-
 ### Dependencies
 - cakephp/cakephp installed in version 4.6.3
 - cakephp/cakephp-codesniffer installed in version 4.7.1
 - phpunit/phpunit updated from 3.7.38 to 8.5.52 major
 
-## [0.1.1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/0.1.1)
-
-### Added
-
-### Changed
+## [0.1.1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/0.1.1) - 2017-02-21
 
 ### Fixed
 
