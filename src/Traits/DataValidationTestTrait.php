@@ -337,7 +337,6 @@ trait DataValidationTestTrait
      * @param array $expected The expected table rules errors.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @todo Add test for this method
      */
     protected function testRules(
         Table $table,

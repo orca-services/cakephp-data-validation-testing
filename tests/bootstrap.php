@@ -63,15 +63,19 @@ $connection->execute('DROP TABLE IF EXISTS validation_test');
 $connection->execute('
     CREATE TABLE validation_test (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        parent_id INTEGER,
         required_field VARCHAR(255),
         not_empty_field VARCHAR(255),
         empty_field VARCHAR(255),
         boolean_field TINYINT(1),
         url_field VARCHAR(255),
         datetime_field DATETIME,
+        date_field DATE,
         max_length_field VARCHAR(255),
         min_length_field VARCHAR(255),
         scalar_field VARCHAR(255),
+        decimal_field DECIMAL,
+        integer_field INT,
         length_between_field VARCHAR(255),
         natural_number_field INTEGER,
         unique_field VARCHAR(255) UNIQUE
