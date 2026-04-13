@@ -200,6 +200,23 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationDate passes when the field is date.
+     *
+     * @return void
+     * @covers ::testDataValidationDate
+     */
+    public function testTestDataValidationDate(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'date_field';
+        $expectedErrors = ['date' => 'The provided value is invalid'];
+        $dataSet = [$field => 'Not a date'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationDate($this->table, $field);
+    }
+
+    /**
      * Test that testDataValidationInList passes when the field is datetime.
      *
      * @return void
@@ -271,6 +288,40 @@ class DataValidationTestTraitTest extends TestCase
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
         $this->testDataValidationScalar($this->table, $field);
+    }
+
+    /**
+     * Test that testDataValidationDecimal passes when the field is decimal.
+     *
+     * @return void
+     * @covers ::testDataValidationDecimal
+     */
+    public function testTestDataValidationDecimal(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'decimal_field';
+        $expectedErrors = ['decimal' => 'The provided value is invalid'];
+        $dataSet = [$field => 'not a decimal'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationDecimal($this->table, $field);
+    }
+
+    /**
+     * Test that testDataValidationInteger passes when the field is integer.
+     *
+     * @return void
+     * @covers ::testDataValidationInteger
+     */
+    public function testTestDataValidationInteger(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'integer_field';
+        $expectedErrors = ['integer' => 'The provided value is invalid'];
+        $dataSet = [$field => 'not a integer'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationInteger($this->table, $field);
     }
 
     /**
@@ -379,5 +430,91 @@ class DataValidationTestTraitTest extends TestCase
         static::assertEmpty($entity->getError($field));
 
         $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid()]);
+    }
+
+    /**
+     * Test that testDataValidationForeignKey passes when the foreign key does not exist.
+     *
+     * @return void
+     * @covers ::testDataValidationForeignKey
+     */
+    public function testTestDataValidationForeignKey(): void
+    {
+        // Ensure the rule works as expected first
+        $field = 'parent_id';
+        $notExistingForeignKey = 999999;
+        $expectedErrors = ['_existsIn' => 'This value does not exist'];
+
+        $entity = $this->table->newEntity([$field => $notExistingForeignKey], ['validate' => false]);
+        static::assertFalse($this->table->checkRules($entity));
+        static::assertSame($expectedErrors, $entity->getError($field));
+
+        $this->testDataValidationForeignKey($this->table, $field, $notExistingForeignKey);
+    }
+
+    /**
+     * Test that testDataValidationForeignKey passes with the default not existing foreign key.
+     *
+     * @return void
+     * @covers ::testDataValidationForeignKey
+     */
+    public function testTestDataValidationForeignKeyDefault(): void
+    {
+        $field = 'parent_id';
+        $this->testDataValidationForeignKey($this->table, $field);
+    }
+
+    /**
+     * Test that testDataValidationIsUnique passes when the field value is not unique.
+     *
+     * @return void
+     * @covers ::testDataValidationIsUnique
+     */
+    public function testTestDataValidationIsUnique(): void
+    {
+        // Ensure the rule works as expected first
+        $field = 'unique_field';
+        $fieldValue = 'duplicate-value';
+        $dataset = [
+            $field => $fieldValue,
+            'required_field' => 'required',
+        ];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        $existing = $this->table->newEntity($dataset, ['validate' => false]);
+        static::assertNotFalse($this->table->save($existing));
+
+        $duplicate = $this->table->newEntity($dataset, ['validate' => false]);
+        static::assertFalse($this->table->checkRules($duplicate));
+        static::assertSame($expectedErrors, $duplicate->getError($field));
+
+        // Use a different value since the trait method will also save a record
+        $this->table->deleteAll([]);
+        $this->testDataValidationIsUnique($this->table, $field, 'another-duplicate-value', $dataset);
+    }
+
+    /**
+     * Test that testRules passes when saving leads to the expected rule errors.
+     *
+     * @return void
+     * @covers ::testRules
+     */
+    public function testTestRules(): void
+    {
+        $field = 'unique_field';
+        $dataSet = ['required_field' => 'required', $field => 'duplicate'];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        // Ensure a first record exists so the unique rule will fail on the second
+        $existing = $this->table->newEntity($dataSet);
+        static::assertNotFalse($this->table->save($existing));
+
+        // Ensure the rule works as expected first
+        $duplicate = $this->table->newEntity($dataSet);
+        static::assertEmpty($duplicate->getError($field));
+        static::assertFalse($this->table->save($duplicate));
+        static::assertSame($expectedErrors, $duplicate->getError($field));
+
+        $this->testRules($this->table, $field, $dataSet, $expectedErrors);
     }
 }

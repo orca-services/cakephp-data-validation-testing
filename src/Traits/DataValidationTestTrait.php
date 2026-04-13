@@ -182,6 +182,44 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that a given field is validated as a date
+     *
+     * @param Table $table The table to test
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $additionalDataSet Additional data set to test.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     */
+    protected function testDataValidationDate(
+        Table $table,
+        string $fieldName,
+        array $additionalDataSet = [],
+        array $options = []
+    ): void {
+        // Valid values
+        $list = [
+            '1900-01-01', // Far in the past
+            '2022-10-12', // Around today
+            '2099-12-31', // Far in the future
+            new Chronos(),
+            new Date(),
+            new FrozenDate(),
+            new FrozenTime(),
+        ];
+        $expected = [];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+
+        // Invalid values
+        $list = [
+            'Not a date', // String
+            '123', // Numeric
+            '2022-10-12 11:50:32', // Date time
+        ];
+        $expected = ['date' => 'The provided value is invalid'];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+    }
+
+    /**
      * Validate that each value of a list of values for a given table does not lead to data validation errors
      *
      * @param Table $table The table to test
@@ -299,7 +337,6 @@ trait DataValidationTestTrait
      * @param array $expected The expected table rules errors.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @todo Add test for this method
      */
     protected function testRules(
         Table $table,
@@ -414,6 +451,69 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate the decimal data validation of a field for a given table
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for decimal data for.
+     * @param ?array|null $expected The expected data validation errors (optional).
+     * @param ?array $options Additional options for newEntity (optional).
+     * @return void
+     */
+    protected function testDataValidationDecimal(
+        Table $table,
+        string $fieldName,
+        ?array $expected = null,
+        ?array $options = []
+    ): void {
+        $expected ??= ['decimal' => 'The provided value is invalid'];
+
+        // Invalid values
+        $this->testDataValidation($table, $fieldName, [$fieldName => []], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'string'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '1abc'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'abc1'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0.099'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '0.099ba'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '0,099ba'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0,099'], $expected, $options);
+
+        // Valid values
+        $this->testDataValidation($table, $fieldName, [$fieldName => -99.0], [], $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 0.099], [], $options);
+    }
+
+    /**
+     * Validate the integer data validation of a field for a given table
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for integer data for.
+     * @param ?array|null $expected The expected data validation errors (optional).
+     * @param ?array $options Additional options for newEntity (optional).
+     * @return void
+     */
+    protected function testDataValidationInteger(
+        Table $table,
+        string $fieldName,
+        ?array $expected = null,
+        ?array $options = []
+    ): void {
+        $expected ??= ['integer' => 'The provided value is invalid'];
+
+        // Invalid values
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'string'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '1abc'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'abc1'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0.099'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '0.099ba'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => '0,099ba'], $expected, $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0,099'], $expected, $options);
+
+        // Valid values
+        $this->testDataValidation($table, $fieldName, [$fieldName => -99], [], $options);
+        $this->testDataValidation($table, $fieldName, [$fieldName => 99], [], $options);
+    }
+
+    /**
      * Validate the length between data validation of a field for a given table
      *
      * @param Table $table The table to test
@@ -490,5 +590,61 @@ trait DataValidationTestTrait
         $errors = $entity->getErrors();
 
         static::assertEquals($expected, $errors);
+    }
+
+    /**
+     * Validate the present foreign key to another table
+     *
+     * @param Table $table The table to test
+     * @param string $fieldName The field to check the foreign key for.
+     * @param int|null $notExistingForeignKey Not existing foreign key. Defaults to 999999.
+     * @return void
+     */
+    protected function testDataValidationForeignKey(
+        Table $table,
+        string $fieldName,
+        ?int $notExistingForeignKey = 999999
+    ): void {
+        $entity = $table->newEmptyEntity();
+        $table->patchEntity($entity, [$fieldName => $notExistingForeignKey]);
+
+        $result = $table->checkRules($entity);
+        static::assertFalse($result);
+        static::assertNotNull($entity->getErrors()[$fieldName]);
+
+        $expected = ['_existsIn' => 'This value does not exist'];
+
+        static::assertSame($expected, $entity->getErrors()[$fieldName]);
+    }
+
+    /**
+     * Validate the uniq value of the given field
+     *
+     * @param Table $table The table to test
+     * @param string $fieldName The field to check the foreign key for.
+     * @param mixed $fieldValue The field value.
+     * @param array $additionalProperties Other required properties for the new entity.
+     * @return void
+     */
+    protected function testDataValidationIsUnique(
+        Table $table,
+        string $fieldName,
+        $fieldValue,
+        array $additionalProperties = []
+    ): void {
+        $prevEntity = $table->newEmptyEntity();
+        $table->patchEntity($prevEntity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
+        $table->saveOrFail($prevEntity);
+
+        $entity = $table->newEmptyEntity();
+        $table->patchEntity($entity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
+
+        $result = $table->checkRules($entity);
+        static::assertFalse($result);
+        static::assertNotNull($entity->getErrors()[$fieldName]);
+
+        $expected = ['_isUnique' => 'This value is already in use'];
+
+        static::assertSame($expected, $entity->getErrors()[$fieldName]);
     }
 }
