@@ -29,7 +29,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         $list = [null, ''];
 
@@ -50,7 +50,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         $list = [null, ''];
 
@@ -71,7 +71,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $dataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         $expected = ['_required' => 'This field is required'];
         $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
@@ -90,7 +90,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $dataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         $this->testDataValidationNoErrors($table, $fieldName, $dataSet, $options);
     }
@@ -108,7 +108,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         // Valid values
         $list = [true, false, 1, 0];
@@ -134,7 +134,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         // Valid values
         $list = ['https://valid.com', 'http://valid.com'];
@@ -160,7 +160,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         // Valid values
         $list = [
@@ -192,7 +192,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         // Valid values
         $list = [
@@ -234,7 +234,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $expected = [],
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
@@ -255,7 +255,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $dataSet,
-        array $options = []
+        array $options = [],
     ): void {
         $expected = [];
         $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
@@ -290,7 +290,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $dataSet,
         array $expected,
-        array $options = []
+        array $options = [],
     ): void {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
@@ -313,7 +313,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $dataSet,
         array $expected,
-        array $options = []
+        array $options = [],
     ): void {
         $defaultOptions = ['validate' => false];
         $options = $defaultOptions + $options;
@@ -341,7 +341,7 @@ trait DataValidationTestTrait
         string $fieldName,
         array $dataSet,
         array $expected,
-        array $options = []
+        array $options = [],
     ): void {
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
@@ -390,7 +390,7 @@ trait DataValidationTestTrait
         string $fieldName,
         int $maxLength,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         $tooLongFieldContent = str_repeat('A', $maxLength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
@@ -414,7 +414,7 @@ trait DataValidationTestTrait
         string $fieldName,
         int $minLength,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
@@ -436,7 +436,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         $dataset = [$fieldName => []];
 
@@ -460,9 +460,11 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
-        $expected ??= ['decimal' => 'The provided value must be decimal with any number of decimal places, including none'];
+        $expected ??= [
+            'decimal' => 'The provided value must be decimal with any number of decimal places, including none',
+        ];
 
         // Invalid values
         $this->testDataValidation($table, $fieldName, [$fieldName => []], $expected, $options);
@@ -492,7 +494,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         $expected ??= ['integer' => 'The provided value must be an integer'];
 
@@ -527,14 +529,16 @@ trait DataValidationTestTrait
         int $minLength,
         int $maxlength,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         // Too short
         if ($minLength >= 1) {
             $tooShortFieldContent = str_repeat('A', $minLength - 1);
             $dataset = [$fieldName => $tooShortFieldContent];
 
-            $expected ??= ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
+            $expected ??= [
+                'lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively',
+            ];
             $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
         }
 
@@ -559,7 +563,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
-        array $options = []
+        array $options = [],
     ): void {
         // Valid value
         $list = [1];
@@ -600,7 +604,7 @@ trait DataValidationTestTrait
     protected function testDataValidationForeignKey(
         Table $table,
         string $fieldName,
-        ?int $notExistingForeignKey = 999999
+        ?int $notExistingForeignKey = 999999,
     ): void {
         $entity = $table->newEmptyEntity();
         $table->patchEntity($entity, [$fieldName => $notExistingForeignKey]);
@@ -626,8 +630,8 @@ trait DataValidationTestTrait
     protected function testDataValidationIsUnique(
         Table $table,
         string $fieldName,
-        $fieldValue,
-        array $additionalProperties = []
+        mixed $fieldValue,
+        array $additionalProperties = [],
     ): void {
         $prevEntity = $table->newEmptyEntity();
         $table->patchEntity($prevEntity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
