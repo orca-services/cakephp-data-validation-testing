@@ -9,12 +9,11 @@
     <arg name="parallel" value="75"/>
     <arg value="p"/>
 
-    <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml">
+    <rule ref="CakePHP">
         <!-- Exclude unwanted sniffs -->
         <exclude name="Generic.Commenting.Todo"/>
 
         <!-- Suppress: FQCNs in PHPDoc should use short names via use statements -->
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
     </rule>
-
 </ruleset>
