@@ -6,18 +6,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
-- Add the following new test methods:
-  - Assert a field accepts only valid date values
-  - Assert a field accepts only decimal values
-  - Assert a field accepts only integer values
-  - Assert a field enforces uniqueness across record
-  - Assert a field's foreign key must reference an existing record
 
 ### Changed
 
 ### Fixed
 
 ### Dependencies
+
+## [1.1.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/1.1.0) - 2026-04-13
+
+### Added
+- Add the following new test methods:
+  - Assert a field accepts only valid date values
+  - Assert a field accepts only decimal values
+  - Assert a field accepts only integer values
+  - Assert a field enforces uniqueness across record
+  - Assert a field's foreign key must reference an existing record
 
 ## [1.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/1.0.0) - 2026-04-08
 
