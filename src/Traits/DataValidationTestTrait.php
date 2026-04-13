@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DataValidationTesting\Traits;
 
 use Cake\Chronos\Chronos;
-use Cake\Chronos\Date;
+use Cake\Chronos\ChronosDate;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Table;
@@ -117,7 +117,7 @@ trait DataValidationTestTrait
 
         // Invalid values
         $list = ['Not a boolean', 123, []];
-        $expected = ['boolean' => 'The provided value is invalid'];
+        $expected = ['boolean' => 'The provided value must be a boolean'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
@@ -143,7 +143,7 @@ trait DataValidationTestTrait
 
         // Invalid values
         $list = ['no-protocol.com', 'htp://foo.com'];
-        $expected = ['urlWithProtocol' => 'The provided value is invalid'];
+        $expected = ['urlWithProtocol' => 'The provided value must be a URL with protocol'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
@@ -168,8 +168,6 @@ trait DataValidationTestTrait
             '2022-10-12 11:50:32', // Around today
             '2099-12-31 23:59:59', // Far in the future
             new Chronos(),
-            new Date(),
-            new FrozenDate(),
             new FrozenTime(),
         ];
         $expected = [];
@@ -177,7 +175,7 @@ trait DataValidationTestTrait
 
         // Invalid values
         $list = ['Not a date/time', '123'];
-        $expected = ['dateTime' => 'The provided value is invalid'];
+        $expected = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
@@ -202,7 +200,7 @@ trait DataValidationTestTrait
             '2022-10-12', // Around today
             '2099-12-31', // Far in the future
             new Chronos(),
-            new Date(),
+            new ChronosDate(),
             new FrozenDate(),
             new FrozenTime(),
         ];
@@ -215,7 +213,7 @@ trait DataValidationTestTrait
             '123', // Numeric
             '2022-10-12 11:50:32', // Date time
         ];
-        $expected = ['date' => 'The provided value is invalid'];
+        $expected = ['date' => 'The provided value must be a date of one of these formats: `ymd`'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
@@ -397,7 +395,7 @@ trait DataValidationTestTrait
         $tooLongFieldContent = str_repeat('A', $maxLength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
-        $expected = $expected ?? ['maxLength' => 'The provided value is invalid'];
+        $expected = $expected ?? ['maxLength' => 'The provided value must be at most `10` characters long'];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
@@ -421,7 +419,7 @@ trait DataValidationTestTrait
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
 
-        $expected ??= ['minLength' => 'The provided value is invalid'];
+        $expected ??= ['minLength' => 'The provided value must be at least `5` characters long'];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
@@ -443,9 +441,8 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => []];
 
         $expected ??= [
-            'scalar' => 'The provided value is invalid',
-            // TODO maxLength will only be triggered when this rule is set on this field.
-            'maxLength' => 'The provided value is invalid',
+            'scalar' => 'The provided value must be scalar',
+            'maxLength' => 'The provided value must be at most `50` characters long',
         ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
@@ -465,7 +462,7 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = []
     ): void {
-        $expected ??= ['decimal' => 'The provided value is invalid'];
+        $expected ??= ['decimal' => 'The provided value must be decimal with any number of decimal places, including none'];
 
         // Invalid values
         $this->testDataValidation($table, $fieldName, [$fieldName => []], $expected, $options);
@@ -497,7 +494,7 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = []
     ): void {
-        $expected ??= ['integer' => 'The provided value is invalid'];
+        $expected ??= ['integer' => 'The provided value must be an integer'];
 
         // Invalid values
         $this->testDataValidation($table, $fieldName, [$fieldName => 'string'], $expected, $options);
@@ -537,7 +534,7 @@ trait DataValidationTestTrait
             $tooShortFieldContent = str_repeat('A', $minLength - 1);
             $dataset = [$fieldName => $tooShortFieldContent];
 
-            $expected ??= ['lengthBetween' => 'The provided value is invalid'];
+            $expected ??= ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
             $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
         }
 
@@ -545,7 +542,7 @@ trait DataValidationTestTrait
         $tooLongFieldContent = str_repeat('A', $maxlength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
-        $expected ??= ['lengthBetween' => 'The provided value is invalid'];
+        $expected ??= ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
@@ -571,7 +568,7 @@ trait DataValidationTestTrait
 
         // Invalid values
         $list = [0, -1];
-        $expected = ['naturalNumber' => 'The provided value is invalid'];
+        $expected = ['naturalNumber' => 'The provided value must be a natural number'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 

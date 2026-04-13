@@ -158,7 +158,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'boolean_field';
-        $expectedErrors = ['boolean' => 'The provided value is invalid'];
+        $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
         $dataSet = [$field => 'Not a boolean'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -175,7 +175,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'url_field';
-        $expectedErrors = ['urlWithProtocol' => 'The provided value is invalid'];
+        $expectedErrors = ['urlWithProtocol' => 'The provided value must be a URL with protocol'];
         $dataSet = [$field => 'no-protocol.com'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -192,7 +192,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
-        $expectedErrors = ['dateTime' => 'The provided value is invalid'];
+        $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $dataSet = [$field => 'Not a date/time'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -209,7 +209,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'date_field';
-        $expectedErrors = ['date' => 'The provided value is invalid'];
+        $expectedErrors = ['date' => 'The provided value must be a date of one of these formats: `ymd`'];
         $dataSet = [$field => 'Not a date'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -226,7 +226,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
-        $expectedErrors = ['dateTime' => 'The provided value is invalid'];
+        $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $invalidValues = ['Not a date/time', '123'];
         $this->testDataValidationInList($this->table, $invalidValues, $field, $expectedErrors);
 
@@ -245,7 +245,7 @@ class DataValidationTestTraitTest extends TestCase
         // Ensure data validation of the field works as expected first
         $maxLength = 10;
         $field = 'max_length_field';
-        $expectedErrors = ['maxLength' => 'The provided value is invalid'];
+        $expectedErrors = ['maxLength' => 'The provided value must be at most `10` characters long'];
         $dataSet = [$field => str_repeat('A', $maxLength + 1)];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -263,7 +263,7 @@ class DataValidationTestTraitTest extends TestCase
         // Ensure data validation of the field works as expected first
         $minLength = 5;
         $field = 'min_length_field';
-        $expectedErrors = ['minLength' => 'The provided value is invalid'];
+        $expectedErrors = ['minLength' => 'The provided value must be at least `5` characters long'];
         $dataSet = [$field => str_repeat('A', $minLength - 1)];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -281,8 +281,8 @@ class DataValidationTestTraitTest extends TestCase
         // Ensure data validation of the field works as expected first
         $field = 'scalar_field';
         $expectedErrors = [
-            'scalar' => 'The provided value is invalid',
-            'maxLength' => 'The provided value is invalid',
+            'scalar' => 'The provided value must be scalar',
+            'maxLength' => 'The provided value must be at most `50` characters long',
         ];
         $dataSet = [$field => []];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
@@ -300,7 +300,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'decimal_field';
-        $expectedErrors = ['decimal' => 'The provided value is invalid'];
+        $expectedErrors = ['decimal' => 'The provided value must be decimal with any number of decimal places, including none'];
         $dataSet = [$field => 'not a decimal'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -317,7 +317,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'integer_field';
-        $expectedErrors = ['integer' => 'The provided value is invalid'];
+        $expectedErrors = ['integer' => 'The provided value must be an integer'];
         $dataSet = [$field => 'not a integer'];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
@@ -336,7 +336,7 @@ class DataValidationTestTraitTest extends TestCase
         $minLength = 5;
         $maxLength = 10;
         $field = 'length_between_field';
-        $expectedErrors = ['lengthBetween' => 'The provided value is invalid'];
+        $expectedErrors = ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
         $dataSet = [$field => str_repeat('A', $minLength - 1)];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
         $dataSet = [$field => str_repeat('A', $maxLength + 1)];
@@ -355,7 +355,7 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'natural_number_field';
-        $expectedErrors = ['naturalNumber' => 'The provided value is invalid'];
+        $expectedErrors = ['naturalNumber' => 'The provided value must be a natural number'];
         $dataSet = [$field => -1];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
