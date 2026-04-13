@@ -9,7 +9,7 @@ We welcome your contribution. There are several ways to help out:
 There are a few guidelines that we need contributors to follow so that we have a chance of keeping on top of things.
 
 * The code must follow
-  the [CakePHP coding standard](https://book.cakephp.org/4.x/contributing/cakephp-coding-conventions.html).
+  the [CakePHP coding standard](https://book.cakephp.org/5.x/contributing/cakephp-coding-conventions.html).
 * All code changes should be covered by unit tests
 
 ## Issues
