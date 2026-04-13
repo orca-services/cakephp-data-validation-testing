@@ -35,17 +35,17 @@ All helper methods are `protected` and callable from within your test class.
 public function testValidationTitle(): void
 {
     // Assert that the "title" field's presence is required
-    $this->_testDataValidationRequired($this->Articles, 'title');
+    $this->testDataValidationRequired($this->Articles, 'title');
     // Assert that the field "title" cannot be empty
-    $this->_testDataValidationNotEmpty($this->Articles, 'title');
+    $this->testDataValidationNotEmpty($this->Articles, 'title');
     // Assert that the "title" field's maximum length is 255 characters
-    $this->_testDataValidationMaxLength($this->Articles, 'title', 255);
+    $this->testDataValidationMaxLength($this->Articles, 'title', 255);
 }
 
 public function testValidationIsPublished(): void
 {
     // Assert that the field "is_published" must have a boolean value
-    $this->_testDataValidationBoolean($this->Articles, 'is_published');
+    $this->testDataValidationBoolean($this->Articles, 'is_published');
 }
 ```
 
@@ -55,46 +55,51 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 ### Presence and emptiness
 
-- `_testDataValidationRequired($table, $fieldName)` - field must be present.
-- `_testDataValidationNotRequired($table, $fieldName)` - field is optional.
-- `_testDataValidationNotEmpty($table, $fieldName)` - field cannot be `null` or `''`.
-- `_testDataValidationEmpty($table, $fieldName)` - field may be `null` or `''`.
+- `testDataValidationRequired($table, $fieldName)` - field must be present.
+- `testDataValidationNotRequired($table, $fieldName)` - field is optional.
+- `testDataValidationNotEmpty($table, $fieldName)` - field cannot be `null` or `''`.
+- `testDataValidationEmpty($table, $fieldName)` - field may be `null` or `''`.
 
 ### Type validators
 
-- `_testDataValidationBoolean($table, $fieldName)` - field must be boolean.
-- `_testDataValidationURLWithProtocol($table, $fieldName)` - requires `http://` or `https://`.
-- `_testDataValidationDateTime($table, $fieldName)` - field must be datetime.
-- `_testDataValidationNaturalNumber($table, $fieldName)` - positive integers only.
-- `_testDataValidationScalar($table, $fieldName)` - rejects non-scalar values like arrays.
+- `testDataValidationBoolean($table, $fieldName)` - field must be boolean.
+- `testDataValidationURLWithProtocol($table, $fieldName)` - requires `http://` or `https://`.
+- `testDataValidationDateTime($table, $fieldName)` - field must be datetime.
+- `testDataValidationDate($table, $fieldName)` - field must be date.
+- `testDataValidationNaturalNumber($table, $fieldName)` - positive integers only.
+- `testDataValidationScalar($table, $fieldName)` - rejects non-scalar values like arrays.
+- `testDataValidationDecimal($table, $fieldName)` - rejects non-decimal values like arrays.
+- `testDataValidationInteger($table, $fieldName)` - rejects non-integer values like arrays.
 
 ### Length validators
 
-- `_testDataValidationMaxLength($table, $fieldName, $maxLength)`
-- `_testDataValidationMinLength($table, $fieldName, $minLength, $expected)`
-- `_testDataValidationLengthBetween($table, $fieldName, $minLength, $maxLength)`
+- `testDataValidationMaxLength($table, $fieldName, $maxLength)`
+- `testDataValidationMinLength($table, $fieldName, $minLength, $expected)`
+- `testDataValidationLengthBetween($table, $fieldName, $minLength, $maxLength)`
 
 ### Generic helpers
 
-- `_testDataValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits.
-- `_testDataValidationNoErrors($table, $fieldName, $dataSet)` - asserts a data set produces no errors on the field.
-- `_testDataValidationInList($table, $list, $fieldName, $expected)` - runs the same assertion for each value in a list.
-- `_testFullDataValidation($table, $dataSet, $expected)` - asserts errors across all fields.
-- `_testFullDataValidationNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
+- `testDataValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits.
+- `testDataValidationNoErrors($table, $fieldName, $dataSet)` - asserts a data set produces no errors on the field.
+- `testDataValidationInList($table, $list, $fieldName, $expected)` - runs the same assertion for each value in a list.
+- `testFullDataValidation($table, $dataSet, $expected)` - asserts errors across all fields.
+- `testFullDataValidationNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
 
 ### Rules helpers
 
 For application rules that run at save time (not marshalling time). These require a real database connection and fixtures.
 
-- `_testDataRules($table, $fieldName, $dataSet, $expected)`
-- `_testDataRulesNoErrors($table, $fieldName, $dataSet)`
-- `_testRules($table, $fieldName, $dataSet, $expected)`
+- `testDataRules($table, $fieldName, $dataSet, $expected)`
+- `testDataRulesNoErrors($table, $fieldName, $dataSet)`
+- `testRules($table, $fieldName, $dataSet, $expected)`
+- `testDataValidationUnique($table, $fieldName, $fieldValue)`
+- `testDataValidationForeignKey($table, $fieldName)`
 
 ## Dependent fields
 
 Use the `$additionalDataSet` parameter to supply required companion fields so your test only fails for the reason you care about:
 ```php
-$this->_testDataValidationNotEmpty(
+$this->testDataValidationNotEmpty(
     $this->Articles,
     'title',
     ['author_id' => 1]
@@ -105,7 +110,7 @@ $this->_testDataValidationNotEmpty(
 
 The `$options` parameter is forwarded to `Table::newEntity()`:
 ```php
-$this->_testDataValidationRequired(
+$this->testDataValidationRequired(
     $this->Articles,
     'title',
     [],
