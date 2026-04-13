@@ -20,6 +20,7 @@ pdepend.xml
 phpunit.xml
 .phpunit.result.cache
 build
+.phpunit.cache
 
 # OS generated files #
 ######################
