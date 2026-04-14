@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Add a new test method to assert a field accepts only non-negative integers
+- Add Test suite run configuration for PhpStorm
 
 ### Changed
 
