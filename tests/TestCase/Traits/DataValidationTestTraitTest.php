@@ -325,6 +325,23 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationNonNegativeInteger passes when the field is a non-negative integer.
+     *
+     * @return void
+     * @covers ::testDataValidationNonNegativeInteger
+     */
+    public function testTestDataValidationNonNegativeInteger(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'non_negative_integer_field';
+        $expectedErrors = ['nonNegativeInteger' => 'The provided value must be a non-negative integer'];
+        $dataSet = [$field => 'not a integer'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationNonNegativeInteger($this->table, $field);
+    }
+
+    /**
      * Test that testDataValidationLengthBetween passes when the field is between the min and max length.
      *
      * @return void

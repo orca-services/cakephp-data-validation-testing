@@ -219,7 +219,9 @@ trait DataValidationTestTrait
             '123', // Numeric
             '2022-10-12 11:50:32', // Date time
         ];
-        $expected = ['date' => 'The provided value must be a date of one of these formats: `ymd`'];
+        $expected = [
+            'date' => 'The provided value must be a date of one of these formats: `ymd`',
+        ];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
@@ -424,8 +426,9 @@ trait DataValidationTestTrait
     ): void {
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
-
-        $expected ??= ['minLength' => 'The provided value must be at least `5` characters long'];
+        $expected ??= [
+            'minLength' => 'The provided value must be at least `5` characters long',
+        ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
@@ -523,6 +526,35 @@ trait DataValidationTestTrait
         $list = [-99, 99];
         $expected = [];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+    }
+
+    /**
+     * Validate that an integer is not negative for a given table
+     *
+     * @param Table $table The table to test
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array|null $expected The expected data validation errors.
+     * @param ?array $options Additional options for newEntity.
+     * @return void
+     */
+    protected function testDataValidationNonNegativeInteger(
+        Table $table,
+        string $fieldName,
+        ?array $expected = null,
+        ?array $options = []
+    ): void {
+        // Negative integer
+        $dataset = [$fieldName => '-1'];
+        $expected ??= [
+            'nonNegativeInteger' => 'The provided value must be a non-negative integer',
+        ];
+
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+
+        // Non-negative integer
+        $dataset = [$fieldName => '0'];
+
+        $this->testDataValidationNoErrors($table, $fieldName, $dataset, $options);
     }
 
     /**
