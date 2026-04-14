@@ -468,23 +468,26 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
+        // Invalid values
+        $list = [
+            [],
+            'string',
+            '1abc',
+            'abc1',
+            'ab0.099',
+            '0.099ba',
+            '0,099ba',
+            'ab0,099',
+        ];
         $expected ??= [
             'decimal' => 'The provided value must be decimal with any number of decimal places, including none',
         ];
-
-        // Invalid values
-        $this->testDataValidation($table, $fieldName, [$fieldName => []], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'string'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '1abc'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'abc1'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0.099'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '0.099ba'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '0,099ba'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0,099'], $expected, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
-        $this->testDataValidation($table, $fieldName, [$fieldName => -99.0], [], $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 0.099], [], $options);
+        $list = [-99.0, 0.099];
+        $expected = [];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
@@ -502,20 +505,24 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        $expected ??= ['integer' => 'The provided value must be an integer'];
-
         // Invalid values
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'string'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '1abc'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'abc1'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0.099'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '0.099ba'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => '0,099ba'], $expected, $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 'ab0,099'], $expected, $options);
+        $list = [
+            [],
+            'string',
+            '1abc',
+            'abc1',
+            'ab0.099',
+            '0.099ba',
+            '0,099ba',
+            'ab0,099',
+        ];
+        $expected ??= ['integer' => 'The provided value must be an integer'];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
-        $this->testDataValidation($table, $fieldName, [$fieldName => -99], [], $options);
-        $this->testDataValidation($table, $fieldName, [$fieldName => 99], [], $options);
+        $list = [-99, 99];
+        $expected = [];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
