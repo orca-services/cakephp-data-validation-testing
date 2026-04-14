@@ -8,10 +8,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
-- Bump support for CakePHP to 5.x [#7](https://github.com/orca-services/cakephp-data-validation-testing/issues/7)
-- Update the minimum required PHP Version to PHP 8.2 [#7](https://github.com/orca-services/cakephp-data-validation-testing/issues/7)
 
 ### Fixed
+
+### Dependencies
+
+## [2.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.0.0) - 2026-04-14
+
+### Changed
+- Bump support for CakePHP to 5.x [#7](https://github.com/orca-services/cakephp-data-validation-testing/issues/7)
+- Update the minimum required PHP Version to PHP 8.2 [#7](https://github.com/orca-services/cakephp-data-validation-testing/issues/7)
 
 ### Dependencies
 - cakephp/cakephp updated from 4.6.3 to 5.3.3 major [#7](https://github.com/orca-services/cakephp-data-validation-testing/issues/7)
