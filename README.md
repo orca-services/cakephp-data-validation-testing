@@ -1,6 +1,6 @@
 # CakePHP Data Validation Testing
 
-A CakePHP 5.x plugin to help testing data validation.
+A CakePHP plugin to help testing data validation.
 
 ## Compatibility
 
