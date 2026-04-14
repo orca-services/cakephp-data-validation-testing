@@ -6,14 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
-- Add a new test method to assert a field accepts only non-negative integers
-- Add Test suite run configuration for PhpStorm
 
 ### Changed
 
 ### Fixed
 
 ### Dependencies
+
+## [2.1.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.1.0) - 2026-04-14
+
+### Added
+
+- Add a new test method to assert a field accepts only non-negative integers
+- Add Test suite run configuration for PhpStorm
 
 ## [2.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.0.0) - 2026-04-14
 
