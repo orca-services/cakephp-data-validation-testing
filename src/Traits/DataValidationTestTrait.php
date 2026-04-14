@@ -543,12 +543,18 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = []
     ): void {
+        // Negative integer
         $dataset = [$fieldName => '-1'];
         $expected ??= [
             'nonNegativeInteger' => 'The provided value must be a non-negative integer',
         ];
 
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+
+        // Non-negative integer
+        $dataset = [$fieldName => '0'];
+
+        $this->testDataValidationNoErrors($table, $fieldName, $dataset, $options);
     }
 
     /**
