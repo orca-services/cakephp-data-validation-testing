@@ -174,7 +174,13 @@ trait DataValidationTestTrait
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
-        $list = ['Not a date/time', '123'];
+        $list = [
+            new ChronosDate(),
+            new FrozenDate(),
+            'Not a date', // String
+            '2022-10-12', // Date
+            '123', // Numeric
+        ];
         $expected = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
