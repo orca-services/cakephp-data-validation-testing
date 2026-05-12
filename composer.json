@@ -47,7 +47,7 @@
         "issues": "https://github.com/orca-services/cakephp-data-validation-testing/issues"
     },
     "require": {
-        "php": "^7.4",
+        "php": "^8.2",
         "cakephp/cakephp": "^4.0"
     },
     "require-dev": {
