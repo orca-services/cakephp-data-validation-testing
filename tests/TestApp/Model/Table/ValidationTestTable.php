@@ -55,6 +55,8 @@ class ValidationTestTable extends Table
             ->allowEmptyString('integer_field')
             ->nonNegativeInteger('non_negative_integer_field')
             ->allowEmptyString('non_negative_integer_field')
+            ->greaterThanOrEqual('greater_than_or_equal_field', 10)
+            ->allowEmptyString('greater_than_or_equal_field')
             ->lengthBetween('length_between_field', [5, 10])
             ->allowEmptyString('length_between_field')
             ->naturalNumber('natural_number_field')

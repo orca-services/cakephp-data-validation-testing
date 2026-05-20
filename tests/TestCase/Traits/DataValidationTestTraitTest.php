@@ -342,6 +342,40 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationGreaterThanOrEqual passes when the field value
+     * is greater than or equal to the configured threshold.
+     *
+     * @return void
+     * @covers ::testDataValidationGreaterThanOrEqual
+     */
+    public function testTestDataValidationGreaterThanOrEqual(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $threshold = 10;
+        $field = 'greater_than_or_equal_field';
+        $expectedErrors = [
+            'greaterThanOrEqual' => sprintf(
+                'The provided value must be greater than or equal to `%s`',
+                $threshold,
+            ),
+        ];
+
+        // Just below the threshold should fail
+        $dataSet = [$field => $threshold - 1];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        // At the threshold should pass
+        $dataSet = [$field => $threshold];
+        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+
+        // Above the threshold should pass
+        $dataSet = [$field => $threshold + 1];
+        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+
+        $this->testDataValidationGreaterThanOrEqual($this->table, $field, $threshold);
+    }
+
+    /**
      * Test that testDataValidationLengthBetween passes when the field is between the min and max length.
      *
      * @return void
