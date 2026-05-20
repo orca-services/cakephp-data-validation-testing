@@ -541,7 +541,7 @@ trait DataValidationTestTrait
         Table $table,
         string $fieldName,
         ?array $expected = null,
-        ?array $options = []
+        ?array $options = [],
     ): void {
         // Negative integer
         $dataset = [$fieldName => '-1'];
@@ -555,6 +555,45 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => '0'];
 
         $this->testDataValidationNoErrors($table, $fieldName, $dataset, $options);
+    }
+
+    /**
+     * Validate that a value is greater than or equal to a given threshold for a given table
+     *
+     * @param Table $table The table to test
+     * @param string $fieldName The field to check for data validation errors.
+     * @param float|int $value The threshold the field value must be greater than or equal to.
+     * @param array|null $expected The expected data validation errors when the value is below the threshold.
+     * @param array $additionalDataSet Additional data set to test.
+     * @param ?array $options Additional options for newEntity.
+     * @return void
+     */
+    protected function testDataValidationGreaterThanOrEqual(
+        Table $table,
+        string $fieldName,
+        float|int $value,
+        ?array $expected = null,
+        array $additionalDataSet = [],
+        ?array $options = [],
+    ): void {
+        $options ??= [];
+
+        // Invalid value: just below the threshold
+        $belowThreshold = is_int($value) ? $value - 1 : $value - 0.01;
+        $dataset = array_merge($additionalDataSet, [$fieldName => $belowThreshold]);
+
+        $expected ??= [
+            'greaterThanOrEqual' => sprintf(
+                'The provided value must be greater than or equal to `%s`',
+                $value,
+            ),
+        ];
+        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+
+        // Valid values: exactly at and just above the threshold
+        $aboveThreshold = is_int($value) ? $value + 1 : $value + 0.01;
+        $list = [$value, $aboveThreshold];
+        $this->testDataValidationInList($table, $list, $fieldName, [], $additionalDataSet, $options);
     }
 
     /**
