@@ -71,6 +71,7 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 - `testDataValidationDecimal($table, $fieldName)` - rejects non-decimal values like arrays.
 - `testDataValidationInteger($table, $fieldName)` - rejects non-integer values like arrays.
 - `testDataValidationNonNegativeInteger($table, $fieldName)` - rejects negative integer values like `-1`.
+- `testDataValidationGreaterThanOrEqual($table, $fieldName)` - rejects values below the threshold.
 
 ### Length validators
 
