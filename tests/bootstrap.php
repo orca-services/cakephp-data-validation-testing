@@ -76,6 +76,7 @@ $connection->execute('
         scalar_field VARCHAR(255),
         decimal_field DECIMAL,
         non_negative_integer_field INT,
+        greater_than_or_equal_field INT,
         integer_field INT,
         length_between_field VARCHAR(255),
         natural_number_field INTEGER,
