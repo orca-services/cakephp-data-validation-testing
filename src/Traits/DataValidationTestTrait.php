@@ -19,7 +19,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field cannot be empty.
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -40,7 +40,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field can be empty.
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -61,7 +61,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is required.
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
@@ -80,7 +80,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is not required.
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
@@ -98,7 +98,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is validated as a boolean
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -150,7 +150,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is validated as a date/time
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -188,7 +188,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is validated as a date
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -228,7 +228,7 @@ trait DataValidationTestTrait
     /**
      * Validate that each value of a list of values for a given table does not lead to data validation errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param array $list A list of values to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $expected The expected data validation errors.
@@ -253,7 +253,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table does not lead to data validation errors for a given field
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
@@ -272,7 +272,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table does not lead to data validation errors on any field
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
@@ -286,7 +286,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table leads to the expected data validation errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $dataSet The data set to test.
      * @param array $expected The expected data validation errors.
@@ -308,7 +308,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table leads to the expected rule errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for errors.
      * @param array $dataSet The data set to test.
      * @param array $expected The expected errors.
@@ -337,7 +337,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table leads to the expected table rules errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for table rules errors.
      * @param array $dataSet The data set to test.
      * @param array $expected The expected table rules errors.
@@ -363,7 +363,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table does not lead to data rules errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for errors.
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
@@ -386,7 +386,7 @@ trait DataValidationTestTrait
     /**
      * Validate the maximum length of a field for a given table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check the maximum length for.
      * @param int $maxLength The maximum length of the field
      * @param array|null $expected The expected data validation errors.
@@ -410,7 +410,7 @@ trait DataValidationTestTrait
     /**
      * Validate the minimum length of a field for a given table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check the minimum length for.
      * @param int $minLength The minimum length of the field
      * @param array|null $expected The expected data validation errors.
@@ -531,7 +531,7 @@ trait DataValidationTestTrait
     /**
      * Validate that an integer is not negative for a given table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array|null $expected The expected data validation errors.
      * @param ?array $options Additional options for newEntity.
@@ -560,9 +560,9 @@ trait DataValidationTestTrait
     /**
      * Validate that a value is greater than or equal to a given threshold for a given table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
-     * @param float|int $value The threshold the field value must be greater than or equal to.
+     * @param float|int $threshold The threshold the field value must be greater than or equal to.
      * @param array|null $expected The expected data validation errors when the value is below the threshold.
      * @param array $additionalDataSet Additional data set to test.
      * @param ?array $options Additional options for newEntity.
@@ -571,7 +571,7 @@ trait DataValidationTestTrait
     protected function testDataValidationGreaterThanOrEqual(
         Table $table,
         string $fieldName,
-        float|int $value,
+        float|int $threshold,
         ?array $expected = null,
         array $additionalDataSet = [],
         ?array $options = [],
@@ -579,27 +579,27 @@ trait DataValidationTestTrait
         $options ??= [];
 
         // Invalid value: just below the threshold
-        $belowThreshold = is_int($value) ? $value - 1 : $value - 0.01;
+        $belowThreshold = is_int($threshold) ? $threshold - 1 : $threshold - 0.01;
         $dataset = array_merge($additionalDataSet, [$fieldName => $belowThreshold]);
 
         $expected ??= [
             'greaterThanOrEqual' => sprintf(
                 'The provided value must be greater than or equal to `%s`',
-                $value,
+                $threshold,
             ),
         ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
 
         // Valid values: exactly at and just above the threshold
-        $aboveThreshold = is_int($value) ? $value + 1 : $value + 0.01;
-        $list = [$value, $aboveThreshold];
+        $aboveThreshold = is_int($threshold) ? $threshold + 1 : $threshold + 0.01;
+        $list = [$threshold, $aboveThreshold];
         $this->testDataValidationInList($table, $list, $fieldName, [], $additionalDataSet, $options);
     }
 
     /**
      * Validate the length between data validation of a field for a given table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check the maximum length for.
      * @param int $minLength The minimum length of the field
      * @param int $maxlength The maximum length of the field
@@ -637,7 +637,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given field is validated as a natural number (positive integers only)
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
@@ -663,7 +663,7 @@ trait DataValidationTestTrait
     /**
      * Validate that a given data set for a given table leads to the expected errors
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param array $dataSet The data set to test.
      * @param array $expected The expected errors.
      * @param array $options Additional options for newEntity.
@@ -680,7 +680,7 @@ trait DataValidationTestTrait
     /**
      * Validate the present foreign key to another table
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check the foreign key for.
      * @param int|null $notExistingForeignKey Not existing foreign key. Defaults to 999999.
      * @return void
@@ -705,7 +705,7 @@ trait DataValidationTestTrait
     /**
      * Validate the uniq value of the given field
      *
-     * @param Table $table The table to test
+     * @param Table $table The table to test.
      * @param string $fieldName The field to check the foreign key for.
      * @param mixed $fieldValue The field value.
      * @param array $additionalProperties Other required properties for the new entity.
