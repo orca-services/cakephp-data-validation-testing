@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add a new test method to assert a field enforces the greater than or equal rule [#13](https://github.com/orca-services/cakephp-data-validation-testing/issues/13)
+- Add FQSEN links to the corresponding data validation rule [#14](https://github.com/orca-services/cakephp-data-validation-testing/issues/14)
 
 ### Changed
 
