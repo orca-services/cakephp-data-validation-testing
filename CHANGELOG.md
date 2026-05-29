@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Exclude repository-only files from distribution archives [#12](https://github.com/orca-services/cakephp-data-validation-testing/issues/12)
+
 ### Fixed
 
 ### Dependencies
