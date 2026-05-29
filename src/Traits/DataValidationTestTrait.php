@@ -24,7 +24,12 @@ trait DataValidationTestTrait
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @see \Cake\Validation\Validator::validate()
+     * @see \Cake\Validation\Validator::notEmptyArray()
+     * @see \Cake\Validation\Validator::notEmptyDate()
+     * @see \Cake\Validation\Validator::notEmptyDateTime()
+     * @see \Cake\Validation\Validator::notEmptyFile()
+     * @see \Cake\Validation\Validator::notEmptyString()
+     * @see \Cake\Validation\Validator::notEmptyTime()
      */
     protected function testDataValidationNotEmpty(
         Table $table,
@@ -46,7 +51,13 @@ trait DataValidationTestTrait
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @see \Cake\Validation\Validator::validate()
+     * @see \Cake\Validation\Validator::allowEmptyArray()
+     * @see \Cake\Validation\Validator::allowEmptyDate()
+     * @see \Cake\Validation\Validator::allowEmptyDateTime()
+     * @see \Cake\Validation\Validator::allowEmptyFile()
+     * @see \Cake\Validation\Validator::allowEmptyFor()
+     * @see \Cake\Validation\Validator::allowEmptyString()
+     * @see \Cake\Validation\Validator::allowEmptyTime()
      */
     protected function testDataValidationEmpty(
         Table $table,
@@ -68,7 +79,7 @@ trait DataValidationTestTrait
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @see \Cake\Validation\Validator::validate()
+     * @see \Cake\Validation\Validator::requirePresence()
      */
     protected function testDataValidationRequired(
         Table $table,
@@ -88,7 +99,7 @@ trait DataValidationTestTrait
      * @param array $dataSet The data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @see \Cake\Validation\Validator::validate()
+     * @see \Cake\Validation\Validator::requirePresence()
      */
     protected function testDataValidationNotRequired(
         Table $table,
@@ -243,7 +254,7 @@ trait DataValidationTestTrait
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
-     * @see \Cake\Validation\Validator::validate()
+     * @see \Cake\Validation\Validator::inList()
      */
     protected function testDataValidationInList(
         Table $table,
