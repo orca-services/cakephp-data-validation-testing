@@ -1,0 +1,49 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": ["config:recommended"],
+    "schedule": ["every weekend"],
+    "timezone": "Europe/Zurich",
+    "labels": ["dependencies"],
+    "assignees": ["ravage84", "neluxx"],
+    "packageRules": [
+        {
+            "matchPackageNames": ["cakephp/cakephp"],
+            "allowedVersions": "<5.0.0",
+            "matchBaseBranches": ["cakephp-4.x"]
+        },
+        {
+            "matchPackageNames": ["cakephp/cakephp"],
+            "allowedVersions": "<6.0.0",
+            "matchBaseBranches": ["cakephp-5.x"]
+        },
+        {
+            "matchDepTypes": ["require-dev"],
+            "matchUpdateTypes": ["patch", "minor"],
+            "automerge": true
+        },
+        {
+            "matchDepTypes": ["require-dev"],
+            "matchUpdateTypes": ["major"],
+            "automerge": false
+        },
+        {
+            "matchDepTypes": ["require"],
+            "matchUpdateTypes": ["patch"],
+            "automerge": true
+        },
+        {
+            "matchDepTypes": ["require"],
+            "matchUpdateTypes": ["minor", "major"],
+            "automerge": false
+        },
+        {
+            "matchUpdateTypes": ["major"],
+            "labels": ["dependencies", "major-update"]
+        }
+    ],
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "automerge": false,
+        "labels": ["security"]
+    }
+}
