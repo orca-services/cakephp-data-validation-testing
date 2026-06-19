@@ -9,12 +9,12 @@
     "packageRules": [
         {
             "matchPackageNames": ["cakephp/cakephp"],
-            "allowedVersions": "<5.0.0",
+            "allowedVersions": "^4.0",
             "matchBaseBranches": ["cakephp-4.x"]
         },
         {
             "matchPackageNames": ["cakephp/cakephp"],
-            "allowedVersions": "<6.0.0",
+            "allowedVersions": "^5.3",
             "matchBaseBranches": ["cakephp-5.x"]
         },
         {
