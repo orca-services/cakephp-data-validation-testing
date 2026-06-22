@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "4.6.3",
+            "version": "4.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "da6b2f49b9f0616d2fe8e04d67f6c558f699bb2f"
+                "reference": "70b5c1097866f7f392d052ab4514c9705449fb3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/da6b2f49b9f0616d2fe8e04d67f6c558f699bb2f",
-                "reference": "da6b2f49b9f0616d2fe8e04d67f6c558f699bb2f",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/70b5c1097866f7f392d052ab4514c9705449fb3f",
+                "reference": "70b5c1097866f7f392d052ab4514c9705449fb3f",
                 "shasum": ""
             },
             "require": {
@@ -117,7 +117,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2025-12-01T16:23:20+00:00"
+            "time": "2026-05-23T16:54:32+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -2750,8 +2750,5 @@
         "php": "^7.4"
     },
     "platform-dev": {},
-    "platform-overrides": {
-        "php": "7.4.33"
-    },
     "plugin-api-version": "2.9.0"
 }
