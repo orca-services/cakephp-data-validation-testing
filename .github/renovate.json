@@ -1,11 +1,9 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": ["config:recommended"],
-    "schedule": ["* 0-6 * * 1"],
+    "schedule": ["before 5:00am"],
     "timezone": "Europe/Zurich",
-    "labels": ["dependencies"],
     "assignees": ["ravage84", "neluxx"],
-    "automerge": false,
     "packageRules": [
         {
             "matchPackageNames": ["cakephp/cakephp"],
@@ -19,11 +17,18 @@
         },
         {
             "matchUpdateTypes": ["major"],
+            "automerge": false,
             "labels": ["dependencies", "major-update"]
+        },
+        {
+            "matchUpdateTypes": ["minor", "patch"],
+            "automerge": false,
+            "labels": ["dependencies"]
         }
     ],
     "vulnerabilityAlerts": {
         "enabled": true,
+        "automerge": false,
         "labels": ["security"]
     }
 }
