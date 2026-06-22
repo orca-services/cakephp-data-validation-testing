@@ -6,16 +6,6 @@
     "assignees": ["ravage84", "neluxx"],
     "packageRules": [
         {
-            "matchPackageNames": ["cakephp/cakephp"],
-            "allowedVersions": "< 5.0.0",
-            "matchBaseBranches": ["cakephp-4.x"]
-        },
-        {
-            "matchPackageNames": ["cakephp/cakephp"],
-            "allowedVersions": "< 6.0.0",
-            "matchBaseBranches": ["cakephp-5.x"]
-        },
-        {
             "matchUpdateTypes": ["major"],
             "automerge": false,
             "labels": ["dependencies", "major-update"]
