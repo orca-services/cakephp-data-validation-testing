@@ -1,10 +1,21 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": ["config:recommended"],
-    "schedule": ["before 5:00am"],
     "timezone": "Europe/Zurich",
+    "schedule": ["before 5:00am"],
     "assignees": ["ravage84", "neluxx"],
+    "baseBranchPatterns": ["cakephp-4.x", "cakephp-5.x"],
     "packageRules": [
+        {
+            "matchPackageNames": ["cakephp/cakephp"],
+            "allowedVersions": "<5.0.0",
+            "matchBaseBranches": ["cakephp-4.x"]
+        },
+        {
+            "matchPackageNames": ["cakephp/cakephp"],
+            "allowedVersions": "<6.0.0",
+            "matchBaseBranches": ["cakephp-5.x"]
+        },
         {
             "matchUpdateTypes": ["major"],
             "automerge": false,
