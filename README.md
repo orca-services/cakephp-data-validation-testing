@@ -6,6 +6,7 @@ A CakePHP 4.x plugin to help testing data validation.
 
 | Plugin Version | CakePHP Compatibility | Branch      | Status    |
 |----------------|-----------------------|-------------| --------- |
+| 2.x            | 5.x                   | cakephp-5.x | Supported |
 | 1.x            | 4.x                   | cakephp-4.x | Supported |
 | 0.x            | 2.x                   | cakephp-2.x | EOL       |
 
