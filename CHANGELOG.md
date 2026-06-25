@@ -7,16 +7,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Dependencies
+
+## [2.1.1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.1.1) - 2026-06-25
+
+### Added
+
 - Add a new test method to assert a field enforces the greater than or equal rule [#13](https://github.com/orca-services/cakephp-data-validation-testing/issues/13)
 - Add FQSEN links to the corresponding data validation rule [#14](https://github.com/orca-services/cakephp-data-validation-testing/issues/14)
 
 ### Changed
 
 - Exclude repository-only files from archives to reduce Composer distribution package size [#12](https://github.com/orca-services/cakephp-data-validation-testing/issues/12)
-
-### Fixed
-
-### Dependencies
 
 ## [2.1.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.1.0) - 2026-04-14
 
