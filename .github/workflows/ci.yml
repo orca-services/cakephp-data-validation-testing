@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - cakephp-4.x
+  pull_request:
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  check:
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.dependencies }} deps
+    runs-on: ubuntu-latest
+
+    strategy:
+      # All combinations should run, even if one fails.
+      fail-fast: false
+      matrix:
+        php-version:
+          - '7.4'
+        dependencies:
+          - lowest
+          - highest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ matrix.php-version }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            composer-${{ matrix.php-version }}-${{ matrix.dependencies }}-
+            composer-${{ matrix.php-version }}-
+
+      # Highest possible dependencies within the composer.json constraints.
+      - name: Install highest dependencies
+        if: matrix.dependencies == 'highest'
+        run: composer update --no-interaction --no-progress --prefer-dist
+
+      # Lowest possible dependencies within the composer.json constraints.
+      - name: Install lowest dependencies
+        if: matrix.dependencies == 'lowest'
+        run: composer update --no-interaction --no-progress --prefer-dist --prefer-lowest --prefer-stable
+
+      - name: Run checks
+        run: composer run check
