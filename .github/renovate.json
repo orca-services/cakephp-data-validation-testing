@@ -17,7 +17,7 @@
         {
             "description": "PHP version of the cakephp-4.x branch",
             "matchBaseBranches": ["cakephp-4.x"],
-            "constraints": { "php": "^7.4" }
+            "constraints": { "php": "^8.0" }
         },
         {
             "description": "PHP version of the cakephp-5.x branch",
