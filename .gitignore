@@ -37,4 +37,3 @@ Thumbs.db
 # Composer Dependencies #
 #########################
 vendor/
-composer.lock
