@@ -8,6 +8,11 @@
     "dependencyDashboard": true,
     "dependencyDashboardApproval": true,
     "constraintsFiltering": "strict",
+    "lockFileMaintenance": {
+        "enabled": true,
+        "automerge": true,
+        "dependencyDashboardApproval": false
+    },
     "packageRules": [
         {
             "description": "Ignore minor and patch updates entirely. Only majors reach the dashboard",
