@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Add how-to guide for adding new data validation trait methods
+
 ### Changed
 
 ### Fixed
