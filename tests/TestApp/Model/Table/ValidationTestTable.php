@@ -63,7 +63,8 @@ class ValidationTestTable extends Table
             ->allowEmptyString('natural_number_field')
             ->allowEmptyString('unique_field')
             ->allowEmptyString('parent_id')
-            ->integer('parent_id');
+            ->integer('parent_id')
+            ->email('email_field');
 
         return $validator;
     }

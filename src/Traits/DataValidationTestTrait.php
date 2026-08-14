@@ -627,6 +627,44 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that an email address is in valid format
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array|null $expected The expected data validation errors.
+     * @param ?array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::email()
+     */
+    protected function testDataValidationEmail(
+        Table $table,
+        string $fieldName,
+        ?array $expected = null,
+        ?array $options = [],
+    ): void {
+        // Valid values
+        $list = [
+            'valid@email.test',
+            'VALID@EMAIL.TEST',
+            'va_lid.123@email.test',
+            'va_lid.123+spamfolder@email.test',
+        ];
+        $this->testDataValidationInList($table, $list, $fieldName, [], [], $options);
+
+        // Invalid values
+        $list = [
+            'hanswurst',
+            'hans@wurst',
+            'hans.wurst',
+            'hans@wurst.1',
+        ];
+        $expected ??= [
+            'email' => 'The provided value must be an e-mail address',
+        ];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+    }
+
+    /**
      * Validate the length between data validation of a field for a given table
      *
      * @param Table $table The table to test.

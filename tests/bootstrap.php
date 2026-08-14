@@ -80,7 +80,8 @@ $connection->execute('
         integer_field INT,
         length_between_field VARCHAR(255),
         natural_number_field INTEGER,
-        unique_field VARCHAR(255) UNIQUE
+        unique_field VARCHAR(255) UNIQUE,
+        email_field VARCHAR(255)
     )
 ');
 
