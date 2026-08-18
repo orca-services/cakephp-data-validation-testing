@@ -665,7 +665,7 @@ trait DataValidationTestTrait
     }
 
     /**
-     * Validate that uuid is in valid format
+     * Validate that UUID is in valid format
      *
      * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
@@ -682,8 +682,15 @@ trait DataValidationTestTrait
     ): void {
         // Valid values
         $list = [
-            'c232ab00-9414-11ec-b3c8-9f6bdeced846',
-            '5df41881-3aed-3515-88a7-2f4a814cf09e',
+            'e22e1622-5c14-11ea-b2f3-0242ac130003', // UUID v1
+            '000001f5-5e9a-21ea-9e00-0242ac130003', // UUID v2
+            '53564aa3-4154-3ca5-ac90-dba59dc7d3cb', // UUID v3
+            '1ee9aa1b-6510-4105-92b9-7171bb2f3089', // UUID v4
+            'a35477ae-bfb1-5f2e-b5a4-4711594d855f', // UUID v5
+            '01833ce0-3486-7bfd-84a1-ad157cf64005', // UUID v6
+            '01833ce0-3486-7bfd-84a1-ad157cf64005', // UUID v7
+            '00112233-4455-8677-8899-aabbccddeeff', // UUID v8
+            'fc93ab0e-c99e-4b58-975e-9c5e68c53624', // GUID
         ];
         $this->testDataValidationInList($table, $list, $fieldName, [], [], $options);
 
