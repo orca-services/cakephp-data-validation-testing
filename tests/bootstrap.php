@@ -82,7 +82,7 @@ $connection->execute('
         natural_number_field INTEGER,
         unique_field VARCHAR(255) UNIQUE,
         email_field VARCHAR(255),
-        uuid VARCHAR(255)
+        uuid VARCHAR(36)
     )
 ');
 
