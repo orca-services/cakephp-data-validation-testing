@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add how-to guide for adding new data validation trait methods
 - Add validation trait method for email addresses
+- Add validation trait method for UUIDs
 
 ### Changed
 

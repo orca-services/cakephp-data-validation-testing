@@ -395,6 +395,25 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationUuid passes when the field is a valid uuid.
+     *
+     * @return void
+     * @covers ::testDataValidationUuid
+     */
+    public function testTestDataValidationUuid(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'uuid_field';
+        $expectedErrors = [
+            'uuid' => 'The provided value must be a UUID',
+        ];
+        $dataSet = [$field => 'Not a uuid'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationUuid($this->table, $field);
+    }
+
+    /**
      * Test that testDataValidationLengthBetween passes when the field is between the min and max length.
      *
      * @return void

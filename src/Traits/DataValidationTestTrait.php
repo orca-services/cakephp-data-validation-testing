@@ -665,6 +665,42 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that uuid is in valid format
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array|null $expected The expected data validation errors.
+     * @param ?array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::uuid()
+     */
+    protected function testDataValidationUuid(
+        Table $table,
+        string $fieldName,
+        ?array $expected = null,
+        ?array $options = [],
+    ): void {
+        // Valid values
+        $list = [
+            'c232ab00-9414-11ec-b3c8-9f6bdeced846',
+            '5df41881-3aed-3515-88a7-2f4a814cf09e',
+        ];
+        $this->testDataValidationInList($table, $list, $fieldName, [], [], $options);
+
+        // Invalid values
+        $list = [
+            'c232ay00-9414-11ec-b3c8-9f6bdeced846', // Invalid Hexadecimal value "y"
+            'c232aa00-941-11ec4-b3c-89f6bdeced846', // Correct length wrong format
+            '5df41881-3aed-3515-88a7-2f4a814cf09', // Too short
+            'notAUuid', // Not a UUID
+        ];
+        $expected ??= [
+            'uuid' => 'The provided value must be a UUID',
+        ];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+    }
+
+    /**
      * Validate the length between data validation of a field for a given table
      *
      * @param Table $table The table to test.

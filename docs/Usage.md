@@ -73,6 +73,7 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 - `testDataValidationNonNegativeInteger($table, $fieldName)` - rejects negative integer values like `-1`.
 - `testDataValidationGreaterThanOrEqual($table, $fieldName)` - rejects values below the threshold.
 - `testDataValidationEmail($table, $fieldName)` - rejects invalid email addresses.
+- `testDataValidationUuid($table, $fieldName)` - rejects invalid UUIDs.
 
 ### Length validators
 

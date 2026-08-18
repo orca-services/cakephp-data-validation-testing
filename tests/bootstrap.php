@@ -81,7 +81,8 @@ $connection->execute('
         length_between_field VARCHAR(255),
         natural_number_field INTEGER,
         unique_field VARCHAR(255) UNIQUE,
-        email_field VARCHAR(255)
+        email_field VARCHAR(255),
+        uuid VARCHAR(255)
     )
 ');
 
