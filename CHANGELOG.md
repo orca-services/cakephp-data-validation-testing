@@ -7,15 +7,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add how-to guide for adding new data validation trait methods
-- Add validation trait method for email addresses
-- Add validation trait method for UUIDs
-
 ### Changed
 
 ### Fixed
 
 ### Dependencies
+
+## [2.2.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.2.0) - 2026-08-19
+
+### Added
+
+- Add how-to guide for adding new data validation trait methods
+- Add validation trait method for email addresses
+- Add validation trait method for UUIDs
 
 ## [2.1.1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.1.1) - 2026-06-25
 
