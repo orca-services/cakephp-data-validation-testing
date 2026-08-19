@@ -653,10 +653,10 @@ trait DataValidationTestTrait
 
         // Invalid values
         $list = [
-            'hanswurst',
-            'hans@wurst',
-            'hans.wurst',
-            'hans@wurst.1',
+            'invalid',
+            'in@valid',
+            'in.valid',
+            'in@valid.1',
         ];
         $expected ??= [
             'email' => 'The provided value must be an e-mail address',
