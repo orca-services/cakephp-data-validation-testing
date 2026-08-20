@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
+- Add how-to guide for adding new data validation trait methods
 
 ### Changed
 
@@ -16,7 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/1.1.1) - 2026-06-25
 
 ### Changed
-
 - Exclude repository-only files from archives to reduce Composer distribution package size [#12](https://github.com/orca-services/cakephp-data-validation-testing/issues/12)
 
 ## [1.1.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/1.1.0) - 2026-04-13
