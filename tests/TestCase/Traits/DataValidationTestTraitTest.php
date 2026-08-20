@@ -325,6 +325,25 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationEmail passes when the field is a valid email.
+     *
+     * @return void
+     * @covers ::testDataValidationEmail
+     */
+    public function testTestDataValidationEmail(): void
+    {
+        // Ensure data validation of the field works as expected first
+        $field = 'email_field';
+        $expectedErrors = [
+            'email' => 'The provided value is invalid',
+        ];
+        $dataSet = [$field => 'Not an email'];
+        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+
+        $this->testDataValidationEmail($this->table, $field);
+    }
+
+    /**
      * Test that testDataValidationLengthBetween passes when the field is between the min and max length.
      *
      * @return void

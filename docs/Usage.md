@@ -70,6 +70,7 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 - `testDataValidationScalar($table, $fieldName)` - rejects non-scalar values like arrays.
 - `testDataValidationDecimal($table, $fieldName)` - rejects non-decimal values like arrays.
 - `testDataValidationInteger($table, $fieldName)` - rejects non-integer values like arrays.
+- `testDataValidationEmail($table, $fieldName)` - rejects invalid email addresses.
 
 ### Length validators
 
