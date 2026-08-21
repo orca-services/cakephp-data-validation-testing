@@ -353,11 +353,15 @@ trait DataValidationTestTrait
 
         foreach ($expected as $rule => $message) {
             static::assertArrayHasKey($rule, $errors, sprintf(
-                'Failed asserting that field `%s` has a `%s` validation error.',
+                'Field `%s` does not have expected validation error `%s`.',
                 $fieldName,
                 $rule,
             ));
-            static::assertSame($message, $errors[$rule]);
+            static::assertSame($message, $errors[$rule], sprintf(
+                'Validation error message for field `%s` and rule `%s` does not match expected.',
+                $fieldName,
+                $rule,
+            ));
         }
     }
 
