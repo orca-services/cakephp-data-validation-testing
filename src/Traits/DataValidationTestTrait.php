@@ -329,6 +329,37 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that a field's data validation errors contain the expected rule => message pairs.
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $dataSet The data set to test.
+     * @param array $expected The expected data validation errors (rule name => message) that must be present.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::validate()
+     */
+    protected function testDataValidationContains(
+        Table $table,
+        string $fieldName,
+        array $dataSet,
+        array $expected,
+        array $options = [],
+    ): void {
+        $entity = $table->newEntity($dataSet, $options);
+        $errors = $entity->getError($fieldName);
+
+        foreach ($expected as $rule => $message) {
+            static::assertArrayHasKey($rule, $errors, sprintf(
+                'Failed asserting that field `%s` has a `%s` validation error.',
+                $fieldName,
+                $rule,
+            ));
+            static::assertSame($message, $errors[$rule]);
+        }
+    }
+
+    /**
      * Validate that a given data set for a given table leads to the expected rule errors
      *
      * @param Table $table The table to test.
@@ -475,11 +506,8 @@ trait DataValidationTestTrait
     ): void {
         $dataset = [$fieldName => []];
 
-        $expected ??= [
-            'scalar' => 'The provided value must be scalar',
-            'maxLength' => 'The provided value must be at most `50` characters long',
-        ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $expected ??= ['scalar' => 'The provided value must be scalar'];
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**

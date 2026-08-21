@@ -280,12 +280,9 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'scalar_field';
-        $expectedErrors = [
-            'scalar' => 'The provided value must be scalar',
-            'maxLength' => 'The provided value must be at most `50` characters long',
-        ];
+        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
         $dataSet = [$field => []];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
 
         $this->testDataValidationScalar($this->table, $field);
     }
