@@ -329,12 +329,14 @@ trait DataValidationTestTrait
     }
 
     /**
-     * Validate that a field's data validation errors contain the expected rule => message pairs.
+     * Validate that a field's data validation error array contains the expected "rule name" => "message" pair(s)
+     *
+     * Other validation errors will be ignored.
      *
      * @param Table $table The table to test.
      * @param string $fieldName The field to check for data validation errors.
      * @param array $dataSet The data set to test.
-     * @param array $expected The expected data validation errors (rule name => message) that must be present.
+     * @param array $expected The expected data validation errors ("rule name" => "message") that must be present.
      * @param array $options Additional options for newEntity.
      * @return void
      * @see \Cake\Validation\Validator::validate()
