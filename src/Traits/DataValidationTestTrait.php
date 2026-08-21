@@ -504,7 +504,7 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        $dataset = [$fieldName => []];
+        $dataset = [$fieldName => []]; // A non-scalar value
 
         $expected ??= ['scalar' => 'The provided value must be scalar'];
         $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
