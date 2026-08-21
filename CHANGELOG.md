@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 ### Fixed
+- Expected length validation messages now use the given parameters instead of hardcoded values.
 
 ### Dependencies
 

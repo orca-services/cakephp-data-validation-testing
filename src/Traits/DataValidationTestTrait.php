@@ -427,7 +427,9 @@ trait DataValidationTestTrait
         $tooLongFieldContent = str_repeat('A', $maxLength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
-        $expected = $expected ?? ['maxLength' => 'The provided value must be at most `10` characters long'];
+        $expected ??= [
+            'maxLength' => sprintf('The provided value must be at most `%d` characters long', $maxLength),
+        ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
@@ -452,7 +454,7 @@ trait DataValidationTestTrait
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
         $expected ??= [
-            'minLength' => 'The provided value must be at least `5` characters long',
+            'minLength' => sprintf('The provided value must be at least `%d` characters long', $minLength),
         ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
@@ -733,7 +735,11 @@ trait DataValidationTestTrait
             $dataset = [$fieldName => $tooShortFieldContent];
 
             $expected ??= [
-                'lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively',
+                'lengthBetween' => sprintf(
+                    'The length of the provided value must be between `%d` and `%d`, inclusively',
+                    $minLength,
+                    $maxlength,
+                ),
             ];
             $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
         }
@@ -742,7 +748,13 @@ trait DataValidationTestTrait
         $tooLongFieldContent = str_repeat('A', $maxlength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
-        $expected ??= ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
+        $expected ??= [
+            'lengthBetween' => sprintf(
+                'The length of the provided value must be between `%d` and `%d`, inclusively',
+                $minLength,
+                $maxlength,
+            ),
+        ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
     }
 
