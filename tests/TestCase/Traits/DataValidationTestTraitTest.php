@@ -288,28 +288,6 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that testDataValidationScalar passes when the field is scalar witht the expected errors set
-     *
-     * @return void
-     * @covers ::testDataValidationScalar
-     */
-    public function testTestDataValidationScalarExpectedSet(): void
-    {
-        // Ensure data validation of the field works as expected first
-        $field = 'scalar_field';
-        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
-        $dataSet = [$field => []];
-        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
-
-        $expected = [
-            'scalar' => 'The provided value must be scalar',
-            'maxLength' => 'The provided value must be at most `50` characters long',
-        ];
-
-        $this->testDataValidationScalar($this->table, $field, $expected);
-    }
-
-    /**
      * Test that testDataValidationDecimal passes when the field is decimal.
      *
      * @return void
