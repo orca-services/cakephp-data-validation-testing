@@ -329,6 +329,43 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that a field's data validation error array contains the expected "rule name" => "message" pair(s)
+     *
+     * Other validation errors will be ignored.
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $dataSet The data set to test.
+     * @param array $expected The expected data validation errors ("rule name" => "message") that must be present.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::validate()
+     */
+    protected function testDataValidationContains(
+        Table $table,
+        string $fieldName,
+        array $dataSet,
+        array $expected,
+        array $options = [],
+    ): void {
+        $entity = $table->newEntity($dataSet, $options);
+        $errors = $entity->getError($fieldName);
+
+        foreach ($expected as $rule => $message) {
+            static::assertArrayHasKey($rule, $errors, sprintf(
+                'Field `%s` does not have expected validation error `%s`.',
+                $fieldName,
+                $rule,
+            ));
+            static::assertSame($message, $errors[$rule], sprintf(
+                'Validation error message for field `%s` and rule `%s` does not match expected.',
+                $fieldName,
+                $rule,
+            ));
+        }
+    }
+
+    /**
      * Validate that a given data set for a given table leads to the expected rule errors
      *
      * @param Table $table The table to test.
@@ -475,13 +512,10 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        $dataset = [$fieldName => []];
+        $dataset = [$fieldName => []]; // A non-scalar value
 
-        $expected ??= [
-            'scalar' => 'The provided value must be scalar',
-            'maxLength' => 'The provided value must be at most `50` characters long',
-        ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $expected ??= ['scalar' => 'The provided value must be scalar'];
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**

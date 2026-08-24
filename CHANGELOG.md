@@ -6,8 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
+- `testDataValidationContains()` to assert that specific validation errors are present, ignoring others on the same field.
 
 ### Changed
+- `testDataValidationScalar()` now checks only the `scalar` rule by default.
 
 ### Fixed
 - Expected length validation messages now use the given parameters instead of hardcoded values.
