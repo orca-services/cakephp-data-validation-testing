@@ -271,7 +271,7 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Tests the testDataValidationScalar method
+     * Test that testDataValidationScalar passes when the field is scalar.
      *
      * @return void
      * @covers ::testDataValidationScalar
@@ -291,7 +291,7 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Tests the testDataValidationScalar method when the expected errors are set
+     * Test that testDataValidationScalar passes when the field is scalar witht the expected errors set
      *
      * @return void
      * @covers ::testDataValidationScalar
