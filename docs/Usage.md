@@ -83,9 +83,13 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 ### Generic helpers
 
-- `testDataValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits.
+- `testDataValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits. Compares the field's **complete** error array against `$expected`.
+- `testDataValidationContains($table, $fieldName, $dataSet, $expected)` - asserts the given `"rule name" => "message"` pairs are present on the field, ignoring any other errors.
+- `testDataValidationNotContains($table, $fieldName, $dataSet, $rules)` - asserts the given rule names are **not** present on the field, ignoring any other errors.
 - `testDataValidationNoErrors($table, $fieldName, $dataSet)` - asserts a data set produces no errors on the field.
-- `testDataValidationInList($table, $list, $fieldName, $expected)` - runs the same assertion for each value in a list.
+- `testDataValidationInList($table, $list, $fieldName, $expected)` - runs the complete-error-array assertion for each value in a list.
+- `testDataValidationInListContains($table, $list, $fieldName, $expected)` - runs the `contains` assertion for each value in a list.
+- `testDataValidationInListNotContains($table, $list, $fieldName, $rules)` - runs the `not contains` assertion for each value in a list.
 - `testFullDataValidation($table, $dataSet, $expected)` - asserts errors across all fields.
 - `testFullDataValidationNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
 
