@@ -275,6 +275,7 @@ class DataValidationTestTraitTest extends TestCase
      *
      * @return void
      * @covers ::testDataValidationScalar
+     * @covers ::testDataValidationContains
      */
     public function testTestDataValidationScalar(): void
     {
@@ -509,13 +510,13 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure the rule works as expected first
         $field = 'unique_field';
-        $dataSet = [$field => 'unique-value-' . uniqid()];
+        $dataSet = [$field => 'unique-value-' . uniqid('', true)];
 
         $entity = $this->table->newEntity($dataSet, ['validate' => false]);
         static::assertNotFalse($this->table->save($entity));
         static::assertEmpty($entity->getError($field));
 
-        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid()]);
+        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid('', true)]);
     }
 
     /**
@@ -602,5 +603,103 @@ class DataValidationTestTraitTest extends TestCase
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
         $this->testRules($this->table, $field, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationNotContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationNotContains
+     */
+    public function testTestDataValidationNotContains(): void
+    {
+        // A valid boolean value must not produce a `boolean` error
+        $field = 'boolean_field';
+        $entity = $this->table->newEntity([$field => true]);
+        static::assertArrayNotHasKey('boolean', $entity->getError($field));
+
+        $this->testDataValidationNotContains($this->table, $field, [$field => true], ['boolean']);
+    }
+
+    /**
+     * Test the testDataValidationInListContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationInListContains
+     * @covers ::assertDataValidationErrorsContain
+     */
+    public function testTestDataValidationInListContains(): void
+    {
+        $field = 'boolean_field';
+        $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
+        $invalidValues = ['Not a boolean', 123];
+
+        $this->testDataValidationInListContains($this->table, $invalidValues, $field, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationInListNotContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationInListNotContains
+     */
+    public function testTestDataValidationInListNotContains(): void
+    {
+        $field = 'boolean_field';
+        $validValues = [true, false, 1, 0];
+
+        $this->testDataValidationInListNotContains($this->table, $validValues, $field, ['boolean']);
+    }
+
+    /**
+     * Test that a type-specific method only asserts its own rule and ignores unrelated errors.
+     *
+     * @return void
+     * @covers ::testDataValidationInteger
+     */
+    public function testTypeSpecificMethodIgnoresUnrelatedErrors(): void
+    {
+        $field = 'multi_rule_field';
+
+        // The invalid value triggers both the integer and the (unrelated) maxLength rule
+        $entity = $this->table->newEntity([$field => 'abcd']);
+        $errors = $entity->getError($field);
+        static::assertArrayHasKey('integer', $errors);
+        static::assertArrayHasKey('maxLength', $errors);
+
+        // The type-specific method still passes because it only checks its own `integer` rule
+        $this->testDataValidationInteger($this->table, $field);
+    }
+
+    /**
+     * Test that testDataValidationForeignKey accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationForeignKey
+     */
+    public function testTestDataValidationForeignKeyCustomExpected(): void
+    {
+        $field = 'parent_id';
+        $expectedErrors = ['_existsIn' => 'This value does not exist'];
+
+        $this->testDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
+    }
+
+    /**
+     * Test that testDataValidationIsUnique accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationIsUnique
+     */
+    public function testTestDataValidationIsUniqueCustomExpected(): void
+    {
+        $field = 'unique_field';
+        $dataset = [
+            $field => 'custom-duplicate-value',
+            'required_field' => 'required',
+        ];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        $this->testDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
     }
 }
