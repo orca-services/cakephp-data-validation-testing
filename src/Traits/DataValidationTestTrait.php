@@ -40,7 +40,7 @@ trait DataValidationTestTrait
         $list = [null, ''];
 
         $expected = ['_empty' => 'This field cannot be left empty'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -67,8 +67,8 @@ trait DataValidationTestTrait
     ): void {
         $list = [null, ''];
 
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $expected = ['_empty'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -88,7 +88,7 @@ trait DataValidationTestTrait
         array $options = [],
     ): void {
         $expected = ['_required' => 'This field is required'];
-        $this->testDataValidation($table, $fieldName, $dataSet, $expected, $options);
+        $this->testDataValidationContains($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -107,7 +107,8 @@ trait DataValidationTestTrait
         array $dataSet = [],
         array $options = [],
     ): void {
-        $this->testDataValidationNoErrors($table, $fieldName, $dataSet, $options);
+        $expected = ['_required'];
+        $this->testDataValidationNotContains($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -128,13 +129,13 @@ trait DataValidationTestTrait
     ): void {
         // Valid values
         $list = [true, false, 1, 0];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $expected = ['boolean'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = ['Not a boolean', 123, []];
         $expected = ['boolean' => 'The provided value must be a boolean'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -155,13 +156,13 @@ trait DataValidationTestTrait
     ): void {
         // Valid values
         $list = ['https://valid.com', 'http://valid.com'];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $expected = ['urlWithProtocol'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = ['no-protocol.com', 'htp://foo.com'];
         $expected = ['urlWithProtocol' => 'The provided value must be a URL with protocol'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -188,8 +189,8 @@ trait DataValidationTestTrait
             new Chronos(),
             new FrozenTime(),
         ];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $expected = ['dateTime'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = [
@@ -200,7 +201,7 @@ trait DataValidationTestTrait
             '123', // Numeric
         ];
         $expected = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -229,8 +230,8 @@ trait DataValidationTestTrait
             new FrozenDate(),
             new FrozenTime(),
         ];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $expected = ['date'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Invalid values
         $list = [
@@ -241,7 +242,7 @@ trait DataValidationTestTrait
         $expected = [
             'date' => 'The provided value must be a date of one of these formats: `ymd`',
         ];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -351,6 +352,53 @@ trait DataValidationTestTrait
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
 
+        $this->assertDataValidationErrorsContain($fieldName, $errors, $expected);
+    }
+
+    /**
+     * Validate that a field's data validation error array does NOT contain the given rule(s)
+     *
+     * Other validation errors will be ignored.
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $dataSet The data set to test.
+     * @param array $rules The rule names ("rule name") that must NOT be present.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::validate()
+     */
+    protected function testDataValidationNotContains(
+        Table $table,
+        string $fieldName,
+        array $dataSet,
+        array $rules,
+        array $options = [],
+    ): void {
+        $entity = $table->newEntity($dataSet, $options);
+        $errors = $entity->getError($fieldName);
+
+        foreach ($rules as $rule) {
+            static::assertArrayNotHasKey($rule, $errors, sprintf(
+                'Field `%s` has unexpected validation error `%s`.',
+                $fieldName,
+                $rule,
+            ));
+        }
+    }
+
+    /**
+     * Assert that a given field errors array contains the expected "rule name" => "message" pair(s)
+     *
+     * Other validation errors are ignored.
+     *
+     * @param string $fieldName The field the errors belong to (used for assertion messages).
+     * @param array $errors The field's validation errors.
+     * @param array $expected The expected errors ("rule name" => "message") that must be present.
+     * @return void
+     */
+    protected function assertDataValidationErrorsContain(string $fieldName, array $errors, array $expected): void
+    {
         foreach ($expected as $rule => $message) {
             static::assertArrayHasKey($rule, $errors, sprintf(
                 'Field `%s` does not have expected validation error `%s`.',
@@ -362,6 +410,60 @@ trait DataValidationTestTrait
                 $fieldName,
                 $rule,
             ));
+        }
+    }
+
+    /**
+     * Validate that each value of a list of values leads to a field error containing the expected rule(s)
+     *
+     * Other validation errors will be ignored.
+     *
+     * @param Table $table The table to test.
+     * @param array $list A list of values to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $expected The expected errors ("rule name" => "message") that must be present.
+     * @param array $additionalDataSet Additional data set to test.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     */
+    protected function testDataValidationInListContains(
+        Table $table,
+        array $list,
+        string $fieldName,
+        array $expected = [],
+        array $additionalDataSet = [],
+        array $options = [],
+    ): void {
+        foreach ($list as $value) {
+            $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
+            $this->testDataValidationContains($table, $fieldName, $dataSet, $expected, $options);
+        }
+    }
+
+    /**
+     * Validate that each value of a list of values does NOT lead to a field error for the given rule(s)
+     *
+     * Other validation errors will be ignored.
+     *
+     * @param Table $table The table to test.
+     * @param array $list A list of values to test.
+     * @param string $fieldName The field to check for data validation errors.
+     * @param array $rules The rule names ("rule name") that must NOT be present.
+     * @param array $additionalDataSet Additional data set to test.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     */
+    protected function testDataValidationInListNotContains(
+        Table $table,
+        array $list,
+        string $fieldName,
+        array $rules = [],
+        array $additionalDataSet = [],
+        array $options = [],
+    ): void {
+        foreach ($list as $value) {
+            $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
+            $this->testDataValidationNotContains($table, $fieldName, $dataSet, $rules, $options);
         }
     }
 
@@ -464,10 +566,8 @@ trait DataValidationTestTrait
         $tooLongFieldContent = str_repeat('A', $maxLength + 1);
         $dataset = [$fieldName => $tooLongFieldContent];
 
-        $expected ??= [
-            'maxLength' => sprintf('The provided value must be at most `%d` characters long', $maxLength),
-        ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $expected ??= ['maxLength' => sprintf('The provided value must be at most `%d` characters long', $maxLength)];
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -490,10 +590,8 @@ trait DataValidationTestTrait
     ): void {
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
-        $expected ??= [
-            'minLength' => sprintf('The provided value must be at least `%d` characters long', $minLength),
-        ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $expected ??= ['minLength' => sprintf('The provided value must be at least `%d` characters long', $minLength)];
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -548,12 +646,12 @@ trait DataValidationTestTrait
         $expected ??= [
             'decimal' => 'The provided value must be decimal with any number of decimal places, including none',
         ];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [-99.0, 0.099];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $expected = ['decimal'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
@@ -584,12 +682,12 @@ trait DataValidationTestTrait
             'ab0,099',
         ];
         $expected ??= ['integer' => 'The provided value must be an integer'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [-99, 99];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $expected = ['integer'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
@@ -610,16 +708,15 @@ trait DataValidationTestTrait
     ): void {
         // Negative integer
         $dataset = [$fieldName => '-1'];
-        $expected ??= [
-            'nonNegativeInteger' => 'The provided value must be a non-negative integer',
-        ];
+        $expected ??= ['nonNegativeInteger' => 'The provided value must be a non-negative integer'];
 
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
 
         // Non-negative integer
         $dataset = [$fieldName => '0'];
 
-        $this->testDataValidationNoErrors($table, $fieldName, $dataset, $options);
+        $expected = ['nonNegativeInteger'];
+        $this->testDataValidationNotContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -654,12 +751,13 @@ trait DataValidationTestTrait
                 $threshold,
             ),
         ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
 
         // Valid values: exactly at and just above the threshold
         $aboveThreshold = is_int($threshold) ? $threshold + 1 : $threshold + 0.01;
         $list = [$threshold, $aboveThreshold];
-        $this->testDataValidationInList($table, $list, $fieldName, [], $additionalDataSet, $options);
+        $expected = ['greaterThanOrEqual'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -678,15 +776,6 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        // Valid values
-        $list = [
-            'valid@email.test',
-            'VALID@EMAIL.TEST',
-            'va_lid.123@email.test',
-            'va_lid.123+spamfolder@email.test',
-        ];
-        $this->testDataValidationInList($table, $list, $fieldName, [], [], $options);
-
         // Invalid values
         $list = [
             'invalid',
@@ -694,10 +783,18 @@ trait DataValidationTestTrait
             'in.valid',
             'in@valid.1',
         ];
-        $expected ??= [
-            'email' => 'The provided value must be an e-mail address',
+        $expected ??= ['email' => 'The provided value must be an e-mail address'];
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, [], $options);
+
+        // Valid values
+        $list = [
+            'valid@email.test',
+            'VALID@EMAIL.TEST',
+            'va_lid.123@email.test',
+            'va_lid.123+spamfolder@email.test',
         ];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $expected = ['email'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
@@ -716,6 +813,16 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
+        // Invalid values
+        $list = [
+            'c232ay00-9414-11ec-b3c8-9f6bdeced846', // Invalid Hexadecimal value "y"
+            'c232aa00-941-11ec4-b3c-89f6bdeced846', // Correct length wrong format
+            '5df41881-3aed-3515-88a7-2f4a814cf09', // Too short
+            'notAUuid', // Not a UUID
+        ];
+        $expected ??= ['uuid' => 'The provided value must be a UUID'];
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, [], $options);
+
         // Valid values
         $list = [
             'e22e1622-5c14-11ea-b2f3-0242ac130003', // UUID v1
@@ -728,19 +835,8 @@ trait DataValidationTestTrait
             '00112233-4455-8677-8899-aabbccddeeff', // UUID v8
             'fc93ab0e-c99e-4b58-975e-9c5e68c53624', // GUID
         ];
-        $this->testDataValidationInList($table, $list, $fieldName, [], [], $options);
-
-        // Invalid values
-        $list = [
-            'c232ay00-9414-11ec-b3c8-9f6bdeced846', // Invalid Hexadecimal value "y"
-            'c232aa00-941-11ec4-b3c-89f6bdeced846', // Correct length wrong format
-            '5df41881-3aed-3515-88a7-2f4a814cf09', // Too short
-            'notAUuid', // Not a UUID
-        ];
-        $expected ??= [
-            'uuid' => 'The provided value must be a UUID',
-        ];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, [], $options);
+        $expected = ['uuid'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
     }
 
     /**
@@ -775,7 +871,7 @@ trait DataValidationTestTrait
                     $maxlength,
                 ),
             ];
-            $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+            $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
         }
 
         // Too long
@@ -789,7 +885,7 @@ trait DataValidationTestTrait
                 $maxlength,
             ),
         ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -808,15 +904,15 @@ trait DataValidationTestTrait
         array $additionalDataSet = [],
         array $options = [],
     ): void {
-        // Valid value
-        $list = [1];
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
-
         // Invalid values
         $list = [0, -1];
         $expected = ['naturalNumber' => 'The provided value must be a natural number'];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->testDataValidationInListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+
+        // Valid value
+        $list = [1];
+        $expected = ['naturalNumber'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -843,23 +939,24 @@ trait DataValidationTestTrait
      * @param Table $table The table to test.
      * @param string $fieldName The field to check the foreign key for.
      * @param int|null $notExistingForeignKey Not existing foreign key. Defaults to 999999.
+     * @param array|null $expected The expected rule errors ("rule name" => "message") that must be present.
      * @return void
      */
     protected function testDataValidationForeignKey(
         Table $table,
         string $fieldName,
         ?int $notExistingForeignKey = 999999,
+        ?array $expected = null,
     ): void {
         $entity = $table->newEmptyEntity();
         $table->patchEntity($entity, [$fieldName => $notExistingForeignKey]);
 
         $result = $table->checkRules($entity);
         static::assertFalse($result);
-        static::assertNotNull($entity->getErrors()[$fieldName]);
 
-        $expected = ['_existsIn' => 'This value does not exist'];
+        $expected ??= ['_existsIn' => 'This value does not exist'];
 
-        static::assertSame($expected, $entity->getErrors()[$fieldName]);
+        $this->assertDataValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
     }
 
     /**
@@ -869,6 +966,7 @@ trait DataValidationTestTrait
      * @param string $fieldName The field to check the foreign key for.
      * @param mixed $fieldValue The field value.
      * @param array $additionalProperties Other required properties for the new entity.
+     * @param array|null $expected The expected rule errors ("rule name" => "message") that must be present.
      * @return void
      */
     protected function testDataValidationIsUnique(
@@ -876,6 +974,7 @@ trait DataValidationTestTrait
         string $fieldName,
         mixed $fieldValue,
         array $additionalProperties = [],
+        ?array $expected = null,
     ): void {
         $prevEntity = $table->newEmptyEntity();
         $table->patchEntity($prevEntity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
@@ -886,10 +985,9 @@ trait DataValidationTestTrait
 
         $result = $table->checkRules($entity);
         static::assertFalse($result);
-        static::assertNotNull($entity->getErrors()[$fieldName]);
 
-        $expected = ['_isUnique' => 'This value is already in use'];
+        $expected ??= ['_isUnique' => 'This value is already in use'];
 
-        static::assertSame($expected, $entity->getErrors()[$fieldName]);
+        $this->assertDataValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
     }
 }
