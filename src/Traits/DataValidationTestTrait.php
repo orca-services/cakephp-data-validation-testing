@@ -960,11 +960,11 @@ trait DataValidationTestTrait
     }
 
     /**
-     * Validate the uniq value of the given field
+     * Validate the unique value of the given field
      *
      * @param Table $table The table to test.
      * @param string $fieldName The field to check the foreign key for.
-     * @param mixed $fieldValue The field value.
+     * @param mixed $fieldValue The field value which will be saved twice (must be unique).
      * @param array $additionalProperties Other required properties for the new entity.
      * @param array|null $expected The expected rule errors ("rule name" => "message") that must be present.
      * @return void
