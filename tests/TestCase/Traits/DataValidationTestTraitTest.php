@@ -674,7 +674,6 @@ class DataValidationTestTraitTest extends TestCase
      *
      * @return void
      * @covers ::testDataValidationInListContains
-     * @covers ::assertDataValidationErrorsContain
      */
     public function testTestDataValidationInListContains(): void
     {
@@ -697,6 +696,25 @@ class DataValidationTestTraitTest extends TestCase
         $validValues = [true, false, 1, 0];
 
         $this->testDataValidationInListNotContains($this->table, $validValues, $field, ['boolean']);
+    }
+
+    /**
+     * Test the assertDataValidationErrorsContain base method.
+     *
+     * @return void
+     * @covers ::assertDataValidationErrorsContain
+     */
+    public function testAssertDataValidationErrorsContain(): void
+    {
+        $field = 'boolean_field';
+        // The errors contain the expected rule alongside an unrelated one, which must be ignored
+        $errors = [
+            'boolean' => 'The provided value must be a boolean',
+            'maxLength' => 'The provided value is too long',
+        ];
+        $expected = ['boolean' => 'The provided value must be a boolean'];
+
+        $this->assertDataValidationErrorsContain($field, $errors, $expected);
     }
 
     /**
