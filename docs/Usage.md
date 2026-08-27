@@ -55,25 +55,25 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 ### Presence and emptiness
 
-- `testDataValidationRequired($table, $fieldName)` - field must be present.
-- `testDataValidationNotRequired($table, $fieldName)` - field is optional.
-- `testDataValidationNotEmpty($table, $fieldName)` - field cannot be `null` or `''`.
-- `testDataValidationEmpty($table, $fieldName)` - field may be `null` or `''`.
+- `testDataValidationRequired($table, $fieldName)` - asserts the field is configured to require presence (`_required`).
+- `testDataValidationNotRequired($table, $fieldName)` - asserts the field is not configured to require presence.
+- `testDataValidationNotEmpty($table, $fieldName)` - asserts the field is configured to disallow empty values, i.e. `null` or `''` (`_empty`).
+- `testDataValidationEmpty($table, $fieldName)` - asserts the field is configured to allow empty values, i.e. `null` or `''`.
 
 ### Type validators
 
-- `testDataValidationBoolean($table, $fieldName)` - field must be boolean.
-- `testDataValidationURLWithProtocol($table, $fieldName)` - requires `http://` or `https://`.
-- `testDataValidationDateTime($table, $fieldName)` - field must be datetime.
-- `testDataValidationDate($table, $fieldName)` - field must be date.
-- `testDataValidationNaturalNumber($table, $fieldName)` - positive integers only.
-- `testDataValidationScalar($table, $fieldName)` - rejects non-scalar values like arrays.
-- `testDataValidationDecimal($table, $fieldName)` - rejects non-decimal values like arrays.
-- `testDataValidationInteger($table, $fieldName)` - rejects non-integer values like arrays.
-- `testDataValidationNonNegativeInteger($table, $fieldName)` - rejects negative integer values like `-1`.
-- `testDataValidationGreaterThanOrEqual($table, $fieldName)` - rejects values below the threshold.
-- `testDataValidationEmail($table, $fieldName)` - rejects invalid email addresses.
-- `testDataValidationUuid($table, $fieldName)` - rejects invalid UUIDs.
+- `testDataValidationBoolean($table, $fieldName)` - asserts the field is configured with the `boolean` validation rule.
+- `testDataValidationURLWithProtocol($table, $fieldName)` - asserts the field is configured with the `urlWithProtocol` validation rule (requires `http://` or `https://`).
+- `testDataValidationDateTime($table, $fieldName)` - asserts the field is configured with the `dateTime` validation rule.
+- `testDataValidationDate($table, $fieldName)` - asserts the field is configured with the `date` validation rule.
+- `testDataValidationNaturalNumber($table, $fieldName)` - asserts the field is configured with the `naturalNumber` validation rule (positive integers).
+- `testDataValidationScalar($table, $fieldName)` - asserts the field is configured with the `scalar` validation rule.
+- `testDataValidationDecimal($table, $fieldName)` - asserts the field is configured with the `decimal` validation rule.
+- `testDataValidationInteger($table, $fieldName)` - asserts the field is configured with the `integer` validation rule.
+- `testDataValidationNonNegativeInteger($table, $fieldName)` - asserts the field is configured with the `nonNegativeInteger` validation rule.
+- `testDataValidationGreaterThanOrEqual($table, $fieldName, $threshold)` - asserts the field is configured with the `greaterThanOrEqual` validation rule.
+- `testDataValidationEmail($table, $fieldName)` - asserts the field is configured with the `email` validation rule.
+- `testDataValidationUuid($table, $fieldName)` - asserts the field is configured with the `uuid` validation rule.
 
 ### Length validators
 
