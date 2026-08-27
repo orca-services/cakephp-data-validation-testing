@@ -68,6 +68,7 @@ class ValidationTestTable extends Table
             ->uuid('uuid_field')
             // A field with more than one validation rule, used to assert that the
             // type-specific trait methods only check their own rule and ignore others.
+            ->requirePresence('multi_rule_field')
             ->integer('multi_rule_field')
             ->maxLength('multi_rule_field', 3)
             ->allowEmptyString('multi_rule_field');

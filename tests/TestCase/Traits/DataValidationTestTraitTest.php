@@ -667,7 +667,7 @@ class DataValidationTestTraitTest extends TestCase
         static::assertArrayHasKey('integer', $errors);
         static::assertArrayHasKey('maxLength', $errors);
 
-        // The type-specific method still passes because it only checks its own `integer` rule
+        // The type-specific method still passes because it checks for the `integer` rule, only
         $this->testDataValidationInteger($this->table, $field);
     }
 
