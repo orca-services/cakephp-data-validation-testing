@@ -280,9 +280,8 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'scalar_field';
-        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
-        $dataSet = [$field => []];
-        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
+        $entity = $this->table->newEntity([$field => []]);
+        static::assertArrayHasKey('scalar', $entity->getError($field));
 
         $this->testDataValidationScalar($this->table, $field);
     }
@@ -456,7 +455,7 @@ class DataValidationTestTraitTest extends TestCase
      */
     public function testTestFullDataValidationNoErrors(): void
     {
-        $dataSet = ['required_field' => 'required'];
+        $dataSet = ['required_field' => 'required', 'multi_rule_field' => 1];
         $this->testFullDataValidationNoErrors($this->table, $dataSet);
     }
 
@@ -468,7 +467,7 @@ class DataValidationTestTraitTest extends TestCase
      */
     public function testTestFullDataValidation(): void
     {
-        $dataSet = ['not_empty_field' => ''];
+        $dataSet = ['not_empty_field' => '', 'multi_rule_field' => 1];
         $expectedErrors = [
             'not_empty_field' => ['_empty' => 'This field cannot be left empty'],
             'required_field' => ['_required' => 'This field is required'],
@@ -509,13 +508,13 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure the rule works as expected first
         $field = 'unique_field';
-        $dataSet = [$field => 'unique-value-' . uniqid()];
+        $dataSet = [$field => 'unique-value-' . uniqid('', true)];
 
         $entity = $this->table->newEntity($dataSet, ['validate' => false]);
         static::assertNotFalse($this->table->save($entity));
         static::assertEmpty($entity->getError($field));
 
-        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid()]);
+        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid('', true)]);
     }
 
     /**
@@ -551,6 +550,20 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationForeignKey accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationForeignKey
+     */
+    public function testTestDataValidationForeignKeyCustomExpected(): void
+    {
+        $field = 'parent_id';
+        $expectedErrors = ['_existsIn' => 'This value does not exist'];
+
+        $this->testDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
+    }
+
+    /**
      * Test that testDataValidationIsUnique passes when the field value is not unique.
      *
      * @return void
@@ -580,6 +593,24 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationIsUnique accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationIsUnique
+     */
+    public function testTestDataValidationIsUniqueCustomExpected(): void
+    {
+        $field = 'unique_field';
+        $dataset = [
+            $field => 'custom-duplicate-value',
+            'required_field' => 'required',
+        ];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        $this->testDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
+    }
+
+    /**
      * Test that testRules passes when saving leads to the expected rule errors.
      *
      * @return void
@@ -588,7 +619,7 @@ class DataValidationTestTraitTest extends TestCase
     public function testTestRules(): void
     {
         $field = 'unique_field';
-        $dataSet = ['required_field' => 'required', $field => 'duplicate'];
+        $dataSet = ['required_field' => 'required', $field => 'duplicate', 'multi_rule_field' => 1];
         $expectedErrors = ['_isUnique' => 'This value is already in use'];
 
         // Ensure a first record exists so the unique rule will fail on the second
@@ -602,5 +633,107 @@ class DataValidationTestTraitTest extends TestCase
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
         $this->testRules($this->table, $field, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationContains
+     */
+    public function testTestDataValidationContains(): void
+    {
+        // An invalid scalar value must produce a `scalar` error
+        $field = 'scalar_field';
+        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
+        $dataSet = [$field => []];
+        $entity = $this->table->newEntity($dataSet);
+        static::assertArrayHasKey('scalar', $entity->getError($field));
+
+        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationNotContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationNotContains
+     */
+    public function testTestDataValidationNotContains(): void
+    {
+        // A valid boolean value must not produce a `boolean` error
+        $field = 'boolean_field';
+        $entity = $this->table->newEntity([$field => true]);
+        static::assertArrayNotHasKey('boolean', $entity->getError($field));
+
+        $this->testDataValidationNotContains($this->table, $field, [$field => true], ['boolean']);
+    }
+
+    /**
+     * Test the testDataValidationInListContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationInListContains
+     */
+    public function testTestDataValidationInListContains(): void
+    {
+        $field = 'boolean_field';
+        $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
+        $invalidValues = ['Not a boolean', 123];
+
+        $this->testDataValidationInListContains($this->table, $invalidValues, $field, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationInListNotContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationInListNotContains
+     */
+    public function testTestDataValidationInListNotContains(): void
+    {
+        $field = 'boolean_field';
+        $validValues = [true, false, 1, 0];
+
+        $this->testDataValidationInListNotContains($this->table, $validValues, $field, ['boolean']);
+    }
+
+    /**
+     * Test the assertDataValidationErrorsContain base method.
+     *
+     * @return void
+     * @covers ::assertDataValidationErrorsContain
+     */
+    public function testAssertDataValidationErrorsContain(): void
+    {
+        $field = 'boolean_field';
+        // The errors contain the expected rule alongside an unrelated one, which must be ignored
+        $errors = [
+            'boolean' => 'The provided value must be a boolean',
+            'maxLength' => 'The provided value is too long',
+        ];
+        $expected = ['boolean' => 'The provided value must be a boolean'];
+
+        $this->assertDataValidationErrorsContain($field, $errors, $expected);
+    }
+
+    /**
+     * Test that a type-specific method only asserts its own rule and ignores unrelated errors.
+     *
+     * @return void
+     * @covers ::testDataValidationInteger
+     */
+    public function testTypeSpecificMethodIgnoresUnrelatedErrors(): void
+    {
+        $field = 'multi_rule_field';
+
+        // The invalid value triggers both the integer and the (unrelated) maxLength rule
+        $entity = $this->table->newEntity([$field => 'abcd']);
+        $errors = $entity->getError($field);
+        static::assertArrayHasKey('integer', $errors);
+        static::assertArrayHasKey('maxLength', $errors);
+
+        // The type-specific method still passes because it checks for the `integer` rule, only
+        $this->testDataValidationInteger($this->table, $field);
     }
 }
