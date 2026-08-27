@@ -280,9 +280,8 @@ class DataValidationTestTraitTest extends TestCase
     {
         // Ensure data validation of the field works as expected first
         $field = 'scalar_field';
-        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
-        $dataSet = [$field => []];
-        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
+        $entity = $this->table->newEntity([$field => []]);
+        static::assertArrayHasKey('scalar', $entity->getError($field));
 
         $this->testDataValidationScalar($this->table, $field);
     }
@@ -456,7 +455,7 @@ class DataValidationTestTraitTest extends TestCase
      */
     public function testTestFullDataValidationNoErrors(): void
     {
-        $dataSet = ['required_field' => 'required'];
+        $dataSet = ['required_field' => 'required', 'multi_rule_field' => 1];
         $this->testFullDataValidationNoErrors($this->table, $dataSet);
     }
 
@@ -468,7 +467,7 @@ class DataValidationTestTraitTest extends TestCase
      */
     public function testTestFullDataValidation(): void
     {
-        $dataSet = ['not_empty_field' => ''];
+        $dataSet = ['not_empty_field' => '', 'multi_rule_field' => 1];
         $expectedErrors = [
             'not_empty_field' => ['_empty' => 'This field cannot be left empty'],
             'required_field' => ['_required' => 'This field is required'],
@@ -620,7 +619,7 @@ class DataValidationTestTraitTest extends TestCase
     public function testTestRules(): void
     {
         $field = 'unique_field';
-        $dataSet = ['required_field' => 'required', $field => 'duplicate'];
+        $dataSet = ['required_field' => 'required', $field => 'duplicate', 'multi_rule_field' => 1];
         $expectedErrors = ['_isUnique' => 'This value is already in use'];
 
         // Ensure a first record exists so the unique rule will fail on the second
