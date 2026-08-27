@@ -275,7 +275,6 @@ class DataValidationTestTraitTest extends TestCase
      *
      * @return void
      * @covers ::testDataValidationScalar
-     * @covers ::testDataValidationContains
      */
     public function testTestDataValidationScalar(): void
     {
@@ -635,6 +634,24 @@ class DataValidationTestTraitTest extends TestCase
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
         $this->testRules($this->table, $field, $dataSet, $expectedErrors);
+    }
+
+    /**
+     * Test the testDataValidationContains base method.
+     *
+     * @return void
+     * @covers ::testDataValidationContains
+     */
+    public function testTestDataValidationContains(): void
+    {
+        // An invalid scalar value must produce a `scalar` error
+        $field = 'scalar_field';
+        $expectedErrors = ['scalar' => 'The provided value must be scalar'];
+        $dataSet = [$field => []];
+        $entity = $this->table->newEntity($dataSet);
+        static::assertArrayHasKey('scalar', $entity->getError($field));
+
+        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
