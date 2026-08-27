@@ -53,6 +53,10 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 ## Available methods
 
+> **Note:** The presence, emptiness and type helpers listed below are rule-dedicated: each one only asserts that
+> its own validation rule is (or is not) configured for the given field and ignores any other validation errors
+> present on that field. They no longer compare against the field's full error list.
+
 ### Presence and emptiness
 
 - `testDataValidationRequired($table, $fieldName)` - asserts the field is configured to require presence (`_required`).
