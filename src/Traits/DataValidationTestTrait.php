@@ -67,8 +67,15 @@ trait DataValidationTestTrait
     ): void {
         $list = [null, ''];
 
-        $expected = ['_empty'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['_empty'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
     }
 
     /**
@@ -107,8 +114,8 @@ trait DataValidationTestTrait
         array $dataSet = [],
         array $options = [],
     ): void {
-        $expected = ['_required'];
-        $this->testDataValidationNotContains($table, $fieldName, $dataSet, $expected, $options);
+        $notExpected = ['_required'];
+        $this->testDataValidationNotContains($table, $fieldName, $dataSet, $notExpected, $options);
     }
 
     /**
@@ -129,8 +136,15 @@ trait DataValidationTestTrait
     ): void {
         // Valid values
         $list = [true, false, 1, 0];
-        $expected = ['boolean'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['boolean'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
 
         // Invalid values
         $list = ['Not a boolean', 123, []];
@@ -156,8 +170,15 @@ trait DataValidationTestTrait
     ): void {
         // Valid values
         $list = ['https://valid.com', 'http://valid.com'];
-        $expected = ['urlWithProtocol'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['urlWithProtocol'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
 
         // Invalid values
         $list = ['no-protocol.com', 'htp://foo.com'];
@@ -189,8 +210,15 @@ trait DataValidationTestTrait
             new Chronos(),
             new FrozenTime(),
         ];
-        $expected = ['dateTime'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['dateTime'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
 
         // Invalid values
         $list = [
@@ -230,8 +258,15 @@ trait DataValidationTestTrait
             new FrozenDate(),
             new FrozenTime(),
         ];
-        $expected = ['date'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['date'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
 
         // Invalid values
         $list = [
@@ -650,8 +685,8 @@ trait DataValidationTestTrait
 
         // Valid values
         $list = [-99.0, 0.099];
-        $expected = ['decimal'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
+        $notExpected = ['decimal'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -686,8 +721,8 @@ trait DataValidationTestTrait
 
         // Valid values
         $list = [-99, 99];
-        $expected = ['integer'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
+        $notExpected = ['integer'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -715,8 +750,8 @@ trait DataValidationTestTrait
         // Non-negative integer
         $dataset = [$fieldName => '0'];
 
-        $expected = ['nonNegativeInteger'];
-        $this->testDataValidationNotContains($table, $fieldName, $dataset, $expected, $options);
+        $notExpected = ['nonNegativeInteger'];
+        $this->testDataValidationNotContains($table, $fieldName, $dataset, $notExpected, $options);
     }
 
     /**
@@ -756,8 +791,15 @@ trait DataValidationTestTrait
         // Valid values: exactly at and just above the threshold
         $aboveThreshold = is_int($threshold) ? $threshold + 1 : $threshold + 0.01;
         $list = [$threshold, $aboveThreshold];
-        $expected = ['greaterThanOrEqual'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['greaterThanOrEqual'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
     }
 
     /**
@@ -793,8 +835,8 @@ trait DataValidationTestTrait
             'va_lid.123@email.test',
             'va_lid.123+spamfolder@email.test',
         ];
-        $expected = ['email'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
+        $notExpected = ['email'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -835,8 +877,8 @@ trait DataValidationTestTrait
             '00112233-4455-8677-8899-aabbccddeeff', // UUID v8
             'fc93ab0e-c99e-4b58-975e-9c5e68c53624', // GUID
         ];
-        $expected = ['uuid'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, [], $options);
+        $notExpected = ['uuid'];
+        $this->testDataValidationInListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -911,8 +953,15 @@ trait DataValidationTestTrait
 
         // Valid value
         $list = [1];
-        $expected = ['naturalNumber'];
-        $this->testDataValidationInListNotContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $notExpected = ['naturalNumber'];
+        $this->testDataValidationInListNotContains(
+            $table,
+            $list,
+            $fieldName,
+            $notExpected,
+            $additionalDataSet,
+            $options,
+        );
     }
 
     /**
