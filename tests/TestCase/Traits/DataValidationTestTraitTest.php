@@ -552,6 +552,20 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
+     * Test that testDataValidationForeignKey accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationForeignKey
+     */
+    public function testTestDataValidationForeignKeyCustomExpected(): void
+    {
+        $field = 'parent_id';
+        $expectedErrors = ['_existsIn' => 'This value does not exist'];
+
+        $this->testDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
+    }
+
+    /**
      * Test that testDataValidationIsUnique passes when the field value is not unique.
      *
      * @return void
@@ -578,6 +592,24 @@ class DataValidationTestTraitTest extends TestCase
         // Use a different value since the trait method will also save a record
         $this->table->deleteAll([]);
         $this->testDataValidationIsUnique($this->table, $field, 'another-duplicate-value', $dataset);
+    }
+
+    /**
+     * Test that testDataValidationIsUnique accepts a custom expected error.
+     *
+     * @return void
+     * @covers ::testDataValidationIsUnique
+     */
+    public function testTestDataValidationIsUniqueCustomExpected(): void
+    {
+        $field = 'unique_field';
+        $dataset = [
+            $field => 'custom-duplicate-value',
+            'required_field' => 'required',
+        ];
+        $expectedErrors = ['_isUnique' => 'This value is already in use'];
+
+        $this->testDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
     }
 
     /**
@@ -669,37 +701,5 @@ class DataValidationTestTraitTest extends TestCase
 
         // The type-specific method still passes because it checks for the `integer` rule, only
         $this->testDataValidationInteger($this->table, $field);
-    }
-
-    /**
-     * Test that testDataValidationForeignKey accepts a custom expected error.
-     *
-     * @return void
-     * @covers ::testDataValidationForeignKey
-     */
-    public function testTestDataValidationForeignKeyCustomExpected(): void
-    {
-        $field = 'parent_id';
-        $expectedErrors = ['_existsIn' => 'This value does not exist'];
-
-        $this->testDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
-    }
-
-    /**
-     * Test that testDataValidationIsUnique accepts a custom expected error.
-     *
-     * @return void
-     * @covers ::testDataValidationIsUnique
-     */
-    public function testTestDataValidationIsUniqueCustomExpected(): void
-    {
-        $field = 'unique_field';
-        $dataset = [
-            $field => 'custom-duplicate-value',
-            'required_field' => 'required',
-        ];
-        $expectedErrors = ['_isUnique' => 'This value is already in use'];
-
-        $this->testDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
     }
 }
