@@ -977,11 +977,19 @@ trait DataValidationTestTrait
         ?array $expected = null,
     ): void {
         $prevEntity = $table->newEmptyEntity();
-        $table->patchEntity($prevEntity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
+        $table->patchEntity(
+            $prevEntity,
+            array_merge($additionalProperties, [$fieldName => $fieldValue]),
+            ['validate' => false],
+        );
         $table->saveOrFail($prevEntity);
 
         $entity = $table->newEmptyEntity();
-        $table->patchEntity($entity, array_merge($additionalProperties, [$fieldName => $fieldValue]));
+        $table->patchEntity(
+            $entity,
+            array_merge($additionalProperties, [$fieldName => $fieldValue]),
+            ['validate' => false],
+        );
 
         $result = $table->checkRules($entity);
         static::assertFalse($result);

@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - **BREAKING CHANGE:** All type-specific/rule-dedicated methods now assert only their own validation rule for the field.
 
 ### Fixed
+- Ignore dataValidation in `testDataValidationIsUnique()` to correctly assert build rules.
 
 ### Dependencies
 
