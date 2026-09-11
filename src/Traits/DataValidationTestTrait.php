@@ -414,11 +414,15 @@ trait DataValidationTestTrait
         $errors = $entity->getError($fieldName);
 
         foreach ($rules as $rule) {
-            static::assertArrayNotHasKey($rule, $errors, sprintf(
-                'Field `%s` has unexpected validation error `%s`.',
-                $fieldName,
+            static::assertArrayNotHasKey(
                 $rule,
-            ));
+                $errors,
+                sprintf(
+                    'Field `%s` has unexpected validation error `%s`.',
+                    $fieldName,
+                    $rule,
+                ),
+            );
         }
     }
 
@@ -435,16 +439,24 @@ trait DataValidationTestTrait
     protected function assertDataValidationErrorsContain(string $fieldName, array $errors, array $expected): void
     {
         foreach ($expected as $rule => $message) {
-            static::assertArrayHasKey($rule, $errors, sprintf(
-                'Field `%s` does not have expected validation error `%s`.',
-                $fieldName,
+            static::assertArrayHasKey(
                 $rule,
-            ));
-            static::assertSame($message, $errors[$rule], sprintf(
-                'Validation error message for field `%s` and rule `%s` does not match expected.',
-                $fieldName,
-                $rule,
-            ));
+                $errors,
+                sprintf(
+                    'Field `%s` does not have expected validation error `%s`.',
+                    $fieldName,
+                    $rule,
+                ),
+            );
+            static::assertSame(
+                $message,
+                $errors[$rule],
+                sprintf(
+                    'Validation error message for field `%s` and rule `%s` does not match expected.',
+                    $fieldName,
+                    $rule,
+                ),
+            );
         }
     }
 
