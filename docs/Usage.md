@@ -5,6 +5,7 @@ The `DataValidationTestTrait` provides helper methods to simplify testing the da
 ## Setup
 
 Add the trait to any PHPUnit test case:
+
 ```php
 <?php
 declare(strict_types=1);
@@ -31,6 +32,7 @@ class ArticlesTableTest extends TestCase
 All helper methods are `protected` and callable from within your test class.
 
 ## Example
+
 ```php
 public function testValidationTitle(): void
 {
@@ -110,6 +112,7 @@ For application rules that run at save time (not marshalling time). These requir
 ## Dependent fields
 
 Use the `$additionalDataSet` parameter to supply required companion fields so your test only fails for the reason you care about:
+
 ```php
 $this->testDataValidationNotEmpty(
     $this->Articles,
@@ -121,6 +124,7 @@ $this->testDataValidationNotEmpty(
 ## Passing `newEntity()` options
 
 The `$options` parameter is forwarded to `Table::newEntity()`:
+
 ```php
 $this->testDataValidationRequired(
     $this->Articles,
