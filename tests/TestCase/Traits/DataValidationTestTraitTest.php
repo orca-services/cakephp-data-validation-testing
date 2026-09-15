@@ -217,12 +217,12 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that testDataValidationList passes when the field is datetime.
+     * Test that testDataValidationInList passes when the field is datetime.
      *
      * @return void
-     * @covers ::testDataValidationList
+     * @covers ::testDataValidationInList
      */
-    public function testTestDataValidationList(): void
+    public function testTestDataValidationInList(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
