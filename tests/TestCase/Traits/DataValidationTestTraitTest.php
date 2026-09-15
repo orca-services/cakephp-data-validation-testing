@@ -228,10 +228,10 @@ class DataValidationTestTraitTest extends TestCase
         $field = 'datetime_field';
         $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $invalidValues = ['Not a date/time', '123'];
-        $this->testDataValidationList($this->table, $invalidValues, $field, $expectedErrors);
+        $this->testDataValidationInList($this->table, $invalidValues, $field, $expectedErrors);
 
         $validValues = ['1900-01-01 00:00:00', '2022-10-12 11:50:32'];
-        $this->testDataValidationList($this->table, $validValues, $field);
+        $this->testDataValidationInList($this->table, $validValues, $field);
     }
 
     /**

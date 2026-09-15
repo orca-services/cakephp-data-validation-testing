@@ -290,8 +290,9 @@ trait DataValidationTestTrait
      * @param array $additionalDataSet Additional data set to test.
      * @param array $options Additional options for newEntity.
      * @return void
+     * @see \Cake\Validation\Validator::inList()
      */
-    protected function testDataValidationList(
+    protected function testDataValidationInList(
         Table $table,
         array $list,
         string $fieldName,
