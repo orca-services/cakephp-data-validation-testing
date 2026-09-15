@@ -217,21 +217,21 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that testDataValidationInList passes when the field is datetime.
+     * Test that testDataValidationList passes when the field is datetime.
      *
      * @return void
-     * @covers ::testDataValidationInList
+     * @covers ::testDataValidationList
      */
-    public function testTestDataValidationInList(): void
+    public function testTestDataValidationList(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
         $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $invalidValues = ['Not a date/time', '123'];
-        $this->testDataValidationInList($this->table, $invalidValues, $field, $expectedErrors);
+        $this->testDataValidationList($this->table, $invalidValues, $field, $expectedErrors);
 
         $validValues = ['1900-01-01 00:00:00', '2022-10-12 11:50:32'];
-        $this->testDataValidationInList($this->table, $validValues, $field);
+        $this->testDataValidationList($this->table, $validValues, $field);
     }
 
     /**
@@ -670,32 +670,32 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test the testDataValidationInListContains base method.
+     * Test the testDataValidationListContains base method.
      *
      * @return void
-     * @covers ::testDataValidationInListContains
+     * @covers ::testDataValidationListContains
      */
-    public function testTestDataValidationInListContains(): void
+    public function testTestDataValidationListContains(): void
     {
         $field = 'boolean_field';
         $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
         $invalidValues = ['Not a boolean', 123];
 
-        $this->testDataValidationInListContains($this->table, $invalidValues, $field, $expectedErrors);
+        $this->testDataValidationListContains($this->table, $invalidValues, $field, $expectedErrors);
     }
 
     /**
-     * Test the testDataValidationInListNotContains base method.
+     * Test the testDataValidationListNotContains base method.
      *
      * @return void
-     * @covers ::testDataValidationInListNotContains
+     * @covers ::testDataValidationListNotContains
      */
-    public function testTestDataValidationInListNotContains(): void
+    public function testTestDataValidationListNotContains(): void
     {
         $field = 'boolean_field';
         $validValues = [true, false, 1, 0];
 
-        $this->testDataValidationInListNotContains($this->table, $validValues, $field, ['boolean']);
+        $this->testDataValidationListNotContains($this->table, $validValues, $field, ['boolean']);
     }
 
     /**
