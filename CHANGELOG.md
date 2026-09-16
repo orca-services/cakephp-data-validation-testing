@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
+- Add validation trait method for numeric range
 
 ### Changed
 
