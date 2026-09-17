@@ -820,16 +820,19 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        // Too high
-        $tooHighFieldContent = $upperBound + 1;
         // Too low
-        $tooLowFieldContent = $lowerBound - 1;
+        $tooLowFloat = $lowerBound - 0.1;
+        $tooLowInt = $lowerBound - 1;
+
+        // Too high
+        $tooHighFloat = $upperBound + 0.1;
+        $tooHighInt = $upperBound + 1;
 
         $list = [
-            $tooHighFieldContent,
-            $tooHighFieldContent,
-            $tooLowFieldContent,
-            $tooLowFieldContent,
+            $tooLowFloat,
+            $tooLowInt,
+            $tooHighFloat,
+            $tooHighInt,
         ];
 
         $expected ??= [
@@ -843,12 +846,14 @@ trait DataValidationTestTrait
 
         // Valid
         $list = [
-            $upperBound,
-            $lowerBound,
+            (float)$lowerBound,
+            (int)$lowerBound,
+            (float)$upperBound,
+            (int)$upperBound,
         ];
 
-        // Expect no errors
-        $this->testDataValidationInList($table, $list, $fieldName, [], $options);
+        $expected = [];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $options);
     }
 
     /**

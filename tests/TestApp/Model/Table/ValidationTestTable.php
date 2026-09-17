@@ -66,7 +66,7 @@ class ValidationTestTable extends Table
             ->integer('parent_id')
             ->email('email_field')
             ->uuid('uuid_field')
-            ->range('range_field', [-30.5, 30.5]);
+            ->range('range_field', [-30.0, 30.0]);
 
         return $validator;
     }
