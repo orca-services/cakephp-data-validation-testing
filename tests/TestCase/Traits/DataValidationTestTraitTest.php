@@ -440,10 +440,10 @@ class DataValidationTestTraitTest extends TestCase
     public function testTestDataValidationRange(): void
     {
         // Ensure data validation of the field works as expected first
-        $lowerBound = -30;
-        $upperBound = 30;
+        $lowerBound = -30.5;
+        $upperBound = 30.5;
         $field = 'range_field';
-        $expectedErrors = ['range' => 'The provided value must be between `-30` and `30`, inclusively'];
+        $expectedErrors = ['range' => 'The provided value must be between `-30.5` and `30.5`, inclusively'];
         $dataSet = [$field => $lowerBound - 1];
         $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
         $dataSet = [$field => $upperBound + 1];

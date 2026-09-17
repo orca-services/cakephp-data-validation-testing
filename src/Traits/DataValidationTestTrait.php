@@ -797,8 +797,8 @@ trait DataValidationTestTrait
      *
      * @param Table $table The table to test.
      * @param string $fieldName The field to check the range.
-     * @param int $lowerBound The lower bound to check with.
-     * @param int $upperBound The upper bound to check with.
+     * @param float|int $lowerBound The lower bound to check with.
+     * @param float|int $upperBound The upper bound to check with.
      * @param array|null $expected The expected data validation errors.
      * @param ?array $options Additional options for newEntity.
      * @return void
@@ -807,14 +807,20 @@ trait DataValidationTestTrait
     protected function testDataValidationRange(
         Table $table,
         string $fieldName,
-        int $lowerBound,
-        int $upperBound,
+        int|float $lowerBound,
+        int|float $upperBound,
         ?array $expected = null,
         ?array $options = [],
     ): void {
+        // Too high
+        $tooHighFieldContent = $upperBound + 1;
         // Too low
         $tooLowFieldContent = $lowerBound - 1;
-        $dataset = [$fieldName => $tooLowFieldContent];
+
+        $list = [
+            $tooHighFieldContent,
+            $tooLowFieldContent,
+        ];
 
         $expected ??= [
             'range' => sprintf(
@@ -823,20 +829,16 @@ trait DataValidationTestTrait
                 $upperBound,
             ),
         ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $options);
 
-        // Too high
-        $tooHighFieldContent = $upperBound + 1;
-        $dataset = [$fieldName => $tooHighFieldContent];
-
-        $expected ??= [
-            'lengthBetween' => sprintf(
-                'The provided value must be between `%s` and `%s`, inclusively',
-                $lowerBound,
-                $upperBound,
-            ),
+        // Valid
+        $list = [
+            $upperBound,
+            $lowerBound,
         ];
-        $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
+
+        // Expect no errors
+        $this->testDataValidationInList($table, $list, $fieldName, [], $options);
     }
 
     /**
