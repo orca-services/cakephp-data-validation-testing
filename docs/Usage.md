@@ -80,6 +80,7 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 - `testDataValidationMaxLength($table, $fieldName, $maxLength)`
 - `testDataValidationMinLength($table, $fieldName, $minLength, $expected)`
 - `testDataValidationLengthBetween($table, $fieldName, $minLength, $maxLength)`
+- `testDataValidationRange($table, $fieldName, $lowerBound, $upperBound)`
 
 ### Generic helpers
 
