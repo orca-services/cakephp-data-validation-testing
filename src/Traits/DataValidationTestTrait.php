@@ -352,16 +352,24 @@ trait DataValidationTestTrait
         $errors = $entity->getError($fieldName);
 
         foreach ($expected as $rule => $message) {
-            static::assertArrayHasKey($rule, $errors, sprintf(
-                'Field `%s` does not have expected validation error `%s`.',
-                $fieldName,
+            static::assertArrayHasKey(
                 $rule,
-            ));
-            static::assertSame($message, $errors[$rule], sprintf(
-                'Validation error message for field `%s` and rule `%s` does not match expected.',
-                $fieldName,
-                $rule,
-            ));
+                $errors,
+                sprintf(
+                    'Field `%s` does not have expected validation error `%s`.',
+                    $fieldName,
+                    $rule,
+                ),
+            );
+            static::assertSame(
+                $message,
+                $errors[$rule],
+                sprintf(
+                    'Validation error message for field `%s` and rule `%s` does not match expected.',
+                    $fieldName,
+                    $rule,
+                ),
+            );
         }
     }
 
@@ -819,6 +827,8 @@ trait DataValidationTestTrait
 
         $list = [
             $tooHighFieldContent,
+            $tooHighFieldContent,
+            $tooLowFieldContent,
             $tooLowFieldContent,
         ];
 
