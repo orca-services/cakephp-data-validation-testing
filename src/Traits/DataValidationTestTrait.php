@@ -797,8 +797,8 @@ trait DataValidationTestTrait
      *
      * @param Table $table The table to test.
      * @param string $fieldName The field to check the range.
-     * @param int $lowerBound The lower bound of the field
-     * @param int $upperBound The upper bound of the field
+     * @param int $lowerBound The lower bound to check with.
+     * @param int $upperBound The upper bound to check with.
      * @param array|null $expected The expected data validation errors.
      * @param ?array $options Additional options for newEntity.
      * @return void
@@ -812,9 +812,9 @@ trait DataValidationTestTrait
         ?array $expected = null,
         ?array $options = [],
     ): void {
-        // Too short
-        $tooShortFieldContent = $lowerBound - 1;
-        $dataset = [$fieldName => $tooShortFieldContent];
+        // Too low
+        $tooLowFieldContent = $lowerBound - 1;
+        $dataset = [$fieldName => $tooLowFieldContent];
 
         $expected ??= [
             'range' => sprintf(
@@ -825,9 +825,9 @@ trait DataValidationTestTrait
         ];
         $this->testDataValidation($table, $fieldName, $dataset, $expected, $options);
 
-        // Too long
-        $tooLongFieldContent = $upperBound + 1;
-        $dataset = [$fieldName => $tooLongFieldContent];
+        // Too high
+        $tooHighFieldContent = $upperBound + 1;
+        $dataset = [$fieldName => $tooHighFieldContent];
 
         $expected ??= [
             'lengthBetween' => sprintf(
