@@ -45,12 +45,12 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test the testDataValidation base method
+     * Test the assertDataValidation base method
      *
      * @return void
-     * @covers ::testDataValidation
+     * @covers ::assertDataValidation
      */
-    public function testTestDataValidation(): void
+    public function testAssertDataValidation(): void
     {
         // Ensure data validation of some field works as expected first
         $fieldName = 'not_empty_field';
@@ -60,16 +60,16 @@ class DataValidationTestTraitTest extends TestCase
         $errors = $entity->getError($fieldName);
         static::assertSame($expectedErrors, $errors);
 
-        $this->testDataValidation($this->table, $fieldName, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $fieldName, $dataSet, $expectedErrors);
     }
 
     /**
-     * Test the testDataValidationNoErrors base method
+     * Test the assertDataValidationNoErrors base method
      *
      * @return void
-     * @covers ::testDataValidationNoErrors
+     * @covers ::assertDataValidationNoErrors
      */
-    public function testTestDataValidationNoErrors(): void
+    public function testAssertDataValidationNoErrors(): void
     {
         // Ensure data validation of some field works as expected first
         $fieldName = 'empty_field';
@@ -79,272 +79,272 @@ class DataValidationTestTraitTest extends TestCase
         $errors = $entity->getError($fieldName);
         static::assertSame($expectedErrors, $errors);
 
-        $this->testDataValidationNoErrors($this->table, $fieldName, $dataSet);
+        $this->assertDataValidationNoErrors($this->table, $fieldName, $dataSet);
     }
 
     /**
-     * Test that testDataValidationNotEmpty passes when the field is not empty.
+     * Test that assertDataValidationNotEmpty passes when the field is not empty.
      *
      * @return void
-     * @covers ::testDataValidationNotEmpty
+     * @covers ::assertDataValidationNotEmpty
      */
-    public function testTestDataValidationNotEmpty(): void
+    public function testAssertDataValidationNotEmpty(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'not_empty_field';
         $expectedErrors = ['_empty' => 'This field cannot be left empty'];
         $dataSet = [$field => ''];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationNotEmpty($this->table, $field);
+        $this->assertDataValidationNotEmpty($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationEmpty passes when the field is empty.
+     * Test that assertDataValidationEmpty passes when the field is empty.
      *
      * @return void
-     * @covers ::testDataValidationEmpty
+     * @covers ::assertDataValidationEmpty
      */
-    public function testTestDataValidationEmpty(): void
+    public function testAssertDataValidationEmpty(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'empty_field';
         $dataSet = [$field => ''];
-        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+        $this->assertDataValidationNoErrors($this->table, $field, $dataSet);
 
-        $this->testDataValidationEmpty($this->table, $field);
+        $this->assertDataValidationEmpty($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationRequired passes when the field is required.
+     * Test that assertDataValidationRequired passes when the field is required.
      *
      * @return void
-     * @covers ::testDataValidationRequired
+     * @covers ::assertDataValidationRequired
      */
-    public function testTestDataValidationRequired(): void
+    public function testAssertDataValidationRequired(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'required_field';
         $expectedErrors = ['_required' => 'This field is required'];
         $dataSet = [];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationRequired($this->table, $field);
+        $this->assertDataValidationRequired($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationNotRequired passes when the field is empty.
+     * Test that assertDataValidationNotRequired passes when the field is empty.
      *
      * @return void
-     * @covers ::testDataValidationNotRequired
+     * @covers ::assertDataValidationNotRequired
      */
-    public function testTestDataValidationNotRequired(): void
+    public function testAssertDataValidationNotRequired(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'empty_field';
         $dataSet = [];
-        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+        $this->assertDataValidationNoErrors($this->table, $field, $dataSet);
 
-        $this->testDataValidationNotRequired($this->table, $field);
+        $this->assertDataValidationNotRequired($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationBoolean passes when the field is boolean.
+     * Test that assertDataValidationBoolean passes when the field is boolean.
      *
      * @return void
-     * @covers ::testDataValidationBoolean
+     * @covers ::assertDataValidationBoolean
      */
-    public function testTestDataValidationBoolean(): void
+    public function testAssertDataValidationBoolean(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'boolean_field';
         $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
         $dataSet = [$field => 'Not a boolean'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationBoolean($this->table, $field);
+        $this->assertDataValidationBoolean($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationURLWithProtocol passes when the field is url.
+     * Test that assertDataValidationURLWithProtocol passes when the field is url.
      *
      * @return void
-     * @covers ::testDataValidationURLWithProtocol
+     * @covers ::assertDataValidationURLWithProtocol
      */
-    public function testTestDataValidationURLWithProtocol(): void
+    public function testAssertDataValidationURLWithProtocol(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'url_field';
         $expectedErrors = ['urlWithProtocol' => 'The provided value must be a URL with protocol'];
         $dataSet = [$field => 'no-protocol.com'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationURLWithProtocol($this->table, $field);
+        $this->assertDataValidationURLWithProtocol($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationDateTime passes when the field is datetime.
+     * Test that assertDataValidationDateTime passes when the field is datetime.
      *
      * @return void
-     * @covers ::testDataValidationDateTime
+     * @covers ::assertDataValidationDateTime
      */
-    public function testTestDataValidationDateTime(): void
+    public function testAssertDataValidationDateTime(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
         $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $dataSet = [$field => 'Not a date/time'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationDateTime($this->table, $field);
+        $this->assertDataValidationDateTime($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationDate passes when the field is date.
+     * Test that assertDataValidationDate passes when the field is date.
      *
      * @return void
-     * @covers ::testDataValidationDate
+     * @covers ::assertDataValidationDate
      */
-    public function testTestDataValidationDate(): void
+    public function testAssertDataValidationDate(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'date_field';
         $expectedErrors = ['date' => 'The provided value must be a date of one of these formats: `ymd`'];
         $dataSet = [$field => 'Not a date'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationDate($this->table, $field);
+        $this->assertDataValidationDate($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationInList passes when the field is datetime.
+     * Test that assertDataValidationInList passes when the field is datetime.
      *
      * @return void
-     * @covers ::testDataValidationInList
+     * @covers ::assertDataValidationInList
      */
-    public function testTestDataValidationInList(): void
+    public function testAssertDataValidationInList(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'datetime_field';
         $expectedErrors = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
         $invalidValues = ['Not a date/time', '123'];
-        $this->testDataValidationInList($this->table, $invalidValues, $field, $expectedErrors);
+        $this->assertDataValidationInList($this->table, $invalidValues, $field, $expectedErrors);
 
         $validValues = ['1900-01-01 00:00:00', '2022-10-12 11:50:32'];
-        $this->testDataValidationInList($this->table, $validValues, $field);
+        $this->assertDataValidationInList($this->table, $validValues, $field);
     }
 
     /**
-     * Test that testDataValidationMaxLength passes when the value is less than the max length.
+     * Test that assertDataValidationMaxLength passes when the value is less than the max length.
      *
      * @return void
-     * @covers ::testDataValidationMaxLength
+     * @covers ::assertDataValidationMaxLength
      */
-    public function testTestDataValidationMaxLength(): void
+    public function testAssertDataValidationMaxLength(): void
     {
         // Ensure data validation of the field works as expected first
         $maxLength = 10;
         $field = 'max_length_field';
         $expectedErrors = ['maxLength' => 'The provided value must be at most `10` characters long'];
         $dataSet = [$field => str_repeat('A', $maxLength + 1)];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationMaxLength($this->table, $field, $maxLength);
+        $this->assertDataValidationMaxLength($this->table, $field, $maxLength);
     }
 
     /**
-     * Test that testDataValidationMinLength passes when the value is greater than the min length.
+     * Test that assertDataValidationMinLength passes when the value is greater than the min length.
      *
      * @return void
-     * @covers ::testDataValidationMinLength
+     * @covers ::assertDataValidationMinLength
      */
-    public function testTestDataValidationMinLength(): void
+    public function testAssertDataValidationMinLength(): void
     {
         // Ensure data validation of the field works as expected first
         $minLength = 5;
         $field = 'min_length_field';
         $expectedErrors = ['minLength' => 'The provided value must be at least `5` characters long'];
         $dataSet = [$field => str_repeat('A', $minLength - 1)];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationMinLength($this->table, $field, $minLength);
+        $this->assertDataValidationMinLength($this->table, $field, $minLength);
     }
 
     /**
-     * Test that testDataValidationScalar passes when the field is scalar.
+     * Test that assertDataValidationScalar passes when the field is scalar.
      *
      * @return void
-     * @covers ::testDataValidationScalar
+     * @covers ::assertDataValidationScalar
      */
-    public function testTestDataValidationScalar(): void
+    public function testAssertDataValidationScalar(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'scalar_field';
         $entity = $this->table->newEntity([$field => []]);
         static::assertArrayHasKey('scalar', $entity->getError($field));
 
-        $this->testDataValidationScalar($this->table, $field);
+        $this->assertDataValidationScalar($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationDecimal passes when the field is decimal.
+     * Test that assertDataValidationDecimal passes when the field is decimal.
      *
      * @return void
-     * @covers ::testDataValidationDecimal
+     * @covers ::assertDataValidationDecimal
      */
-    public function testTestDataValidationDecimal(): void
+    public function testAssertDataValidationDecimal(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'decimal_field';
         $expectedErrors = ['decimal' => 'The provided value must be decimal with any number of decimal places, including none'];
         $dataSet = [$field => 'not a decimal'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationDecimal($this->table, $field);
+        $this->assertDataValidationDecimal($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationInteger passes when the field is integer.
+     * Test that assertDataValidationInteger passes when the field is integer.
      *
      * @return void
-     * @covers ::testDataValidationInteger
+     * @covers ::assertDataValidationInteger
      */
-    public function testTestDataValidationInteger(): void
+    public function testAssertDataValidationInteger(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'integer_field';
         $expectedErrors = ['integer' => 'The provided value must be an integer'];
         $dataSet = [$field => 'not a integer'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationInteger($this->table, $field);
+        $this->assertDataValidationInteger($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationNonNegativeInteger passes when the field is a non-negative integer.
+     * Test that assertDataValidationNonNegativeInteger passes when the field is a non-negative integer.
      *
      * @return void
-     * @covers ::testDataValidationNonNegativeInteger
+     * @covers ::assertDataValidationNonNegativeInteger
      */
-    public function testTestDataValidationNonNegativeInteger(): void
+    public function testAssertDataValidationNonNegativeInteger(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'non_negative_integer_field';
         $expectedErrors = ['nonNegativeInteger' => 'The provided value must be a non-negative integer'];
         $dataSet = [$field => 'not a integer'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationNonNegativeInteger($this->table, $field);
+        $this->assertDataValidationNonNegativeInteger($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationGreaterThanOrEqual passes when the field value
+     * Test that assertDataValidationGreaterThanOrEqual passes when the field value
      * is greater than or equal to the configured threshold.
      *
      * @return void
-     * @covers ::testDataValidationGreaterThanOrEqual
+     * @covers ::assertDataValidationGreaterThanOrEqual
      */
-    public function testTestDataValidationGreaterThanOrEqual(): void
+    public function testAssertDataValidationGreaterThanOrEqual(): void
     {
         // Ensure data validation of the field works as expected first
         $threshold = 10;
@@ -358,26 +358,26 @@ class DataValidationTestTraitTest extends TestCase
 
         // Just below the threshold should fail
         $dataSet = [$field => $threshold - 1];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
         // At the threshold should pass
         $dataSet = [$field => $threshold];
-        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+        $this->assertDataValidationNoErrors($this->table, $field, $dataSet);
 
         // Above the threshold should pass
         $dataSet = [$field => $threshold + 1];
-        $this->testDataValidationNoErrors($this->table, $field, $dataSet);
+        $this->assertDataValidationNoErrors($this->table, $field, $dataSet);
 
-        $this->testDataValidationGreaterThanOrEqual($this->table, $field, $threshold);
+        $this->assertDataValidationGreaterThanOrEqual($this->table, $field, $threshold);
     }
 
     /**
-     * Test that testDataValidationEmail passes when the field is a valid email.
+     * Test that assertDataValidationEmail passes when the field is a valid email.
      *
      * @return void
-     * @covers ::testDataValidationEmail
+     * @covers ::assertDataValidationEmail
      */
-    public function testTestDataValidationEmail(): void
+    public function testAssertDataValidationEmail(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'email_field';
@@ -385,18 +385,18 @@ class DataValidationTestTraitTest extends TestCase
             'email' => 'The provided value must be an e-mail address',
         ];
         $dataSet = [$field => 'Not an email'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationEmail($this->table, $field);
+        $this->assertDataValidationEmail($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationUuid passes when the field is a valid uuid.
+     * Test that assertDataValidationUuid passes when the field is a valid uuid.
      *
      * @return void
-     * @covers ::testDataValidationUuid
+     * @covers ::assertDataValidationUuid
      */
-    public function testTestDataValidationUuid(): void
+    public function testAssertDataValidationUuid(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'uuid_field';
@@ -404,18 +404,18 @@ class DataValidationTestTraitTest extends TestCase
             'uuid' => 'The provided value must be a UUID',
         ];
         $dataSet = [$field => 'Not a uuid'];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationUuid($this->table, $field);
+        $this->assertDataValidationUuid($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationLengthBetween passes when the field is between the min and max length.
+     * Test that assertDataValidationLengthBetween passes when the field is between the min and max length.
      *
      * @return void
-     * @covers ::testDataValidationLengthBetween
+     * @covers ::assertDataValidationLengthBetween
      */
-    public function testTestDataValidationLengthBetween(): void
+    public function testAssertDataValidationLengthBetween(): void
     {
         // Ensure data validation of the field works as expected first
         $minLength = 5;
@@ -423,20 +423,20 @@ class DataValidationTestTraitTest extends TestCase
         $field = 'length_between_field';
         $expectedErrors = ['lengthBetween' => 'The length of the provided value must be between `5` and `10`, inclusively'];
         $dataSet = [$field => str_repeat('A', $minLength - 1)];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
         $dataSet = [$field => str_repeat('A', $maxLength + 1)];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationLengthBetween($this->table, $field, $minLength, $maxLength);
+        $this->assertDataValidationLengthBetween($this->table, $field, $minLength, $maxLength);
     }
 
     /**
-     * Test that testDataValidationRange passes when the field is between the lower and upper bound.
+     * Test that assertDataValidationRange passes when the field is between the lower and upper bound.
      *
      * @return void
-     * @covers ::testDataValidationRange
+     * @covers ::assertDataValidationRange
      */
-    public function testTestDataValidationRange(): void
+    public function testAssertDataValidationRange(): void
     {
         // Ensure data validation of the field works as expected first
         $lowerBound = -30.0;
@@ -445,29 +445,29 @@ class DataValidationTestTraitTest extends TestCase
         $expectedErrors = ['range' => 'The provided value must be between `-30` and `30`, inclusively'];
 
         $dataSet = [$field => $lowerBound - 1];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
         $dataSet = [$field => $upperBound + 1];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationRange($this->table, $field, $lowerBound, $upperBound);
+        $this->assertDataValidationRange($this->table, $field, $lowerBound, $upperBound);
     }
 
     /**
-     * Test that testDataValidationNaturalNumber passes when the field is a natural number.
+     * Test that assertDataValidationNaturalNumber passes when the field is a natural number.
      *
      * @return void
-     * @covers ::testDataValidationNaturalNumber
+     * @covers ::assertDataValidationNaturalNumber
      */
-    public function testTestDataValidationNaturalNumber(): void
+    public function testAssertDataValidationNaturalNumber(): void
     {
         // Ensure data validation of the field works as expected first
         $field = 'natural_number_field';
         $expectedErrors = ['naturalNumber' => 'The provided value must be a natural number'];
         $dataSet = [$field => -1];
-        $this->testDataValidation($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidation($this->table, $field, $dataSet, $expectedErrors);
 
-        $this->testDataValidationNaturalNumber($this->table, $field);
+        $this->assertDataValidationNaturalNumber($this->table, $field);
     }
 
     /**
@@ -479,7 +479,7 @@ class DataValidationTestTraitTest extends TestCase
     public function testTestFullDataValidationNoErrors(): void
     {
         $dataSet = ['required_field' => 'required', 'multi_rule_field' => 1];
-        $this->testFullDataValidationNoErrors($this->table, $dataSet);
+        $this->assertFullDataValidationNoErrors($this->table, $dataSet);
     }
 
     /**
@@ -495,7 +495,7 @@ class DataValidationTestTraitTest extends TestCase
             'not_empty_field' => ['_empty' => 'This field cannot be left empty'],
             'required_field' => ['_required' => 'This field is required'],
         ];
-        $this->testFullDataValidation($this->table, $dataSet, $expectedErrors);
+        $this->assertFullDataValidation($this->table, $dataSet, $expectedErrors);
     }
 
     /**
@@ -518,7 +518,7 @@ class DataValidationTestTraitTest extends TestCase
         static::assertFalse($this->table->save($duplicate));
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
-        $this->testDataRules($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataRules($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
@@ -537,16 +537,16 @@ class DataValidationTestTraitTest extends TestCase
         static::assertNotFalse($this->table->save($entity));
         static::assertEmpty($entity->getError($field));
 
-        $this->testDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid('', true)]);
+        $this->assertDataRulesNoErrors($this->table, $field, [$field => 'another-unique-' . uniqid('', true)]);
     }
 
     /**
-     * Test that testDataValidationForeignKey passes when the foreign key does not exist.
+     * Test that assertDataValidationForeignKey passes when the foreign key does not exist.
      *
      * @return void
-     * @covers ::testDataValidationForeignKey
+     * @covers ::assertDataValidationForeignKey
      */
-    public function testTestDataValidationForeignKey(): void
+    public function testAssertDataValidationForeignKey(): void
     {
         // Ensure the rule works as expected first
         $field = 'parent_id';
@@ -557,42 +557,42 @@ class DataValidationTestTraitTest extends TestCase
         static::assertFalse($this->table->checkRules($entity));
         static::assertSame($expectedErrors, $entity->getError($field));
 
-        $this->testDataValidationForeignKey($this->table, $field, $notExistingForeignKey);
+        $this->assertDataValidationForeignKey($this->table, $field, $notExistingForeignKey);
     }
 
     /**
-     * Test that testDataValidationForeignKey passes with the default not existing foreign key.
+     * Test that assertDataValidationForeignKey passes with the default not existing foreign key.
      *
      * @return void
-     * @covers ::testDataValidationForeignKey
+     * @covers ::assertDataValidationForeignKey
      */
-    public function testTestDataValidationForeignKeyDefault(): void
+    public function testAssertDataValidationForeignKeyDefault(): void
     {
         $field = 'parent_id';
-        $this->testDataValidationForeignKey($this->table, $field);
+        $this->assertDataValidationForeignKey($this->table, $field);
     }
 
     /**
-     * Test that testDataValidationForeignKey accepts a custom expected error.
+     * Test that assertDataValidationForeignKey accepts a custom expected error.
      *
      * @return void
-     * @covers ::testDataValidationForeignKey
+     * @covers ::assertDataValidationForeignKey
      */
-    public function testTestDataValidationForeignKeyCustomExpected(): void
+    public function testAssertDataValidationForeignKeyCustomExpected(): void
     {
         $field = 'parent_id';
         $expectedErrors = ['_existsIn' => 'This value does not exist'];
 
-        $this->testDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
+        $this->assertDataValidationForeignKey($this->table, $field, 999999, $expectedErrors);
     }
 
     /**
-     * Test that testDataValidationIsUnique passes when the field value is not unique.
+     * Test that assertDataValidationIsUnique passes when the field value is not unique.
      *
      * @return void
-     * @covers ::testDataValidationIsUnique
+     * @covers ::assertDataValidationIsUnique
      */
-    public function testTestDataValidationIsUnique(): void
+    public function testAssertDataValidationIsUnique(): void
     {
         // Ensure the rule works as expected first
         $field = 'unique_field';
@@ -612,16 +612,16 @@ class DataValidationTestTraitTest extends TestCase
 
         // Use a different value since the trait method will also save a record
         $this->table->deleteAll([]);
-        $this->testDataValidationIsUnique($this->table, $field, 'another-duplicate-value', $dataset);
+        $this->assertDataValidationIsUnique($this->table, $field, 'another-duplicate-value', $dataset);
     }
 
     /**
-     * Test that testDataValidationIsUnique accepts a custom expected error.
+     * Test that assertDataValidationIsUnique accepts a custom expected error.
      *
      * @return void
-     * @covers ::testDataValidationIsUnique
+     * @covers ::assertDataValidationIsUnique
      */
-    public function testTestDataValidationIsUniqueCustomExpected(): void
+    public function testAssertDataValidationIsUniqueCustomExpected(): void
     {
         $field = 'unique_field';
         $dataset = [
@@ -630,7 +630,7 @@ class DataValidationTestTraitTest extends TestCase
         ];
         $expectedErrors = ['_isUnique' => 'This value is already in use'];
 
-        $this->testDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
+        $this->assertDataValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
     }
 
     /**
@@ -655,16 +655,16 @@ class DataValidationTestTraitTest extends TestCase
         static::assertFalse($this->table->save($duplicate));
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
-        $this->testRules($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertRules($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
-     * Test the testDataValidationContains base method.
+     * Test the assertDataValidationContains base method.
      *
      * @return void
-     * @covers ::testDataValidationContains
+     * @covers ::assertDataValidationContains
      */
-    public function testTestDataValidationContains(): void
+    public function testAssertDataValidationContains(): void
     {
         // An invalid scalar value must produce a `scalar` error
         $field = 'scalar_field';
@@ -673,52 +673,52 @@ class DataValidationTestTraitTest extends TestCase
         $entity = $this->table->newEntity($dataSet);
         static::assertArrayHasKey('scalar', $entity->getError($field));
 
-        $this->testDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertDataValidationContains($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
-     * Test the testDataValidationNotContains base method.
+     * Test the assertDataValidationNotContains base method.
      *
      * @return void
-     * @covers ::testDataValidationNotContains
+     * @covers ::assertDataValidationNotContains
      */
-    public function testTestDataValidationNotContains(): void
+    public function testAssertDataValidationNotContains(): void
     {
         // A valid boolean value must not produce a `boolean` error
         $field = 'boolean_field';
         $entity = $this->table->newEntity([$field => true]);
         static::assertArrayNotHasKey('boolean', $entity->getError($field));
 
-        $this->testDataValidationNotContains($this->table, $field, [$field => true], ['boolean']);
+        $this->assertDataValidationNotContains($this->table, $field, [$field => true], ['boolean']);
     }
 
     /**
-     * Test the testDataValidationListContains base method.
+     * Test the assertDataValidationListContains base method.
      *
      * @return void
-     * @covers ::testDataValidationListContains
+     * @covers ::assertDataValidationListContains
      */
-    public function testTestDataValidationListContains(): void
+    public function testAssertDataValidationListContains(): void
     {
         $field = 'boolean_field';
         $expectedErrors = ['boolean' => 'The provided value must be a boolean'];
         $invalidValues = ['Not a boolean', 123];
 
-        $this->testDataValidationListContains($this->table, $invalidValues, $field, $expectedErrors);
+        $this->assertDataValidationListContains($this->table, $invalidValues, $field, $expectedErrors);
     }
 
     /**
-     * Test the testDataValidationListNotContains base method.
+     * Test the assertDataValidationListNotContains base method.
      *
      * @return void
-     * @covers ::testDataValidationListNotContains
+     * @covers ::assertDataValidationListNotContains
      */
-    public function testTestDataValidationListNotContains(): void
+    public function testAssertDataValidationListNotContains(): void
     {
         $field = 'boolean_field';
         $validValues = [true, false, 1, 0];
 
-        $this->testDataValidationListNotContains($this->table, $validValues, $field, ['boolean']);
+        $this->assertDataValidationListNotContains($this->table, $validValues, $field, ['boolean']);
     }
 
     /**
@@ -744,7 +744,7 @@ class DataValidationTestTraitTest extends TestCase
      * Test that a type-specific method only asserts its own rule and ignores unrelated errors.
      *
      * @return void
-     * @covers ::testDataValidationInteger
+     * @covers ::assertDataValidationInteger
      */
     public function testTypeSpecificMethodIgnoresUnrelatedErrors(): void
     {
@@ -757,6 +757,6 @@ class DataValidationTestTraitTest extends TestCase
         static::assertArrayHasKey('maxLength', $errors);
 
         // The type-specific method still passes because it checks for the `integer` rule, only
-        $this->testDataValidationInteger($this->table, $field);
+        $this->assertDataValidationInteger($this->table, $field);
     }
 }
