@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Optional custom `$expected` parameter for `testDataValidationForeignKey()` and `testDataValidationIsUnique()`.
 
 ### Changed
+- **BREAKING CHANGE:** Replace `test` prefix in all test trait method names with `assert`.
 - **BREAKING CHANGE:** All type-specific/rule-dedicated methods now assert only their own validation rule for the field, ignoring others.
 
 ### Fixed
