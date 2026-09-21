@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - `testDataValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
-- `testDataValidationInListContains()` and `testDataValidationInListNotContains()` list helpers.
+- `testDataValidationListContains()` and `testDataValidationListNotContains()` list helpers.
 - Optional custom `$expected` parameter for `testDataValidationForeignKey()` and `testDataValidationIsUnique()`.
 
 ### Changed
