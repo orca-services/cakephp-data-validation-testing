@@ -943,6 +943,62 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate the range data validation of a field for a given table
+     *
+     * @param Table $table The table to test.
+     * @param string $fieldName The field to check the range.
+     * @param float|int $lowerBound The lower bound to check with.
+     * @param float|int $upperBound The upper bound to check with.
+     * @param array|null $expected The expected data validation errors.
+     * @param ?array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::range()
+     */
+    protected function testDataValidationRange(
+        Table $table,
+        string $fieldName,
+        int|float $lowerBound,
+        int|float $upperBound,
+        ?array $expected = null,
+        ?array $options = [],
+    ): void {
+        // Too low
+        $tooLowFloat = $lowerBound - 0.1;
+        $tooLowInt = $lowerBound - 1;
+
+        // Too high
+        $tooHighFloat = $upperBound + 0.1;
+        $tooHighInt = $upperBound + 1;
+
+        $list = [
+            $tooLowFloat,
+            $tooLowInt,
+            $tooHighFloat,
+            $tooHighInt,
+        ];
+
+        $expected ??= [
+            'range' => sprintf(
+                'The provided value must be between `%s` and `%s`, inclusively',
+                $lowerBound,
+                $upperBound,
+            ),
+        ];
+        $this->testDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+
+        // Valid
+        $list = [
+            (float)$lowerBound,
+            (int)$lowerBound,
+            (float)$upperBound,
+            (int)$upperBound,
+        ];
+
+        $expected = [];
+        $this->testDataValidationInList($table, $list, $fieldName, $expected, $options);
+    }
+
+    /**
      * Validate that a given field is validated as a natural number (positive integers only)
      *
      * @param Table $table The table to test.

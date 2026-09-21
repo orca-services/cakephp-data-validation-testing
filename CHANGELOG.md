@@ -18,6 +18,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Dependencies
 
+## [2.5.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.5.0) - 2026-09-17
+
+### Added
+- Add validation trait method for numeric range
+
 ## [2.4.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.4.0) - 2026-08-25
 
 ### Added
