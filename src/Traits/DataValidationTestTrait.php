@@ -994,8 +994,8 @@ trait DataValidationTestTrait
             (int)$upperBound,
         ];
 
-        $expected = [];
-        $this->testDataValidationInList($table, $list, $fieldName, $expected, $options);
+        $notExpected = ['range'];
+        $this->testDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
