@@ -66,7 +66,13 @@ class ValidationTestTable extends Table
             ->integer('parent_id')
             ->email('email_field')
             ->uuid('uuid_field')
-            ->range('range_field', [-30.0, 30.0]);
+            ->range('range_field', [-30.0, 30.0])
+            // A field with more than one validation rule, used to assert that the
+            // type-specific trait methods only check their own rule and ignore others.
+            ->requirePresence('multi_rule_field')
+            ->integer('multi_rule_field')
+            ->maxLength('multi_rule_field', 3)
+            ->allowEmptyString('multi_rule_field');
 
         return $validator;
     }

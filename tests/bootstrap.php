@@ -83,7 +83,8 @@ $connection->execute('
         unique_field VARCHAR(255) UNIQUE,
         email_field VARCHAR(255),
         uuid VARCHAR(36),
-        range_field INT
+        range_field INT,
+        multi_rule_field VARCHAR(255)
     )
 ');
 
