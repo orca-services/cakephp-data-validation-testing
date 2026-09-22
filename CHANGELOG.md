@@ -6,16 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
-- `testDataValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
-- `testDataValidationListContains()` and `testDataValidationListNotContains()` list helpers.
-- Optional custom `$expected` parameter for `testDataValidationForeignKey()` and `testDataValidationIsUnique()`.
+- `assertValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
+- `assertValidationListContains()` and `assertValidationListNotContains()` list helpers.
+- Optional custom `$expected` parameter for `assertValidationForeignKey()` and `assertValidationIsUnique()`.
 
 ### Changed
 - **BREAKING CHANGE:** Replace `testData` prefix in all test trait method names with `assert`. E.g. `testDataValidationNotEmpty()` becomes `assertValidationNotEmpty()`.
 - **BREAKING CHANGE:** All type-specific/rule-dedicated methods now assert only their own validation rule for the field, ignoring others.
 
 ### Fixed
-- Ignore data validation in `testDataValidationIsUnique()` to correctly assert build rules.
+- Ignore data validation in `assertValidationIsUnique()` to correctly assert build rules.
 
 ### Dependencies
 
