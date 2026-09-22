@@ -31,7 +31,7 @@ trait DataValidationTestTrait
      * @see \Cake\Validation\Validator::notEmptyString()
      * @see \Cake\Validation\Validator::notEmptyTime()
      */
-    protected function assertDataValidationNotEmpty(
+    protected function assertValidationNotEmpty(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -40,7 +40,7 @@ trait DataValidationTestTrait
         $list = [null, ''];
 
         $expected = ['_empty' => 'This field cannot be left empty'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -59,7 +59,7 @@ trait DataValidationTestTrait
      * @see \Cake\Validation\Validator::allowEmptyString()
      * @see \Cake\Validation\Validator::allowEmptyTime()
      */
-    protected function assertDataValidationEmpty(
+    protected function assertValidationEmpty(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -68,7 +68,7 @@ trait DataValidationTestTrait
         $list = [null, ''];
 
         $notExpected = ['_empty'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -88,14 +88,14 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::requirePresence()
      */
-    protected function assertDataValidationRequired(
+    protected function assertValidationRequired(
         Table $table,
         string $fieldName,
         array $dataSet = [],
         array $options = [],
     ): void {
         $expected = ['_required' => 'This field is required'];
-        $this->assertDataValidationContains($table, $fieldName, $dataSet, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -108,14 +108,14 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::requirePresence()
      */
-    protected function assertDataValidationNotRequired(
+    protected function assertValidationNotRequired(
         Table $table,
         string $fieldName,
         array $dataSet = [],
         array $options = [],
     ): void {
         $notExpected = ['_required'];
-        $this->assertDataValidationNotContains($table, $fieldName, $dataSet, $notExpected, $options);
+        $this->assertValidationNotContains($table, $fieldName, $dataSet, $notExpected, $options);
     }
 
     /**
@@ -128,7 +128,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::boolean()
      */
-    protected function assertDataValidationBoolean(
+    protected function assertValidationBoolean(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -137,7 +137,7 @@ trait DataValidationTestTrait
         // Valid values
         $list = [true, false, 1, 0];
         $notExpected = ['boolean'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -149,7 +149,7 @@ trait DataValidationTestTrait
         // Invalid values
         $list = ['Not a boolean', 123, []];
         $expected = ['boolean' => 'The provided value must be a boolean'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -162,7 +162,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::urlWithProtocol()
      */
-    protected function assertDataValidationURLWithProtocol(
+    protected function assertValidationURLWithProtocol(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -171,7 +171,7 @@ trait DataValidationTestTrait
         // Valid values
         $list = ['https://valid.com', 'http://valid.com'];
         $notExpected = ['urlWithProtocol'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -183,7 +183,7 @@ trait DataValidationTestTrait
         // Invalid values
         $list = ['no-protocol.com', 'htp://foo.com'];
         $expected = ['urlWithProtocol' => 'The provided value must be a URL with protocol'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -196,7 +196,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::dateTime()
      */
-    protected function assertDataValidationDateTime(
+    protected function assertValidationDateTime(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -211,7 +211,7 @@ trait DataValidationTestTrait
             new FrozenTime(),
         ];
         $notExpected = ['dateTime'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -229,7 +229,7 @@ trait DataValidationTestTrait
             '123', // Numeric
         ];
         $expected = ['dateTime' => 'The provided value must be a date and time of one of these formats: `ymd`'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -242,7 +242,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::date()
      */
-    protected function assertDataValidationDate(
+    protected function assertValidationDate(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -259,7 +259,7 @@ trait DataValidationTestTrait
             new FrozenTime(),
         ];
         $notExpected = ['date'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -277,7 +277,7 @@ trait DataValidationTestTrait
         $expected = [
             'date' => 'The provided value must be a date of one of these formats: `ymd`',
         ];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
     }
 
     /**
@@ -292,7 +292,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::inList()
      */
-    protected function assertDataValidationInList(
+    protected function assertValidationInList(
         Table $table,
         array $list,
         string $fieldName,
@@ -302,7 +302,7 @@ trait DataValidationTestTrait
     ): void {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
-            $this->assertDataValidation($table, $fieldName, $dataSet, $expected, $options);
+            $this->assertValidation($table, $fieldName, $dataSet, $expected, $options);
         }
     }
 
@@ -316,14 +316,14 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertDataValidationNoErrors(
+    protected function assertValidationNoErrors(
         Table $table,
         string $fieldName,
         array $dataSet,
         array $options = [],
     ): void {
         $expected = [];
-        $this->assertDataValidation($table, $fieldName, $dataSet, $expected, $options);
+        $this->assertValidation($table, $fieldName, $dataSet, $expected, $options);
     }
 
     /**
@@ -352,7 +352,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertDataValidation(
+    protected function assertValidation(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -377,7 +377,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertDataValidationContains(
+    protected function assertValidationContains(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -387,7 +387,7 @@ trait DataValidationTestTrait
         $entity = $table->newEntity($dataSet, $options);
         $errors = $entity->getError($fieldName);
 
-        $this->assertDataValidationErrorsContain($fieldName, $errors, $expected);
+        $this->assertValidationErrorsContain($fieldName, $errors, $expected);
     }
 
     /**
@@ -403,7 +403,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertDataValidationNotContains(
+    protected function assertValidationNotContains(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -436,7 +436,7 @@ trait DataValidationTestTrait
      * @param array $expected The expected errors ("rule name" => "message") that must be present.
      * @return void
      */
-    protected function assertDataValidationErrorsContain(string $fieldName, array $errors, array $expected): void
+    protected function assertValidationErrorsContain(string $fieldName, array $errors, array $expected): void
     {
         foreach ($expected as $rule => $message) {
             static::assertArrayHasKey(
@@ -473,7 +473,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function assertDataValidationListContains(
+    protected function assertValidationListContains(
         Table $table,
         array $list,
         string $fieldName,
@@ -483,7 +483,7 @@ trait DataValidationTestTrait
     ): void {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
-            $this->assertDataValidationContains($table, $fieldName, $dataSet, $expected, $options);
+            $this->assertValidationContains($table, $fieldName, $dataSet, $expected, $options);
         }
     }
 
@@ -500,7 +500,7 @@ trait DataValidationTestTrait
      * @param array $options Additional options for newEntity.
      * @return void
      */
-    protected function assertDataValidationListNotContains(
+    protected function assertValidationListNotContains(
         Table $table,
         array $list,
         string $fieldName,
@@ -510,7 +510,7 @@ trait DataValidationTestTrait
     ): void {
         foreach ($list as $value) {
             $dataSet = array_merge($additionalDataSet, [$fieldName => $value]);
-            $this->assertDataValidationNotContains($table, $fieldName, $dataSet, $rules, $options);
+            $this->assertValidationNotContains($table, $fieldName, $dataSet, $rules, $options);
         }
     }
 
@@ -579,7 +579,7 @@ trait DataValidationTestTrait
      * @return void
      * @todo Move to a rules dedicated helper class.
      */
-    protected function assertDataRulesNoErrors(
+    protected function assertRulesNoErrors(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -607,7 +607,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::maxLength()
      */
-    protected function assertDataValidationMaxLength(
+    protected function assertValidationMaxLength(
         Table $table,
         string $fieldName,
         int $maxLength,
@@ -618,7 +618,7 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => $tooLongFieldContent];
 
         $expected ??= ['maxLength' => sprintf('The provided value must be at most `%d` characters long', $maxLength)];
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -632,7 +632,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::minLength()
      */
-    protected function assertDataValidationMinLength(
+    protected function assertValidationMinLength(
         Table $table,
         string $fieldName,
         int $minLength,
@@ -642,7 +642,7 @@ trait DataValidationTestTrait
         $tooShortFieldContent = str_repeat('A', $minLength - 1);
         $dataset = [$fieldName => $tooShortFieldContent];
         $expected ??= ['minLength' => sprintf('The provided value must be at least `%d` characters long', $minLength)];
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -655,7 +655,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::scalar()
      */
-    protected function assertDataValidationScalar(
+    protected function assertValidationScalar(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -664,7 +664,7 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => []]; // A non-scalar value
 
         $expected ??= ['scalar' => 'The provided value must be scalar'];
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -677,7 +677,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::decimal()
      */
-    protected function assertDataValidationDecimal(
+    protected function assertValidationDecimal(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -697,12 +697,12 @@ trait DataValidationTestTrait
         $expected ??= [
             'decimal' => 'The provided value must be decimal with any number of decimal places, including none',
         ];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [-99.0, 0.099];
         $notExpected = ['decimal'];
-        $this->assertDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
+        $this->assertValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -715,7 +715,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::integer()
      */
-    protected function assertDataValidationInteger(
+    protected function assertValidationInteger(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -733,12 +733,12 @@ trait DataValidationTestTrait
             'ab0,099',
         ];
         $expected ??= ['integer' => 'The provided value must be an integer'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [-99, 99];
         $notExpected = ['integer'];
-        $this->assertDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
+        $this->assertValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -751,7 +751,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::nonNegativeInteger()
      */
-    protected function assertDataValidationNonNegativeInteger(
+    protected function assertValidationNonNegativeInteger(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -761,13 +761,13 @@ trait DataValidationTestTrait
         $dataset = [$fieldName => '-1'];
         $expected ??= ['nonNegativeInteger' => 'The provided value must be a non-negative integer'];
 
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
 
         // Non-negative integer
         $dataset = [$fieldName => '0'];
 
         $notExpected = ['nonNegativeInteger'];
-        $this->assertDataValidationNotContains($table, $fieldName, $dataset, $notExpected, $options);
+        $this->assertValidationNotContains($table, $fieldName, $dataset, $notExpected, $options);
     }
 
     /**
@@ -782,7 +782,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::greaterThanOrEqual()
      */
-    protected function assertDataValidationGreaterThanOrEqual(
+    protected function assertValidationGreaterThanOrEqual(
         Table $table,
         string $fieldName,
         float|int $threshold,
@@ -802,13 +802,13 @@ trait DataValidationTestTrait
                 $threshold,
             ),
         ];
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
 
         // Valid values: exactly at and just above the threshold
         $aboveThreshold = is_int($threshold) ? $threshold + 1 : $threshold + 0.01;
         $list = [$threshold, $aboveThreshold];
         $notExpected = ['greaterThanOrEqual'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -828,7 +828,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::email()
      */
-    protected function assertDataValidationEmail(
+    protected function assertValidationEmail(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -842,7 +842,7 @@ trait DataValidationTestTrait
             'in@valid.1',
         ];
         $expected ??= ['email' => 'The provided value must be an e-mail address'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [
@@ -852,7 +852,7 @@ trait DataValidationTestTrait
             'va_lid.123+spamfolder@email.test',
         ];
         $notExpected = ['email'];
-        $this->assertDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
+        $this->assertValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -865,7 +865,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::uuid()
      */
-    protected function assertDataValidationUuid(
+    protected function assertValidationUuid(
         Table $table,
         string $fieldName,
         ?array $expected = null,
@@ -879,7 +879,7 @@ trait DataValidationTestTrait
             'notAUuid', // Not a UUID
         ];
         $expected ??= ['uuid' => 'The provided value must be a UUID'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid values
         $list = [
@@ -894,7 +894,7 @@ trait DataValidationTestTrait
             'fc93ab0e-c99e-4b58-975e-9c5e68c53624', // GUID
         ];
         $notExpected = ['uuid'];
-        $this->assertDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
+        $this->assertValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -909,7 +909,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::lengthBetween()
      */
-    protected function assertDataValidationLengthBetween(
+    protected function assertValidationLengthBetween(
         Table $table,
         string $fieldName,
         int $minLength,
@@ -929,7 +929,7 @@ trait DataValidationTestTrait
                     $maxlength,
                 ),
             ];
-            $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+            $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
         }
 
         // Too long
@@ -943,7 +943,7 @@ trait DataValidationTestTrait
                 $maxlength,
             ),
         ];
-        $this->assertDataValidationContains($table, $fieldName, $dataset, $expected, $options);
+        $this->assertValidationContains($table, $fieldName, $dataset, $expected, $options);
     }
 
     /**
@@ -958,7 +958,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::range()
      */
-    protected function assertDataValidationRange(
+    protected function assertValidationRange(
         Table $table,
         string $fieldName,
         int|float $lowerBound,
@@ -988,7 +988,7 @@ trait DataValidationTestTrait
                 $upperBound,
             ),
         ];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, [], $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, [], $options);
 
         // Valid
         $list = [
@@ -999,7 +999,7 @@ trait DataValidationTestTrait
         ];
 
         $notExpected = ['range'];
-        $this->assertDataValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
+        $this->assertValidationListNotContains($table, $list, $fieldName, $notExpected, [], $options);
     }
 
     /**
@@ -1012,7 +1012,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::naturalNumber()
      */
-    protected function assertDataValidationNaturalNumber(
+    protected function assertValidationNaturalNumber(
         Table $table,
         string $fieldName,
         array $additionalDataSet = [],
@@ -1021,12 +1021,12 @@ trait DataValidationTestTrait
         // Invalid values
         $list = [0, -1];
         $expected = ['naturalNumber' => 'The provided value must be a natural number'];
-        $this->assertDataValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
+        $this->assertValidationListContains($table, $list, $fieldName, $expected, $additionalDataSet, $options);
 
         // Valid value
         $list = [1];
         $notExpected = ['naturalNumber'];
-        $this->assertDataValidationListNotContains(
+        $this->assertValidationListNotContains(
             $table,
             $list,
             $fieldName,
@@ -1067,7 +1067,7 @@ trait DataValidationTestTrait
      * @param array|null $expected The expected rule errors ("rule name" => "message") that must be present.
      * @return void
      */
-    protected function assertDataValidationForeignKey(
+    protected function assertValidationForeignKey(
         Table $table,
         string $fieldName,
         ?int $notExistingForeignKey = 999999,
@@ -1081,7 +1081,7 @@ trait DataValidationTestTrait
 
         $expected ??= ['_existsIn' => 'This value does not exist'];
 
-        $this->assertDataValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
+        $this->assertValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
     }
 
     /**
@@ -1094,7 +1094,7 @@ trait DataValidationTestTrait
      * @param array|null $expected The expected rule errors ("rule name" => "message") that must be present.
      * @return void
      */
-    protected function assertDataValidationIsUnique(
+    protected function assertValidationIsUnique(
         Table $table,
         string $fieldName,
         mixed $fieldValue,
@@ -1121,6 +1121,6 @@ trait DataValidationTestTrait
 
         $expected ??= ['_isUnique' => 'This value is already in use'];
 
-        $this->assertDataValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
+        $this->assertValidationErrorsContain($fieldName, $entity->getError($fieldName), $expected);
     }
 }
