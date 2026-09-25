@@ -525,7 +525,7 @@ trait DataValidationTestTrait
      * @return void
      * @todo Move to a rules dedicated helper class.
      */
-    protected function assertDataRules(
+    protected function assertRules(
         Table $table,
         string $fieldName,
         array $dataSet,
@@ -539,32 +539,6 @@ trait DataValidationTestTrait
         $entitySaved = $table->save($entity, $options);
         static::assertFalse($entitySaved);
 
-        $errors = $entity->getError($fieldName);
-        static::assertEquals($expected, $errors);
-    }
-
-    /**
-     * Validate that a given data set for a given table leads to the expected table rules errors
-     *
-     * @param Table $table The table to test.
-     * @param string $fieldName The field to check for table rules errors.
-     * @param array $dataSet The data set to test.
-     * @param array $expected The expected table rules errors.
-     * @param array $options Additional options for newEntity.
-     * @return void
-     */
-    protected function assertRules(
-        Table $table,
-        string $fieldName,
-        array $dataSet,
-        array $expected,
-        array $options = [],
-    ): void {
-        $entity = $table->newEntity($dataSet, $options);
-        $errors = $entity->getError($fieldName);
-        static::assertEmpty($errors);
-
-        $table->save($entity);
         $errors = $entity->getError($fieldName);
         static::assertEquals($expected, $errors);
     }

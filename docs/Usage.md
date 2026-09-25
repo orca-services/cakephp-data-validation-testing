@@ -104,7 +104,6 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 For application rules that run at save time (not marshalling time). These require a real database connection and fixtures.
 
-- `assertDataRules($table, $fieldName, $dataSet, $expected)`
 - `assertRulesNoErrors($table, $fieldName, $dataSet)`
 - `assertRules($table, $fieldName, $dataSet, $expected)`
 - `assertValidationUnique($table, $fieldName, $fieldValue)`

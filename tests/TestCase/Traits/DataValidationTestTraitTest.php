@@ -499,12 +499,12 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that assertDataRules passes when saving leads to the expected rule errors.
+     * Test that assertRules passes when saving leads to the expected rule errors.
      *
      * @return void
-     * @covers ::assertDataRules
+     * @covers ::assertRules
      */
-    public function testAssertDataRules(): void
+    public function testAssertRules(): void
     {
         $field = 'unique_field';
         $dataSet = [$field => 'duplicate'];
@@ -518,7 +518,7 @@ class DataValidationTestTraitTest extends TestCase
         static::assertFalse($this->table->save($duplicate));
         static::assertSame($expectedErrors, $duplicate->getError($field));
 
-        $this->assertDataRules($this->table, $field, $dataSet, $expectedErrors);
+        $this->assertRules($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
@@ -631,31 +631,6 @@ class DataValidationTestTraitTest extends TestCase
         $expectedErrors = ['_isUnique' => 'This value is already in use'];
 
         $this->assertValidationIsUnique($this->table, $field, 'custom-duplicate-value', $dataset, $expectedErrors);
-    }
-
-    /**
-     * Test that assertRules passes when saving leads to the expected rule errors.
-     *
-     * @return void
-     * @covers ::assertRules
-     */
-    public function testAssertRules(): void
-    {
-        $field = 'unique_field';
-        $dataSet = ['required_field' => 'required', $field => 'duplicate', 'multi_rule_field' => 1];
-        $expectedErrors = ['_isUnique' => 'This value is already in use'];
-
-        // Ensure a first record exists so the unique rule will fail on the second
-        $existing = $this->table->newEntity($dataSet);
-        static::assertNotFalse($this->table->save($existing));
-
-        // Ensure the rule works as expected first
-        $duplicate = $this->table->newEntity($dataSet);
-        static::assertEmpty($duplicate->getError($field));
-        static::assertFalse($this->table->save($duplicate));
-        static::assertSame($expectedErrors, $duplicate->getError($field));
-
-        $this->assertRules($this->table, $field, $dataSet, $expectedErrors);
     }
 
     /**
