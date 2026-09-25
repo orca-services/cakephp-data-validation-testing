@@ -34,20 +34,20 @@ All helper methods are `protected` and callable from within your test class.
 ## Example
 
 ```php
-public function testValidationTitle(): void
+public function assertValidationTitle(): void
 {
     // Assert that the "title" field's presence is required
-    $this->testDataValidationRequired($this->Articles, 'title');
+    $this->assertValidationRequired($this->Articles, 'title');
     // Assert that the field "title" cannot be empty
-    $this->testDataValidationNotEmpty($this->Articles, 'title');
+    $this->assertValidationNotEmpty($this->Articles, 'title');
     // Assert that the "title" field's maximum length is 255 characters
-    $this->testDataValidationMaxLength($this->Articles, 'title', 255);
+    $this->assertValidationMaxLength($this->Articles, 'title', 255);
 }
 
-public function testValidationIsPublished(): void
+public function assertValidationIsPublished(): void
 {
     // Assert that the field "is_published" must have a boolean value
-    $this->testDataValidationBoolean($this->Articles, 'is_published');
+    $this->assertValidationBoolean($this->Articles, 'is_published');
 }
 ```
 
@@ -61,61 +61,60 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 
 ### Presence and emptiness
 
-- `testDataValidationRequired($table, $fieldName)` - asserts the field is configured to require presence (`_required`).
-- `testDataValidationNotRequired($table, $fieldName)` - asserts the field is not configured to require presence.
-- `testDataValidationNotEmpty($table, $fieldName)` - asserts the field is configured to disallow empty values, i.e. `null` or `''` (`_empty`).
-- `testDataValidationEmpty($table, $fieldName)` - asserts the field is configured to allow empty values, i.e. `null` or `''`.
+- `assertValidationRequired($table, $fieldName)` - asserts the field is configured to require presence (`_required`).
+- `assertValidationNotRequired($table, $fieldName)` - asserts the field is not configured to require presence.
+- `assertValidationNotEmpty($table, $fieldName)` - asserts the field is configured to disallow empty values, i.e. `null` or `''` (`_empty`).
+- `assertValidationEmpty($table, $fieldName)` - asserts the field is configured to allow empty values, i.e. `null` or `''`.
 
 ### Type validators
 
-- `testDataValidationBoolean($table, $fieldName)` - asserts the field is configured with the `boolean` validation rule.
-- `testDataValidationURLWithProtocol($table, $fieldName)` - asserts the field is configured with the `urlWithProtocol` validation rule (requires `http://` or `https://`).
-- `testDataValidationDateTime($table, $fieldName)` - asserts the field is configured with the `dateTime` validation rule.
-- `testDataValidationDate($table, $fieldName)` - asserts the field is configured with the `date` validation rule.
-- `testDataValidationNaturalNumber($table, $fieldName)` - asserts the field is configured with the `naturalNumber` validation rule (positive integers).
-- `testDataValidationScalar($table, $fieldName)` - asserts the field is configured with the `scalar` validation rule.
-- `testDataValidationDecimal($table, $fieldName)` - asserts the field is configured with the `decimal` validation rule.
-- `testDataValidationInteger($table, $fieldName)` - asserts the field is configured with the `integer` validation rule.
-- `testDataValidationNonNegativeInteger($table, $fieldName)` - asserts the field is configured with the `nonNegativeInteger` validation rule.
-- `testDataValidationGreaterThanOrEqual($table, $fieldName, $threshold)` - asserts the field is configured with the `greaterThanOrEqual` validation rule.
-- `testDataValidationEmail($table, $fieldName)` - asserts the field is configured with the `email` validation rule.
-- `testDataValidationUuid($table, $fieldName)` - asserts the field is configured with the `uuid` validation rule.
+- `assertValidationBoolean($table, $fieldName)` - asserts the field is configured with the `boolean` validation rule.
+- `assertValidationURLWithProtocol($table, $fieldName)` - asserts the field is configured with the `urlWithProtocol` validation rule (requires `http://` or `https://`).
+- `assertValidationDateTime($table, $fieldName)` - asserts the field is configured with the `dateTime` validation rule.
+- `assertValidationDate($table, $fieldName)` - asserts the field is configured with the `date` validation rule.
+- `assertValidationNaturalNumber($table, $fieldName)` - asserts the field is configured with the `naturalNumber` validation rule (positive integers).
+- `assertValidationScalar($table, $fieldName)` - asserts the field is configured with the `scalar` validation rule.
+- `assertValidationDecimal($table, $fieldName)` - asserts the field is configured with the `decimal` validation rule.
+- `assertValidationInteger($table, $fieldName)` - asserts the field is configured with the `integer` validation rule.
+- `assertValidationNonNegativeInteger($table, $fieldName)` - asserts the field is configured with the `nonNegativeInteger` validation rule.
+- `assertValidationGreaterThanOrEqual($table, $fieldName, $threshold)` - asserts the field is configured with the `greaterThanOrEqual` validation rule.
+- `assertValidationEmail($table, $fieldName)` - asserts the field is configured with the `email` validation rule.
+- `assertValidationUuid($table, $fieldName)` - asserts the field is configured with the `uuid` validation rule.
 
 ### Length validators
 
-- `testDataValidationMaxLength($table, $fieldName, $maxLength)`
-- `testDataValidationMinLength($table, $fieldName, $minLength, $expected)`
-- `testDataValidationLengthBetween($table, $fieldName, $minLength, $maxLength)`
-- `testDataValidationRange($table, $fieldName, $lowerBound, $upperBound)`
+- `assertValidationMaxLength($table, $fieldName, $maxLength)`
+- `assertValidationMinLength($table, $fieldName, $minLength, $expected)`
+- `assertValidationLengthBetween($table, $fieldName, $minLength, $maxLength)`
+- `assertValidationRange($table, $fieldName, $lowerBound, $upperBound)`
 
 ### Generic helpers
 
-- `testDataValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits. Compares the field's **complete** error array against `$expected`.
-- `testDataValidationContains($table, $fieldName, $dataSet, $expected)` - asserts the given `"rule name" => "message"` pairs are present on the field, ignoring any other errors.
-- `testDataValidationNotContains($table, $fieldName, $dataSet, $rules)` - asserts the given rule names are **not** present on the field, ignoring any other errors.
-- `testDataValidationNoErrors($table, $fieldName, $dataSet)` - asserts a data set produces no errors on the field.
-- `testDataValidationInList($table, $list, $fieldName, $expected)` - runs the complete-error-array assertion for each value in a list.
-- `testDataValidationInListContains($table, $list, $fieldName, $expected)` - runs the `contains` assertion for each value in a list.
-- `testDataValidationInListNotContains($table, $list, $fieldName, $rules)` - runs the `not contains` assertion for each value in a list.
-- `testFullDataValidation($table, $dataSet, $expected)` - asserts errors across all fields.
-- `testFullDataValidationNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
+- `assertValidation($table, $fieldName, $dataSet, $expected)` - the underlying helper. Use when no specialized helper fits. Compares the field's **complete** error array against `$expected`.
+- `assertValidationContains($table, $fieldName, $dataSet, $expected)` - asserts the given `"rule name" => "message"` pairs are present on the field, ignoring any other errors.
+- `assertValidationNotContains($table, $fieldName, $dataSet, $rules)` - asserts the given rule names are **not** present on the field, ignoring any other errors.
+- `assertValidationNoErrors($table, $fieldName, $dataSet)` - asserts a data set produces no errors on the field.
+- `assertValidationInList($table, $list, $fieldName, $expected)` - runs the complete-error-array assertion for each value in a list.
+- `assertValidationInListContains($table, $list, $fieldName, $expected)` - runs the `contains` assertion for each value in a list.
+- `assertValidationInListNotContains($table, $list, $fieldName, $rules)` - runs the `not contains` assertion for each value in a list.
+- `assertValidationTableErrors($table, $dataSet, $expected)` - asserts errors across all fields.
+- `assertValidationTableNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
 
 ### Rules helpers
 
 For application rules that run at save time (not marshalling time). These require a real database connection and fixtures.
 
-- `testDataRules($table, $fieldName, $dataSet, $expected)`
-- `testDataRulesNoErrors($table, $fieldName, $dataSet)`
-- `testRules($table, $fieldName, $dataSet, $expected)`
-- `testDataValidationUnique($table, $fieldName, $fieldValue)`
-- `testDataValidationForeignKey($table, $fieldName)`
+- `assertRulesNoErrors($table, $fieldName, $dataSet)`
+- `assertRules($table, $fieldName, $dataSet, $expected)`
+- `assertValidationUnique($table, $fieldName, $fieldValue)`
+- `assertValidationForeignKey($table, $fieldName)`
 
 ## Dependent fields
 
 Use the `$additionalDataSet` parameter to supply required companion fields so your test only fails for the reason you care about:
 
 ```php
-$this->testDataValidationNotEmpty(
+$this->assertValidationNotEmpty(
     $this->Articles,
     'title',
     ['author_id' => 1]
@@ -127,7 +126,7 @@ $this->testDataValidationNotEmpty(
 The `$options` parameter is forwarded to `Table::newEntity()`:
 
 ```php
-$this->testDataValidationRequired(
+$this->assertValidationRequired(
     $this->Articles,
     'title',
     [],
