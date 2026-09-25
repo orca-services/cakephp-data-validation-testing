@@ -14,43 +14,43 @@ This avoids PHPUnit mistaking them for actual test methods. **No logic changed**
 
 ### Rename table
 
-| Old | New |
-|---|---|
-| `testDataValidationNotEmpty()` | `assertValidationNotEmpty()` |
-| `testDataValidationEmpty()` | `assertValidationEmpty()` |
-| `testDataValidationRequired()` | `assertValidationRequired()` |
-| `testDataValidationNotRequired()` | `assertValidationNotRequired()` |
-| `testDataValidationBoolean()` | `assertValidationBoolean()` |
-| `testDataValidationURLWithProtocol()` | `assertValidationURLWithProtocol()` |
-| `testDataValidationDateTime()` | `assertValidationDateTime()` |
-| `testDataValidationDate()` | `assertValidationDate()` |
-| `testDataValidationInList()` | `assertValidationInList()` |
-| `testDataValidationNoErrors()` | `assertValidationNoErrors()` |
-| `testFullDataValidationNoErrors()` | `assertValidationTableNoErrors()` |
-| `testDataValidation()` | `assertValidation()` |
-| `testDataValidationContains()` | `assertValidationContains()` |
-| `testDataValidationNotContains()` | `assertValidationNotContains()` |
-| `assertDataValidationErrorsContain()` | `assertValidationErrorsContain()` |
-| `testDataValidationListContains()` | `assertValidationListContains()` |
-| `testDataValidationListNotContains()` | `assertValidationListNotContains()` |
-| `testDataRules()` | `assertRules()` |
-| `testRules()` | Removed |
-| `testDataRulesNoErrors()` | `assertRulesNoErrors()` |
-| `testDataValidationMaxLength()` | `assertValidationMaxLength()` |
-| `testDataValidationMinLength()` | `assertValidationMinLength()` |
-| `testDataValidationScalar()` | `assertValidationScalar()` |
-| `testDataValidationDecimal()` | `assertValidationDecimal()` |
-| `testDataValidationInteger()` | `assertValidationInteger()` |
+| Old                                      | New                                    |
+|------------------------------------------|----------------------------------------|
+| `testDataValidationNotEmpty()`           | `assertValidationNotEmpty()`           |
+| `testDataValidationEmpty()`              | `assertValidationEmpty()`              |
+| `testDataValidationRequired()`           | `assertValidationRequired()`           |
+| `testDataValidationNotRequired()`        | `assertValidationNotRequired()`        |
+| `testDataValidationBoolean()`            | `assertValidationBoolean()`            |
+| `testDataValidationURLWithProtocol()`    | `assertValidationURLWithProtocol()`    |
+| `testDataValidationDateTime()`           | `assertValidationDateTime()`           |
+| `testDataValidationDate()`               | `assertValidationDate()`               |
+| `testDataValidationInList()`             | `assertValidationInList()`             |
+| `testDataValidationNoErrors()`           | `assertValidationNoErrors()`           |
+| `testFullDataValidationNoErrors()`       | `assertValidationTableNoErrors()`      |
+| `testDataValidation()`                   | `assertValidation()`                   |
+| `testDataValidationContains()`           | `assertValidationContains()`           |
+| `testDataValidationNotContains()`        | `assertValidationNotContains()`        |
+| `assertDataValidationErrorsContain()`    | `assertValidationErrorsContain()`      |
+| `testDataValidationListContains()`       | `assertValidationListContains()`       |
+| `testDataValidationListNotContains()`    | `assertValidationListNotContains()`    |
+| `testDataRules()`                        | `assertRules()`                        |
+| `testRules()`                            | Removed                                |
+| `testDataRulesNoErrors()`                | `assertRulesNoErrors()`                |
+| `testDataValidationMaxLength()`          | `assertValidationMaxLength()`          |
+| `testDataValidationMinLength()`          | `assertValidationMinLength()`          |
+| `testDataValidationScalar()`             | `assertValidationScalar()`             |
+| `testDataValidationDecimal()`            | `assertValidationDecimal()`            |
+| `testDataValidationInteger()`            | `assertValidationInteger()`            |
 | `testDataValidationNonNegativeInteger()` | `assertValidationNonNegativeInteger()` |
 | `testDataValidationGreaterThanOrEqual()` | `assertValidationGreaterThanOrEqual()` |
-| `testDataValidationEmail()` | `assertValidationEmail()` |
-| `testDataValidationUuid()` | `assertValidationUuid()` |
-| `testDataValidationLengthBetween()` | `assertValidationLengthBetween()` |
-| `testDataValidationRange()` | `assertValidationRange()` |
-| `testDataValidationNaturalNumber()` | `assertValidationNaturalNumber()` |
-| `testFullDataValidation()` | `assertValidationTableErrors()` |
-| `testDataValidationForeignKey()` | `assertValidationForeignKey()` |
-| `testDataValidationIsUnique()` | `assertValidationIsUnique()` |
+| `testDataValidationEmail()`              | `assertValidationEmail()`              |
+| `testDataValidationUuid()`               | `assertValidationUuid()`               |
+| `testDataValidationLengthBetween()`      | `assertValidationLengthBetween()`      |
+| `testDataValidationRange()`              | `assertValidationRange()`              |
+| `testDataValidationNaturalNumber()`      | `assertValidationNaturalNumber()`      |
+| `testFullDataValidation()`               | `assertValidationTableErrors()`        |
+| `testDataValidationForeignKey()`         | `assertValidationForeignKey()`         |
+| `testDataValidationIsUnique()`           | `assertValidationIsUnique()`           |
 
 ---
 
