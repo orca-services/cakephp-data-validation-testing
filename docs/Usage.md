@@ -97,8 +97,8 @@ Each helper builds an entity, runs the validator, and asserts the expected error
 - `assertValidationInList($table, $list, $fieldName, $expected)` - runs the complete-error-array assertion for each value in a list.
 - `assertValidationInListContains($table, $list, $fieldName, $expected)` - runs the `contains` assertion for each value in a list.
 - `assertValidationInListNotContains($table, $list, $fieldName, $rules)` - runs the `not contains` assertion for each value in a list.
-- `testFullDataValidation($table, $dataSet, $expected)` - asserts errors across all fields.
-- `testFullDataValidationNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
+- `assertValidationTableErrors($table, $dataSet, $expected)` - asserts errors across all fields.
+- `assertValidationTableNoErrors($table, $dataSet)` - asserts a full data set produces no errors at all.
 
 ### Rules helpers
 

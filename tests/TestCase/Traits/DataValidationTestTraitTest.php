@@ -471,31 +471,31 @@ class DataValidationTestTraitTest extends TestCase
     }
 
     /**
-     * Test that assertFullDataValidationNoErrors passes when the full data set has no errors.
+     * Test that assertValidationTableNoErrors passes when the full data set has no errors.
      *
      * @return void
-     * @covers ::assertFullDataValidationNoErrors
+     * @covers ::assertValidationTableNoErrors
      */
-    public function testAssertFullDataValidationNoErrors(): void
+    public function testAssertValidationTableNoErrors(): void
     {
         $dataSet = ['required_field' => 'required', 'multi_rule_field' => 1];
-        $this->assertFullDataValidationNoErrors($this->table, $dataSet);
+        $this->assertValidationTableNoErrors($this->table, $dataSet);
     }
 
     /**
-     * Test that assertFullDataValidation reports all errors.
+     * Test that assertValidationTableErrors reports all errors.
      *
      * @return void
-     * @covers ::assertFullDataValidation
+     * @covers ::assertValidationTableErrors
      */
-    public function testAssertFullDataValidation(): void
+    public function testAssertValidationTableErrors(): void
     {
         $dataSet = ['not_empty_field' => '', 'multi_rule_field' => 1];
         $expectedErrors = [
             'not_empty_field' => ['_empty' => 'This field cannot be left empty'],
             'required_field' => ['_required' => 'This field is required'],
         ];
-        $this->assertFullDataValidation($this->table, $dataSet, $expectedErrors);
+        $this->assertValidationTableErrors($this->table, $dataSet, $expectedErrors);
     }
 
     /**

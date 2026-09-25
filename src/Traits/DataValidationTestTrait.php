@@ -335,10 +335,10 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertFullDataValidationNoErrors(Table $table, array $dataSet, array $options = []): void
+    protected function assertValidationTableNoErrors(Table $table, array $dataSet, array $options = []): void
     {
         $expected = [];
-        $this->assertFullDataValidation($table, $dataSet, $expected, $options);
+        $this->assertValidationTableErrors($table, $dataSet, $expected, $options);
     }
 
     /**
@@ -1046,7 +1046,7 @@ trait DataValidationTestTrait
      * @return void
      * @see \Cake\Validation\Validator::validate()
      */
-    protected function assertFullDataValidation(
+    protected function assertValidationTableErrors(
         Table $table,
         array $dataSet,
         array $expected,
