@@ -35,7 +35,7 @@ This avoids PHPUnit mistaking them for actual test methods. **No logic changed**
 | `testDataValidationListContains()`       | `assertValidationListContains()`       |
 | `testDataValidationListNotContains()`    | `assertValidationListNotContains()`    |
 | `testDataRules()`                        | `assertRules()`                        |
-| `testRules()`                            | Removed                                |
+| `testRules()`                            | Removed use `assertRules()` instead    |
 | `testDataRulesNoErrors()`                | `assertRulesNoErrors()`                |
 | `testDataValidationMaxLength()`          | `assertValidationMaxLength()`          |
 | `testDataValidationMinLength()`          | `assertValidationMinLength()`          |
