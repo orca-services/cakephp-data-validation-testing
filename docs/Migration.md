@@ -25,9 +25,10 @@ This avoids PHPUnit mistaking them for actual test methods. **No logic changed**
 | `testDataValidationDateTime()`           | `assertValidationDateTime()`           |
 | `testDataValidationDate()`               | `assertValidationDate()`               |
 | `testDataValidationInList()`             | `assertValidationInList()`             |
-| `testDataValidationNoErrors()`           | `assertValidationNoErrors()`           |
-| `testFullDataValidationNoErrors()`       | `assertValidationTableNoErrors()`      |
 | `testDataValidation()`                   | `assertValidation()`                   |
+| `testDataValidationNoErrors()`           | `assertValidationNoErrors()`           |
+| `testFullDataValidation()`               | `assertValidationTableErrors()`        |
+| `testFullDataValidationNoErrors()`       | `assertValidationTableNoErrors()`      |
 | `testDataValidationContains()`           | `assertValidationContains()`           |
 | `testDataValidationNotContains()`        | `assertValidationNotContains()`        |
 | `assertDataValidationErrorsContain()`    | `assertValidationErrorsContain()`      |
@@ -48,7 +49,6 @@ This avoids PHPUnit mistaking them for actual test methods. **No logic changed**
 | `testDataValidationLengthBetween()`      | `assertValidationLengthBetween()`      |
 | `testDataValidationRange()`              | `assertValidationRange()`              |
 | `testDataValidationNaturalNumber()`      | `assertValidationNaturalNumber()`      |
-| `testFullDataValidation()`               | `assertValidationTableErrors()`        |
 | `testDataValidationForeignKey()`         | `assertValidationForeignKey()`         |
 | `testDataValidationIsUnique()`           | `assertValidationIsUnique()`           |
 

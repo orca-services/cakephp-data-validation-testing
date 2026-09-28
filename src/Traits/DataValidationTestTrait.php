@@ -327,6 +327,28 @@ trait DataValidationTestTrait
     }
 
     /**
+     * Validate that a given data set for a given table leads to the expected errors
+     *
+     * @param Table $table The table to test.
+     * @param array $dataSet The data set to test.
+     * @param array $expected The expected errors.
+     * @param array $options Additional options for newEntity.
+     * @return void
+     * @see \Cake\Validation\Validator::validate()
+     */
+    protected function assertValidationTableErrors(
+        Table $table,
+        array $dataSet,
+        array $expected,
+        array $options = [],
+    ): void {
+        $entity = $table->newEntity($dataSet, $options);
+        $errors = $entity->getErrors();
+
+        static::assertEquals($expected, $errors);
+    }
+
+    /**
      * Validate that a given data set for a given table does not lead to data validation errors on any field
      *
      * @param Table $table The table to test.
@@ -1008,28 +1030,6 @@ trait DataValidationTestTrait
             $additionalDataSet,
             $options,
         );
-    }
-
-    /**
-     * Validate that a given data set for a given table leads to the expected errors
-     *
-     * @param Table $table The table to test.
-     * @param array $dataSet The data set to test.
-     * @param array $expected The expected errors.
-     * @param array $options Additional options for newEntity.
-     * @return void
-     * @see \Cake\Validation\Validator::validate()
-     */
-    protected function assertValidationTableErrors(
-        Table $table,
-        array $dataSet,
-        array $expected,
-        array $options = [],
-    ): void {
-        $entity = $table->newEntity($dataSet, $options);
-        $errors = $entity->getErrors();
-
-        static::assertEquals($expected, $errors);
     }
 
     /**
