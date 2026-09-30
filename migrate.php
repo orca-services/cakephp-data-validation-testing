@@ -13,7 +13,6 @@ declare(strict_types=1);
  * 1. Renames all calls of the old `testDataValidation`-prefixed trait methods to the new `assertValidation`-prefixed ones.
  * 2. Replaces calls of the removed `testRules()` with `assertRules()` and lists them for manual review.
  * 3. Lists all calls of rule-dedicated methods, which now only check their own rule, for manual review.
- * 4. Optionally updates the version constraint of the package in composer.json.
  *
  * Usage: php vendor/orca-services/cakephp-data-validation-testing/migrate.php (from your application root)
  */
@@ -29,16 +28,6 @@ $fields = [
         'Directories to migrate',
         'comma separated, relative to ' . getcwd(),
         'tests',
-    ],
-    'composer_json' => [
-        'Path to the composer.json to update',
-        'leave "-" to skip',
-        'composer.json',
-    ],
-    'version_constraint' => [
-        'New version constraint for ' . PACKAGE_NAME,
-        '',
-        '^3.0',
     ],
 ];
 
@@ -236,7 +225,7 @@ $renamePattern = method_call_pattern(array_keys($renames));
 $ruleDedicatedPattern = method_call_pattern($ruleDedicatedMethods);
 $leftoverPattern = '/\b(' . implode('|', array_map(static function ($name) {
         return preg_quote($name, '/');
-}, array_keys($renames))) . ')\b/';
+    }, array_keys($renames))) . ')\b/';
 
 $totalReplacements = 0;
 $changedFiles = 0;
@@ -308,30 +297,6 @@ foreach ($filesToMigrate as $filename) {
 }
 echo "\n$totalReplacements replacement(s) in $changedFiles of " . count($filesToMigrate) . " file(s).\n\n";
 
-$composerUpdated = false;
-if ($values['composer_json'] !== '-') {
-    echo "----------------------------------------------------------------------\n";
-    echo "Updating composer.json:\n";
-    echo "----------------------------------------------------------------------\n";
-    $composerJson = $values['composer_json'];
-    if (!is_file($composerJson)) {
-        echo "Warning: '$composerJson' does not exist, skipping.\n";
-    } else {
-        $content = file_get_contents($composerJson);
-        $pattern = '/("' . preg_quote(PACKAGE_NAME, '/') . '"\s*:\s*")([^"]*)(")/';
-        if (!preg_match($pattern, $content, $match)) {
-            echo 'Warning: ' . PACKAGE_NAME . " is not required in '$composerJson', skipping.\n";
-        } else {
-            // Only replace the version constraint, so the formatting of the file is preserved
-            $content = preg_replace($pattern, '${1}' . $values['version_constraint'] . '${3}', $content, 1);
-            file_put_contents($composerJson, $content);
-            echo "Changed the constraint from '$match[2]' to '" . $values['version_constraint'] . "'.\n";
-            $composerUpdated = true;
-        }
-    }
-    echo "\n";
-}
-
 echo "Done.\n\n";
 
 if (!empty($manualReview)) {
@@ -360,9 +325,6 @@ if (!empty($ruleDedicatedCalls)) {
 }
 
 echo "\nNext steps:\n";
-if ($composerUpdated) {
-    echo '- Run: composer update ' . PACKAGE_NAME . " --with-dependencies\n";
-}
 echo "- Run your test suite and fix failing tests.\n";
 echo "- Review the diff (e.g. git diff) before committing.\n\n";
 
