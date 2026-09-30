@@ -6,6 +6,7 @@ A CakePHP plugin to help testing data validation.
 
 | Plugin Version | CakePHP Compatibility | Branch      | Status    |
 |----------------|-----------------------|-------------| --------- |
+| 3.x            | 5.x                   | cakephp-5.x | Supported |
 | 2.x            | 5.x                   | cakephp-5.x | Supported |
 | 1.x            | 4.x                   | cakephp-4.x | Supported |
 | 0.x            | 2.x                   | cakephp-2.x | EOL       |
@@ -21,6 +22,11 @@ See the [installation documentation](docs/Installation.md).
 ## How to use
 
 You can use the plugin as shown in [usage documentation](docs/Usage.md).
+
+## Upgrading
+
+See the [migration guide](docs/Migration.md) for upgrading from 2.x to 3.x.
+It includes a migration script that automates most of the necessary changes.
 
 ## Versioning
 
