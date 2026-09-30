@@ -9,18 +9,20 @@ This major version bundles two breaking changes:
 
 ## Automated migration
 
-A migration script automates most of the steps below. Run it from the root of your application,
-after installing 3.x (or before, if you let the script update your `composer.json`):
+A migration script automates most of the steps below. It is shipped with the package,
+so first update the package to 3.x:
+
+```bash
+composer require --dev orca-services/cakephp-data-validation-testing:^3.0 -W
+```
+
+Then run the script from the root of your application:
 
 ```bash
 php vendor/orca-services/cakephp-data-validation-testing/migrate.php
 ```
 
-The script interactively asks for:
-
-- The directories to migrate (comma separated, default: `tests`)
-- The path to your `composer.json` (default: `composer.json`, enter `-` to skip updating it)
-- The new version constraint for the package (default: `^3.0`)
+The script interactively asks for the directories to migrate (comma separated, default: `tests`).
 
 What it does:
 
@@ -32,12 +34,10 @@ What it does:
 3. Lists all calls of rule-dedicated methods for manual review
    (see [Rule-dedicated methods now check only their own rule](#2-rule-dedicated-methods-now-check-only-their-own-rule)).
 4. Lists old method names it did not replace, e.g. in strings, callables or own methods with the same name.
-5. Optionally updates the version constraint of the package in your `composer.json`.
 
 The script modifies your files in place, so make sure your working tree is clean (e.g. committed in Git) before running it.
 Afterward:
 
-- Run `composer update orca-services/cakephp-data-validation-testing --with-dependencies`, if the script updated your `composer.json`.
 - Review the diff (e.g. `git diff`) and the listed findings.
 - Run your test suite and fix any failing tests.
 
