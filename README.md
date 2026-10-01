@@ -26,7 +26,7 @@ You can use the plugin as shown in [usage documentation](docs/Usage.md).
 ## Upgrading
 
 See the [migration guide](docs/Migration.md) for upgrading from 2.x to 3.x.
-It includes a migration script that automates most of the necessary changes.
+It includes a migration script that renames the old method calls and lists the places that need a manual review.
 
 ## Versioning
 
