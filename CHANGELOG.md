@@ -13,7 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Dependencies
 
-## [3.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/3.0.0) - 2026-10-01
+## [3.0.0-RC1](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/3.0.0-RC1) - 2026-10-01
 
 ### Added
 - `assertValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
