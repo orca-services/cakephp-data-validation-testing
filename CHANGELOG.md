@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - `assertValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
 - `assertValidationListContains()` and `assertValidationListNotContains()` list helpers.
 - Optional custom `$expected` parameter for `assertValidationForeignKey()` and `assertValidationIsUnique()`.
+- Migration script `migrate.php` to assist upgrading from 2.x to 3.x. See the [migration guide](docs/Migration.md). [#47](https://github.com/orca-services/cakephp-data-validation-testing/issues/47)
 
 ### Changed
 - **BREAKING CHANGE:** Replace `testDataValidation` prefix in all test trait method names with `assertValidation`. E.g. `testDataValidationNotEmpty()` becomes `assertValidationNotEmpty()`.
