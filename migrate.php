@@ -27,7 +27,7 @@ $fields = [
     'paths' => [
         'Directories to migrate',
         'comma separated, relative to ' . getcwd(),
-        'tests',
+        'tests,plugins',
     ],
 ];
 
