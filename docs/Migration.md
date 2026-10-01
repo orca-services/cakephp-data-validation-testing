@@ -5,11 +5,15 @@ This major version bundles two breaking changes:
 1. **Method renames** — [PR #45](https://github.com/orca-services/cakephp-data-validation-testing/pull/45) (closes [#44](https://github.com/orca-services/cakephp-data-validation-testing/issues/44))
 2. **Rule-dedicated methods now check only their own rule** — [PR #40](https://github.com/orca-services/cakephp-data-validation-testing/pull/40) (closes [#38](https://github.com/orca-services/cakephp-data-validation-testing/issues/38))
 
+You can use the [Migration Script](#migration-script) to rename the old method calls automatically
+and to find the places that need a manual review.
+
 ---
 
-## Automated migration
+## Migration Script
 
-A migration script automates most of the steps below. It is shipped with the package,
+The Migration Script does not fully automate the upgrade, but it takes care of the method renames
+and lists everything else you need to review manually. It is shipped with the package,
 so first update the package to 3.x:
 
 ```bash
@@ -22,7 +26,7 @@ Then run the script from the root of your application:
 php vendor/orca-services/cakephp-data-validation-testing/migrate.php
 ```
 
-The script interactively asks for the directories to migrate (comma separated, default: `tests`).
+The script interactively asks for the directories to migrate (comma separated, default: `tests,plugins`).
 
 What it does:
 
@@ -104,4 +108,4 @@ Previously, methods like `assertValidationBoolean()`, `assertValidationEmail()`,
 Now these methods assert **only their own rule key** (present or absent), ignoring any other errors on the same field.
 
 Review your calls of these methods, especially where a custom `$expected` array containing several rules is passed,
-and make sure the tests still cover what you intend. The migration script lists all these calls for you.
+and make sure the tests still cover what you intend. The [Migration Script](#migration-script) lists all these calls for you.
