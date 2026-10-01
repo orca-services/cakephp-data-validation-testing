@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/orca-services/cakephp-data-validation-testing)
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Dependencies
+
+## [3.0.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/3.0.0) - 2026-10-01
+
+### Added
 - `assertValidationNotContains()` to assert that specific validation rules are absent, ignoring others on the same field.
 - `assertValidationListContains()` and `assertValidationListNotContains()` list helpers.
 - Optional custom `$expected` parameter for `assertValidationForeignKey()` and `assertValidationIsUnique()`.
@@ -17,8 +27,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Ignore data validation in `assertValidationIsUnique()` to correctly assert build rules.
-
-### Dependencies
 
 ## [2.5.0](https://github.com/orca-services/cakephp-data-validation-testing/releases/tag/2.5.0) - 2026-09-17
 
